@@ -7,10 +7,10 @@ static void hexdump(const void * memory, size_t bytes);
  
 int main(void) {
   unsigned char ascii[256];
-  int i;
+  int f;
   
-  for (i = 0; i < sizeof ascii; ++i)
-    ascii[i] = i;
+  for (f = 0; f < sizeof ascii; ++f)
+    ascii[f] = f;
   hexdump(ascii, sizeof ascii);
   return 0;
   }

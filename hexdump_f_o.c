@@ -5,23 +5,23 @@ static void hexdump (const void* data, size_t size){
   
   while (size)
   {
-    q = p;
-    printf("%p: ", (void *) p);
-    
-    for (i = 0; i < colnum && size; ++i)
-    {
-      printf("%02X ", *p);
-      ++p;
-      --size;
-    }
-    size += i;
-    while (i < colnum)
-    {
-      printf("XX ");
-      ++i;
-    }
-  printf("| ");
+  q = p;
+  printf("%p: ", (void *) p);
   
+  for (i = 0; i < colnum && size; ++i)
+  {
+    printf("%02X ", *p);
+    ++p;
+    --size;
+  }
+  size += i;
+  while (i < colnum)
+  {
+    printf("XX ");
+    ++i;
+  }
+  
+  printf("| ");
   p=q;
   
   for (i = 0; i < colnum && size; ++i)
