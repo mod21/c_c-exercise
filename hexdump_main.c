@@ -3,7 +3,7 @@
 #include <ctype.h>
 #define colnum  16
 
-static void hexdump(const void * data, size_t bytes);
+static void hexdump(const void * data, size_t size );
  
 int main(void) {
   unsigned char ascii[256];
