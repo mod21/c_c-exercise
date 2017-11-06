@@ -1,0 +1,5 @@
+1) kein pragma once
+"#pragma once ist kein C++ Standard -> normale Include Guards mit #ifndef
+verwenden"
+
+2) c++11 darf verwendet werden

@@ -1,0 +1,2 @@
+Util.o: Util.cpp Util.h Game.h Level.h Player.h CoordPair.h Direction.h \
+ Field.h

@@ -1,0 +1,3 @@
+Field.o: Field.cpp Direction.h Field.h CoordPair.h FieldBonus.h \
+ FieldCounter.h FieldFinish.h FieldHole.h FieldIce.h FieldOneWay.h \
+ FieldPath.h FieldQuicksand.h FieldStart.h FieldTeleport.h FieldWall.h

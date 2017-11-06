@@ -1,0 +1,230 @@
+//------------------------------------------------------------------------------
+// Game.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "Exceptions.h"
+#include "Field.h"
+#include "Game.h"
+#include "Util.h"
+#include "Map.h"
+#include "Level.h"
+#include <fstream>
+#include <iterator>
+
+//------------------------------------------------------------------------------
+Game::Game() :
+  level_(), isAutoSaveEnabled_(false)
+{
+}
+
+//------------------------------------------------------------------------------
+Game::~Game()
+{
+  if (level_)
+    delete level_;
+}
+
+//------------------------------------------------------------------------------
+Level* Game::getLevel()
+{
+  return level_;
+}
+
+//------------------------------------------------------------------------------
+void Game::setLevel(Level* level)
+{
+  if (level_)
+  {
+    delete level_;
+  }
+  level_ = level;
+}
+
+//------------------------------------------------------------------------------
+vector<Direction*>* Game::getHistoryFromString(string history)
+{
+  vector<Direction*>* list = new vector<Direction*>();
+  for (unsigned int index = 0; index < history.length(); index++)
+  {
+    Direction* direction = Direction::getDirectionByChar(history.at(index));
+    if (direction == nullptr)
+    {
+      delete list;
+      return nullptr;
+    }
+    list->push_back(direction);
+  }
+  return list;
+}
+
+//------------------------------------------------------------------------------
+Map* Game::createMapFromLines(vector<string> textLines)
+{
+  // get initial level width
+  int width = textLines.at(2).length();
+  if (width == 0)
+  {
+    return nullptr;
+  }
+
+  // check if line width is the same for each line
+  int height = 1;
+  for (unsigned int index = 3; index < textLines.size(); index++)
+  {
+    string line = textLines.at(index);
+    int length = line.length();
+    if (length == 0)
+    {
+      break;
+    }
+    else if (length != width)
+    {
+      return nullptr;
+    }
+    height++;
+  }
+
+  // fill array with fields
+  Field** fields = new Field*[width * height];
+  for (int row = 0; row < height; row++)
+  {
+    string line = textLines.at(row + 2);
+    for (int column = 0; column < width; column++)
+    {
+      Field* field = Field::getBySymbol(line.at(column));
+      if (field == nullptr)
+      {
+        delete fields;
+        return nullptr;
+      }
+      fields[column + row * width] = field;
+    }
+  }
+
+  return new Map(fields, width, height);
+}
+
+//------------------------------------------------------------------------------
+void Game::loadFromFile(string path)
+{
+  std::ifstream infile(path);
+
+  if (!infile.good())
+  {
+    throw FileLoadException();
+  }
+  vector<string>* lines = new vector<string>();
+
+  std::string line;
+  while (std::getline(infile, line))
+  {
+    lines->push_back(line);
+  }
+
+  Level* level = readLevel(*lines);
+  if (level == nullptr)
+  {
+    throw InvalidBasicFileException();
+  }
+  setLevel(level);
+  delete lines;
+
+}
+
+//------------------------------------------------------------------------------
+void Game::saveToFile(string path)
+{
+  Level* level = getLevel();
+
+  if (level == nullptr)
+  {
+    throw NoMazeLoadedException();
+  }
+
+  auto lines = level->serialize();
+
+  std::ofstream outputFile(path);
+
+  std::ostream_iterator<std::string> outputIterator(outputFile, "\n");
+  std::copy(lines->begin(), lines->end(), outputIterator);
+
+  if (!outputFile.good())
+    throw FileWriteException();
+
+  delete lines;
+}
+
+//------------------------------------------------------------------------------
+void Game::enableAutoSave(string path)
+{
+  autoSavePath_ = path;
+  isAutoSaveEnabled_ = true;
+}
+
+//------------------------------------------------------------------------------
+void Game::disableAutosave()
+{
+  isAutoSaveEnabled_ = false;
+}
+
+//------------------------------------------------------------------------------
+void Game::autoSave()
+{
+  if (isAutoSaveEnabled_)
+  {
+    saveToFile(autoSavePath_);
+  }
+}
+
+//------------------------------------------------------------------------------
+Level* Game::readLevel(vector<string> textLines)
+{
+  if (textLines.size() < 3)
+  {
+    cout << "short file" << endl;
+    return nullptr;
+  }
+  vector<Direction*>* history = getHistoryFromString(textLines.at(0));
+  if (history == nullptr)
+  {
+    return nullptr;
+  }
+  string total_steps_str = textLines.at(1);
+  if (!Util::checkAllDigits(total_steps_str))
+  {
+    return nullptr;
+  }
+  int total_steps = std::atoi(total_steps_str.c_str());
+  if (total_steps <= 0)
+  {
+    return nullptr;
+  }
+  Map* map = createMapFromLines(textLines);
+  if (map == nullptr)
+  {
+    delete history;
+    return nullptr;
+  }
+  if (!map->validate())
+  {
+    delete map;
+    delete history;
+    return nullptr;
+  }
+  Level* level = new Level(map, total_steps);
+  bool path_valid = level->fastMove(*history);
+  delete history;
+  if (!path_valid)
+  {
+    delete level;
+    throw InvalidPathException();
+  }
+  return level;
+}

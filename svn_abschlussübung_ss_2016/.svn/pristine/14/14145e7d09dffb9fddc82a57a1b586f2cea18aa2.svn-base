@@ -1,0 +1,38 @@
+sep> ################
+#o++++++++++++*#
+#              #
+################
+Congratulation! You solved the maze.
+sep> ################
+#o+++++F*+++++x#
+#      F       #
+################
+sep> [ERR] Invalid path.
+sep> ################
+#o+++++j++++++*#
+#              #
+################
+Congratulation! You solved the maze.
+sep> Remaining Steps: 3
+Moved Steps: rr
+################
+#o+++++j++++++*#
+#              #
+################
+sep> [ERR] Invalid move.
+sep> ################
+#o+++++*++++++x#
+#              #
+################
+sep> Remaining Steps: 1
+Moved Steps: r
+################
+#o+++++*++++++x#
+#              #
+################
+sep> ################
+#o+++++ ++++++*#
+#              #
+################
+Congratulation! You solved the maze.
+sep> Bye!

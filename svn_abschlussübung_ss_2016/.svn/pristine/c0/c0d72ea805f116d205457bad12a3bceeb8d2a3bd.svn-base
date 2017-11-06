@@ -1,0 +1,81 @@
+//------------------------------------------------------------------------------
+// Player.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include "CoordPair.h"
+#include "Direction.h"
+
+
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+//class CoordPair;
+//class Direction;
+class Level;
+
+class Player
+{
+private:
+  long remaining_steps_ = 0;
+  Level* level_;
+  vector<Direction*>* history_;
+  vector<CoordPair>* visited_bonus_fields_;
+  CoordPair position_;
+  bool is_finished_;
+
+public:
+  static const char player_symbol = '*';
+
+  Player(Level* lvl);
+
+  Player(Player &player);
+
+  Level* getLevel();
+
+  bool step(Direction* d, bool record);
+
+  void teleport(CoordPair pair);
+
+  void move(Direction* d);
+
+  CoordPair& getPosition();
+
+  vector<Direction*>* getHistory();
+
+  void addToHistory(Direction* d);
+
+  bool hasStepsLeft();
+
+  void grantMoreSteps(long amount);
+
+  void takeRemainingSteps(long amount);
+
+  long getRemainingSteps();
+
+  void visitBonusField(CoordPair pair);
+
+  bool hasBonusFieldVisited(CoordPair pair);
+
+  bool isInFinish();
+
+  void checkFinished();
+
+  bool isFinished();
+
+  ~Player();
+};
+
+#endif

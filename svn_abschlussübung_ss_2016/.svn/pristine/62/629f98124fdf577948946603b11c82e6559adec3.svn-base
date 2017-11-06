@@ -1,0 +1,66 @@
+//------------------------------------------------------------------------------
+// CommandShow.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CommandShow.h"
+#include "Exceptions.h"
+#include "Game.h"
+#include "Level.h"
+
+const string CommandShow::NAME = "show";
+
+//------------------------------------------------------------------------------
+CommandShow::CommandShow() : Command(NAME)
+{
+}
+
+//------------------------------------------------------------------------------
+CommandShow::~CommandShow()
+{
+}
+
+//------------------------------------------------------------------------------
+bool CommandShow::execute(Game& game, std::vector<std::string>& params)
+{
+  bool more = false;
+  bool showPath = true;
+  if (params.size() > 2)
+  {
+    throw WrongParameterCountException();
+  }
+  else if (params.size() > 0)
+  {
+    if (params.at(0) != "more")
+    {
+      throw WrongParameterException();
+    }
+    more = true;
+
+    if (params.size() == 2)
+    {
+      if (params.at(1) != "nopath")
+      {
+        throw WrongParameterException();
+      }
+      showPath = false;
+    }
+  }
+
+  Level* level = game.getLevel();
+
+  if (level == nullptr)
+  {
+    throw NoMazeLoadedException();
+  }
+
+  level->print(more, showPath);
+
+  return false;
+}

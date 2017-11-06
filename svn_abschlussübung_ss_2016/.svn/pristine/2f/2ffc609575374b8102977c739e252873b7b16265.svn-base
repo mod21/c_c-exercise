@@ -1,0 +1,2 @@
+FieldTeleport.o: FieldTeleport.cpp FieldTeleport.h Field.h CoordPair.h \
+ Direction.h Player.h VisitsMap.h Map.h Level.h

@@ -1,0 +1,10 @@
+load iceTeleport.maze
+save saveTest2.maze
+move down
+show
+move up
+save 
+save saveTest3.maze
+load big.maze
+save saveBig.maze
+quit

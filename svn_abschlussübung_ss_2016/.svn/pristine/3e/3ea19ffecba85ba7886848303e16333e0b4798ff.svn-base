@@ -1,0 +1,80 @@
+//------------------------------------------------------------------------------
+// Field.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELD_H
+#define FIELD_H
+
+#include "Player.h"
+
+class Direction;
+
+#include <vector>
+
+using namespace std;
+
+class Direction;
+class Player;
+
+class Field
+{
+private:
+  char symbol_;
+  static vector<Field*>* fields_;
+
+  Field(Field &);
+
+public:
+  static const int number_of_teleporter_types = 26;
+  static const char air_symbol = ' ';
+
+  Field(char symbol);
+
+  virtual bool onEnter(Player* player, CoordPair position, Direction* direction)
+  {
+    return onEnter(player, direction);
+  }
+
+  virtual bool onLeave(Player* player, CoordPair position, Direction* direction)
+  {
+    return onLeave(player, direction);
+  }
+
+  virtual bool onEnter(Player* player, Direction* direction)
+  {
+    return false;
+  }
+
+  virtual bool onLeave(Player* player, Direction* direction)
+  {
+    return false;
+  }
+
+  virtual ~Field() = 0;
+
+  char getSymbol();
+
+  static Field* getBySymbol(char symbol);
+
+  static void init();
+
+  static void remove();
+
+  static void printKnownFields();
+
+  static Field* WALL;
+  static Field* PATH;
+  static Field* START;
+  static Field* FINISH;
+  static Field* ICE;
+};
+
+
+#endif

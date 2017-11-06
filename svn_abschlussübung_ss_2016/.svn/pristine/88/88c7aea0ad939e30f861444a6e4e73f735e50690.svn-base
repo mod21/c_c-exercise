@@ -1,0 +1,197 @@
+//------------------------------------------------------------------------------
+// Field.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELD_H
+#define FIELD_H
+
+#include "Player.h"
+
+class Direction;
+
+#include <vector>
+
+using namespace std;
+
+class Direction;
+class Player;
+
+class Field
+{
+private:
+  char symbol_;
+  static vector<Field*>* fields_;
+
+  Field(Field &);
+
+public:
+  static const int number_of_teleporter_types = 26;
+  static const char air_symbol = ' ';
+
+  Field(char symbol);
+
+  virtual bool onEnter(Player* player, CoordPair position, Direction* direction)
+  {
+    return onEnter(player, direction);
+  }
+
+  virtual bool onLeave(Player* player, CoordPair position, Direction* direction)
+  {
+    return onLeave(player, direction);
+  }
+
+  virtual bool onEnter(Player* player, Direction* direction)
+  {
+    return false;
+  }
+
+  virtual bool onLeave(Player* player, Direction* direction)
+  {
+    return false;
+  }
+
+  virtual ~Field() = 0;
+
+  char getSymbol();
+
+  static Field* getBySymbol(char symbol);
+
+  static void init();
+
+  static void remove();
+
+  static void printKnownFields();
+
+  static Field* WALL;
+  static Field* PATH;
+  static Field* START;
+  static Field* FINISH;
+  static Field* ICE;
+};
+
+class FieldPath : public Field
+{
+public:
+  FieldPath();
+
+  virtual bool onEnter(Player* player, Direction* direction);
+
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  ~FieldPath();
+};
+
+class FieldWall : public Field
+{
+public:
+  FieldWall();
+
+  virtual bool onEnter(Player* player, Direction* direction);
+
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  ~FieldWall();
+};
+
+class FieldStart : public Field
+{
+public:
+  FieldStart();
+
+  virtual bool onEnter(Player* player, Direction* direction);
+
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  ~FieldStart();
+};
+
+class FieldFinish : public Field
+{
+public:
+  FieldFinish();
+
+  virtual bool onEnter(Player* player, Direction* direction);
+
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  ~FieldFinish();
+};
+
+class FieldIce : public Field
+{
+public:
+  FieldIce();
+
+  virtual bool onEnter(Player* player, Direction* direction);
+
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  ~FieldIce();
+};
+
+class FieldTeleport : public Field
+{
+public:
+  FieldTeleport(char id);
+
+  virtual bool onEnter(Player* player, CoordPair position,
+    Direction* direction);
+
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  ~FieldTeleport();
+};
+
+class FieldOneWay : public Field
+{
+private:
+  Direction* direction_;
+
+public:
+  FieldOneWay(char symbol, Direction* direction);
+
+  virtual bool onEnter(Player* player, Direction* direction);
+
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  ~FieldOneWay();
+};
+
+class FieldBonus : public Field
+{
+private:
+  long bonus_;
+
+public:
+  FieldBonus(long bonus);
+
+  virtual bool onEnter(Player* player, CoordPair position,
+    Direction* direction);
+
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  ~FieldBonus();
+};
+
+class FieldQuicksand : public Field
+{
+private:
+  long malus_;
+
+public:
+  FieldQuicksand(long malus);
+
+  virtual bool onEnter(Player* player, Direction* direction);
+
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  ~FieldQuicksand();
+};
+#endif

@@ -1,0 +1,2 @@
+Command.o: Command.cpp Command.h Game.h Level.h Player.h CoordPair.h \
+ Direction.h

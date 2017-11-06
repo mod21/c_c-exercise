@@ -1,0 +1,77 @@
+//------------------------------------------------------------------------------
+// Main.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#include "CommandParser.h"
+#include "CommandLineArgumentParser.h"
+#include "Exceptions.h"
+#include "Game.h"
+#include "Util.h"
+#include "Command.h"
+
+#include <vector>
+#include <string>
+
+using namespace std;
+
+
+int main(int argc, char* argv[])
+{
+  Util::init();
+
+  CommandParser parser;
+  CommandLineArgumentParser arguementParser;
+  Game game;
+
+  try
+  {
+    arguementParser.parseArguements(argc, argv);
+
+    if (arguementParser.isAutoSave())
+      game.enableAutoSave(arguementParser.getAutoSavePath());
+    if (arguementParser.isDefaultLoad())
+      game.loadFromFile(arguementParser.getDefaultLoadPath());
+  }
+  catch (const exception &ex)
+  {
+    processErrorMessage(ex);
+  }
+
+  while (true)
+  {
+    try
+    {
+      std::cout << "sep> ";
+      parser.readCommand();
+
+      Command* c = parser.getCommand();
+
+      // The user has entered nothing and pressed return
+      if (c == nullptr)
+      {
+        continue;
+      }
+
+      vector<string>* commandArguments = parser.getParams();
+
+      if (c->execute(game, *commandArguments) == 0)
+      {
+        Util::prepareExit(0);
+      }
+    }
+    catch (const exception &ex)
+    {
+      int result = processErrorMessage(ex);
+      if (result)
+      {
+        Util::prepareExit(result);
+      }
+    }
+  }
+}

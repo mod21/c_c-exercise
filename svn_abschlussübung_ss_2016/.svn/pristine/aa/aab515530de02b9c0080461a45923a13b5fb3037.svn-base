@@ -1,0 +1,75 @@
+//------------------------------------------------------------------------------
+// CommandMove.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CommandMove.h"
+#include "Direction.h"
+#include "Exceptions.h"
+#include "Game.h"
+#include "Player.h"
+
+#include <iostream>
+
+//------------------------------------------------------------------------------
+CommandMove::CommandMove(std::string name) :
+  Command(name)
+{
+}
+
+//------------------------------------------------------------------------------
+CommandMove::~CommandMove()
+{
+}
+
+//------------------------------------------------------------------------------
+int CommandMove::execute(Game& game, std::vector<std::string>& params)
+{
+  if (params.size() != 1)
+  {
+    throw WrongParameterCountException();
+  }
+  string directionText = params.at(0);
+  Direction* direction = Direction::getDirectionByWord(directionText);
+
+  if (direction == nullptr)
+  {
+    throw WrongParameterException();
+  }
+
+  Level* level = game.getLevel();
+
+  if (level == nullptr)
+  {
+    throw NoMazeLoadedException();
+  }
+  Player* player = level->getPlayer();
+
+  if (player->isFinished())
+  {
+    throw InvalidMoveException();
+  }
+
+  if (!player->hasStepsLeft())
+  {
+    level->respawnPlayer();
+    throw OutOfStepsException();
+  }
+
+  if (!player->step(direction, true))
+  {
+    throw InvalidMoveException();
+  }
+
+  game.autoSave();
+  level->print(false);
+  player->checkFinished();
+
+  return 1;
+}

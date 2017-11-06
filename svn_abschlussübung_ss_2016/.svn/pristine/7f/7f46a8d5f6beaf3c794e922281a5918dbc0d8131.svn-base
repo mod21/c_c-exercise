@@ -1,0 +1,312 @@
+//------------------------------------------------------------------------------
+// Command.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#ifndef COMMAND_H
+#define COMMAND_H
+
+#include <string>
+#include <vector>
+
+//----------------------------------------------------------------------------
+// Game Class
+// Deklaration
+//
+class Game;
+
+//----------------------------------------------------------------------------
+// Command Class
+// class to manage the game commands
+//
+class Command
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // Private copy constructor
+  // @param original inserted original command
+  //
+  Command(const Command& original);
+
+  //--------------------------------------------------------------------------
+  // Private assignment operator
+  // @param original inserted original command
+  //
+  Command& operator=(const Command& original);
+
+  //--------------------------------------------------------------------------
+  /// Name of this command
+  //
+  std::string command_name_;
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  Command() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param name command name which was used
+  //
+  Command(std::string name);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~Command();
+
+  //--------------------------------------------------------------------------
+  // Executes the command.
+  // @param game The game where action should be performed on
+  // @param params Possible parameters needed for the execution
+  // @return Integer representing the success of the action
+  //
+  virtual int execute(Game& game, std::vector<std::string>& params) = 0;
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  const std::string& getName() const;
+};
+
+//----------------------------------------------------------------------------
+// CommandLoad Class
+// passed by Command class
+// class to load the game
+//
+class CommandLoad: public Command
+{
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  CommandLoad() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param name command name which was used
+  //
+  CommandLoad(std::string name);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~CommandLoad();
+  
+  //--------------------------------------------------------------------------
+  // Executes the command.
+  // @param game The game where action should be performed on
+  // @param params Possible parameters needed for the execution
+  //
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+//----------------------------------------------------------------------------
+// CommandSave Class
+// passed by Command class
+// class to save the game 
+//
+class CommandSave: public Command
+{
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  CommandSave() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param name command name which was used
+  //
+  CommandSave(std::string name);
+  
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~CommandSave();
+
+  //--------------------------------------------------------------------------
+  // Executes the command.
+  // @param game The game where action should be performed on
+  // @param params Possible parameters needed for the execution
+  //
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+//----------------------------------------------------------------------------
+// Copy CommandMove Class
+// passed by Command class
+// class for move player position
+//
+class CommandMove: public Command
+{
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  CommandMove() = delete;
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  // @param name command name which was used
+  //
+  CommandMove(std::string name);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~CommandMove();
+
+  //--------------------------------------------------------------------------
+  // Executes the command.
+  // @param game The game where action should be performed on
+  // @param params Possible parameters needed for the execution
+  //
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+//----------------------------------------------------------------------------
+// CommandFastMove Class
+// passed by Command class
+// class for fastmove player position by doing multible steps
+//
+class CommandFastMove: public Command
+{
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  CommandFastMove() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param name command name which was used
+  //
+  CommandFastMove(std::string name);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~CommandFastMove();
+
+  //--------------------------------------------------------------------------
+  // Executes the command.
+  // @param game The game where action should be performed on
+  // @param params Possible parameters needed for the execution
+  //
+  virtual int execute(Game & game, std::vector<std::string>& params);
+
+};
+
+//----------------------------------------------------------------------------
+// CommandShow Class
+// passed by Command class
+// class to show the current lab with details
+//
+class CommandShow: public Command
+{
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  CommandShow() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param name command name which was used
+  //
+  CommandShow(std::string name);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~CommandShow();
+
+  //--------------------------------------------------------------------------
+  // Executes the command.
+  // @param game The game where action should be performed on
+  // @param params Possible parameters needed for the execution
+  //
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+//----------------------------------------------------------------------------
+// CommandQuit Class
+// passed by Command class
+// class to exit the game
+//
+class CommandQuit: public Command
+{
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  CommandQuit() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param name command name which was used
+  //
+  CommandQuit(std::string name);
+  
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~CommandQuit();
+  
+  //--------------------------------------------------------------------------
+  // Executes the command.
+  // @param game The game where action should be performed on
+  // @param params Possible parameters needed for the execution
+  //
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+//----------------------------------------------------------------------------
+// CommandReset Class
+// passed by Command class
+// class to reset the game
+//
+class CommandReset: public Command
+{
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  CommandReset() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param name command name which was used
+  //
+  CommandReset(std::string name);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~CommandReset();
+
+  //--------------------------------------------------------------------------
+  // Executes the command.
+  // @param game The game where action should be performed on
+  // @param params Possible parameters needed for the execution
+  //
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+#endif

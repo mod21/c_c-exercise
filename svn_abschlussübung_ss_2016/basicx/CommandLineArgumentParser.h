@@ -1,0 +1,87 @@
+#ifndef COMMANDLINEARGUMENTPARSER_H
+#define COMMANDLINEARGUMENTPARSER_H
+
+#include <string>
+
+using std::string;
+
+//------------------------------------------------------------------------------
+// CommandLineArgumentParser Class
+// class to read and work with arguments at program startup
+//
+class CommandLineArgumentParser
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  // @param original Instance to be copied.
+  //
+  CommandLineArgumentParser(const CommandLineArgumentParser& original);
+
+  //----------------------------------------------------------------------------
+  // Private assignment operator - Should not be used.
+  // @param original Instance to be assigned from.
+  //
+  CommandLineArgumentParser& operator=(
+    const CommandLineArgumentParser& original);
+
+  //----------------------------------------------------------------------------
+  // Stores if autosave is enabled.
+  //
+  bool isAutoSave_;
+
+  //----------------------------------------------------------------------------
+  // Stores if default load is enabled.
+  //
+  bool isDefaultLoad_;
+
+  //----------------------------------------------------------------------------
+  // Stores the path of the autosave file.
+  //
+  string autoSavePath_;
+
+  //----------------------------------------------------------------------------
+  // Stores the path of the initial file.
+  //
+  string defaultLoadPath_;
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Default constructor - creates a new instance.
+  //
+  CommandLineArgumentParser();
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~CommandLineArgumentParser();
+
+  //----------------------------------------------------------------------------
+  // Returns if autosave is enabled.
+  //
+  bool isAutoSave();
+
+  //----------------------------------------------------------------------------
+  // Returns if default load is enabled.
+  //
+  bool isDefaultLoad();
+
+  //----------------------------------------------------------------------------
+  // Returns the path of the file to autosave to.
+  //
+  string getAutoSavePath();
+
+  //----------------------------------------------------------------------------
+  // Returns the path of the file to load from.
+  //
+  string getDefaultLoadPath();
+
+  //----------------------------------------------------------------------------
+  // Parses the given arguments and stores them in its member variables.
+  //
+  void parseArguments(int argc, char* argv[]);
+};
+
+#endif

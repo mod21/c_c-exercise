@@ -1,0 +1,205 @@
+//------------------------------------------------------------------------------
+// LevelIO.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "Direction.h"
+#include "Exceptions.h"
+#include "Field.h"
+#include "Level.h"
+#include "LevelIO.h"
+#include "Map.h"
+#include "Util.h"
+
+#include <algorithm>
+#include <iterator>
+#include <fstream>
+
+//------------------------------------------------------------------------------
+Map* LevelIO::createMapFromLines(vector<string> textLines)
+{
+  // get initial level width
+  int width = textLines.at(2).length();
+  if (width == 0)
+  {
+    return nullptr;
+  }
+
+  // check if line width is the same for each line
+  int height = 1;
+  for (unsigned int index = 3; index < textLines.size(); index++)
+  {
+    string line = textLines.at(index);
+    int length = line.length();
+    if (length == 0)
+    {
+      break;
+    }
+    else if (length != width)
+    {
+      return nullptr;
+    }
+    height++;
+  }
+
+  // fill array with fields
+  Field** fields = nullptr;
+  try
+  {
+    fields = new Field*[width * height];
+    for (int row = 0; row < height; row++)
+    {
+      string line = textLines.at(row + 2);
+      for (int column = 0; column < width; column++)
+      {
+        Field* field = Field::getBySymbol(line.at(column));
+        if (field == nullptr)
+        {
+          delete fields;
+          return nullptr;
+        }
+        fields[column + row * width] = field;
+      }
+    }
+  }
+  catch (const std::exception&)
+  {
+    if (fields != nullptr)
+    {
+      delete fields;
+    }
+    throw;
+  }
+
+  return new Map(fields, width, height);
+}
+
+//------------------------------------------------------------------------------
+bool LevelIO::tryGetHistoryFromString(string text, vector<Direction*>& list)
+{
+    for (unsigned int index = 0; index < text.length(); index++)
+    {
+      Direction* direction = Direction::getDirectionByChar(text.at(index));
+      if (direction == nullptr)
+      {
+        return false;
+      }
+      list.push_back(direction);
+    }
+
+  return true;
+}
+
+//------------------------------------------------------------------------------
+Level* LevelIO::parseLevel(vector<string> textLines)
+{
+  Level* level = nullptr;
+  Map* map = nullptr;
+
+  if (textLines.size() < 3)
+  {
+    return nullptr;
+  }
+  try
+  {
+    vector<Direction*> history;
+    if (!tryGetHistoryFromString(textLines.at(0), history))
+    {
+      return nullptr;
+    }
+    string total_steps_str = textLines.at(1);
+    if (!Util::checkAllDigits(total_steps_str))
+    {
+      return nullptr;
+    }
+    int total_steps = std::atoi(total_steps_str.c_str());
+    if (total_steps <= 0)
+    {
+      return nullptr;
+    }
+    map = createMapFromLines(textLines);
+    if (map == nullptr)
+    {
+      return nullptr;
+    }
+    if (!map->validate())
+    {
+      delete map;
+      return nullptr;
+    }
+    level = new Level(map, total_steps);
+    bool path_valid = level->fastMove(history);
+    if (!path_valid)
+    {
+      delete level;
+      level = nullptr;
+      map = nullptr;
+      throw InvalidPathException();
+    }
+  }
+  catch (const std::exception&)
+  {
+    if (level != nullptr)
+    {
+      delete level;
+    }
+    else if (map != nullptr)
+    {
+      delete map;
+    }
+    throw;
+  }
+  return level;
+}
+
+//------------------------------------------------------------------------------
+Level* LevelIO::loadFromFile(string path)
+{
+  std::ifstream infile(path);
+
+  if (!infile.good())
+  {
+    throw FileLoadException();
+  }
+  vector<string> lines;
+
+  std::string line;
+  while (std::getline(infile, line))
+  {
+    lines.push_back(line);
+  }
+
+  Level* level = parseLevel(lines);
+  if (level == nullptr)
+  {
+    throw InvalidBasicFileException();
+  }
+  return level;
+}
+
+//------------------------------------------------------------------------------
+void LevelIO::saveToFile(Level* level, string path)
+{
+  if (level == nullptr)
+  {
+    throw NoMazeLoadedException();
+  }
+
+  auto lines = level->serialize();
+
+  std::ofstream outputFile(path);
+
+  std::ostream_iterator<std::string> outputIterator(outputFile, "\n");
+  std::copy(lines.begin(), lines.end(), outputIterator);
+
+  if (!outputFile.good())
+  {
+    throw FileWriteException();
+  }
+}

@@ -1,0 +1,10 @@
+load loadfiles/iceTeleport.maze
+save savefiles/saveTest2.maze
+move down
+show
+move up
+save 
+save savefiles/saveTest3.maze
+load loadfiles/big.maze
+save savefiles/saveBig.maze
+quit

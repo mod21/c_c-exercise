@@ -1,0 +1,2 @@
+FieldQuicksand.o: FieldQuicksand.cpp FieldQuicksand.h Field.h CoordPair.h \
+ Direction.h Player.h

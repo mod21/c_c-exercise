@@ -1,0 +1,169 @@
+//------------------------------------------------------------------------------
+// Player.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include "CoordPair.h"
+
+#include <algorithm>
+#include <vector>
+
+using std::vector;
+using std::string;
+
+//----------------------------------------------------------------------------
+// Level Class
+// Declaration
+//
+class Level;
+class Direction;
+//----------------------------------------------------------------------------
+// Player Class
+// Class to manage all player informations
+//
+class Player
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // Variable Remaining steps inicial with 0
+  //
+  long remaining_steps_ = 0;
+
+  //--------------------------------------------------------------------------
+  // object level of player
+  //
+  Level* level_;
+
+  //--------------------------------------------------------------------------
+  // object history of steps from player
+  //
+  vector<Direction*>* history_;
+
+  //--------------------------------------------------------------------------
+  // object visited bonus fields of player
+  //
+  vector<CoordPair>* visited_bonus_fields_;
+
+  //--------------------------------------------------------------------------
+  // object player position 
+  //
+  CoordPair position_;
+
+  //--------------------------------------------------------------------------
+  // Variable is_finished_ to know current status of player
+  //
+  bool is_finished_;
+
+public:
+
+  //--------------------------------------------------------------------------
+  // player symbol for map
+  //
+  static const char player_symbol = '*';
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  Player() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param lvl level of user
+  //
+  Player(Level* lvl);
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param player with player information
+  //
+  Player(Player &player);
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  Level* getLevel();
+
+  //--------------------------------------------------------------------------
+  // Returns the current position of the player
+  // @return A coordinate pair
+  //
+  CoordPair& getPosition();
+
+  //--------------------------------------------------------------------------
+  // Gets the history of moves made by this player
+  // @return A list of directions
+  //
+  vector<Direction*>* getHistory();
+
+  //--------------------------------------------------------------------------
+  // Tries to conduct a step in the given direction
+  // @param direction The direction to move to
+  // @param record Whether or not this move should be added to the history
+  // @return Whether the move was successful
+  //
+  bool step(Direction* direction, bool record);
+
+  //--------------------------------------------------------------------------
+  // @return Returns if the player has some steps left
+  //
+  bool hasStepsLeft();
+
+  //--------------------------------------------------------------------------
+  // @return Returns how many steps this player has left
+  //
+  long getRemainingSteps();
+
+  //--------------------------------------------------------------------------
+  // @param pair The coordinates of the bonus field
+  // @return Returns if the player has visited the bonus field at
+  // the given coordinates
+  bool hasBonusFieldVisited(CoordPair pair);
+
+  //--------------------------------------------------------------------------
+  // @return Returns if the player is currently on the finish field
+  //
+  bool isInFinish();
+
+  //--------------------------------------------------------------------------
+  // @ return Returns if the player has already finished the game
+  //
+  bool isFinished();
+
+  //--------------------------------------------------------------------------
+  // Teleports the player to the given coordinates
+  // @param pair The coordinates
+  //
+  void teleport(CoordPair pair);
+
+  //--------------------------------------------------------------------------
+  // Moves the player in the given direction
+  // @param direction The direction to move to
+  void move(Direction* direction);
+
+  void addToHistory(Direction* d);
+
+  void grantMoreSteps(long amount);
+
+  void takeRemainingSteps(long amount);
+
+  void visitBonusField(CoordPair pair);
+
+  void checkFinished();
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~Player();
+};
+
+#endif

@@ -1,0 +1,118 @@
+//------------------------------------------------------------------------------
+// Main.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CommandParser.h"
+#include "CommandLineArgumentParser.h"
+#include "Exceptions.h"
+#include "Game.h"
+#include "Util.h"
+#include "Command.h"
+
+#include <vector>
+#include <string>
+
+using std::cout;
+
+void parseArguments(Game& game, int argc, char* argv[])
+{
+  CommandLineArgumentParser argumentParser;
+  argumentParser.parseArguments(argc, argv);
+
+  if (argumentParser.isAutoSave())
+  {
+    game.enableAutoSave(argumentParser.getAutoSavePath());
+  }
+  if (argumentParser.isDefaultLoad())
+  {
+    game.loadAndInitializeLevel(argumentParser.getDefaultLoadPath());
+  }
+}
+
+int commandLoop(Game& game)
+{
+  CommandParser parser;
+  while (true)
+  {
+    Command* command = nullptr;
+    try
+    {
+      std::cout << "sep> ";
+
+      parser.readCommand();
+      command = parser.getCommand();
+
+      // The user has entered nothing and pressed return
+      if (command == nullptr)
+      {
+        continue;
+      }
+
+      auto commandArguments = parser.getParams();
+      bool result = command->execute(game, commandArguments);
+      delete command;
+      command = nullptr;
+
+      if (result)
+      {
+        return 0;
+      }
+    }
+    catch (const std::exception &ex)
+    {
+      if (command)
+      {
+        delete command;
+      }
+      int result = processErrorMessage(ex);
+      if (result)
+      {
+        return result;
+      }
+    }
+  }
+  // No return required at this point
+}
+
+//------------------------------------------------------------------------------
+// main function
+// entry point for execution
+// @param argc argument count
+// @param **argv argument values
+//
+int main(int argc, char* argv[])
+{
+  try
+  {
+    Game game;
+
+    try
+    {
+      parseArguments(game, argc, argv);
+    }
+    catch (const std::exception &ex)
+    {
+      int result = processErrorMessage(ex);
+      if (result)
+      {
+        return result;
+      }
+    }
+    Util::init();
+    int result = commandLoop(game);
+    Util::prepareExit();
+    return result;
+  }
+  catch (const std::exception& ex)
+  {
+    Util::prepareExit();
+    return processErrorMessage(ex);
+  }
+}

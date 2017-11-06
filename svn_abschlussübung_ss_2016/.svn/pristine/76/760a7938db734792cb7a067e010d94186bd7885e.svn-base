@@ -1,0 +1,11 @@
+load loadfiles/ice3.maze
+load loadfiles/iceTeleport.maze
+load loadfiles/iceQuicksand1.maze
+load loadfiles/iceQuicksand2.maze
+show more
+move right
+load loadfiles/iceBonus.maze
+show more
+move right
+quit
+

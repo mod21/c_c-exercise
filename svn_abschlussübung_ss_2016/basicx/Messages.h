@@ -1,0 +1,100 @@
+#ifndef MESSAGES_H
+#define MESSAGES_H
+
+#include <string>
+
+using std::string;
+
+//------------------------------------------------------------------------------
+// Holds all the hardcoded messages for this program.
+//
+namespace DomainMessages
+{
+  //----------------------------------------------------------------------------
+  // The name of the solver bot.
+  //
+  const string NAME = "MailVotesRigged\n";
+
+  //----------------------------------------------------------------------------
+  // Error message for an unknown file.
+  //
+  const string IOS_FAILURE = "[ERR] File could not be opened.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message for an invalid syntax of a file.
+  //
+  const string INVALID_FILE = "[ERR] Invalid file.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message for an invalid path.
+  //
+  const string INVALID_PATH = "[ERR] Invalid path.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message for save file could not be written.
+  //
+  const string WRITE_ERROR = "[ERR] File could not be written.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message for an invalid move.
+  //
+  const string INVALID_MOVE = "[ERR] Invalid move.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message if no more steps are left.
+  //
+  const string OUT_OF_STEPS = "[ERR] No more steps possible.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message for system out of memory.
+  //
+  const string OUT_OF_MEMORY = "[ERR] Out of memory.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message for wrong arguments added.
+  //
+  const string WRONG_USAGE =
+    "[ERR] Wrong usage: ./basic [-s <filename1>] [-m <filename2>]\n";
+
+  //----------------------------------------------------------------------------
+  // Error message for an unknown command.
+  //
+  const string UNKNOWN_COMMAND = "[ERR] Unknown command.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message for wrong count of parameters.
+  //
+  const string WRONG_PARAMETER_COUNT = "[ERR] Wrong parameter count.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message for wrong parameters.
+  //
+  const string WRONG_PARAMETER = "[ERR] Wrong parameter.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message if no map is loaded.
+  //
+  const string NO_MAZE_LOADED = "[ERR] No maze loaded.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message if no path is found.
+  //
+  const string NO_PATH_FOUND = "[ERR] No path found.\n";
+
+  //----------------------------------------------------------------------------
+  // Error message if the player is already in the finish field.
+  //
+  const string ALREADY_SOLVED = "[ERR] You already solved the maze.\n";
+
+  //----------------------------------------------------------------------------
+  // Message when quitting.
+  //
+  const string BYE = "Bye!\n";
+
+  //----------------------------------------------------------------------------
+  // Displayed when the player wins the game.
+  //
+  const string SOLVED = "Congratulation! You solved the maze.\n";
+}
+
+#endif

@@ -1,0 +1,29 @@
+//------------------------------------------------------------------------------
+// ExceptionOutOfSteps.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef OUTOFSTEPSEXCEPTION_H
+#define OUTOFSTEPSEXCEPTION_H
+
+#include <exception>
+#include <iostream>
+#include <typeinfo>
+
+using namespace std;
+
+class OutOfStepsException: public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::OUT_OF_STEPS.c_str();
+  }
+};
+
+#endif

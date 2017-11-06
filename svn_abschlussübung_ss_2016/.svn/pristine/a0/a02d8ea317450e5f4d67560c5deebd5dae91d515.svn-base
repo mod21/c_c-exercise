@@ -1,0 +1,25 @@
+//------------------------------------------------------------------------------
+// ExceptionFileLoad.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef EXCEPTIONFILELOAD_H
+#define EXCEPTIONFILELOAD_H
+
+#include <exception>
+
+class FileLoadException: public std::exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::IOS_FAILURE.c_str();
+  }
+};
+
+#endif

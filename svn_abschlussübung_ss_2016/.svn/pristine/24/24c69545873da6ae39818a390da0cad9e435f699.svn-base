@@ -1,0 +1,38 @@
+//------------------------------------------------------------------------------
+// VisitsMap.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CoordPair.h"
+#include "Map.h"
+#include "VisitsMap.h"
+
+#include <map>
+
+using std::map;
+
+//------------------------------------------------------------------------------
+VisitsMap::VisitsMap(Map* map_obj) :
+  visits_(map<int, long>()), size_x_(map_obj->getSizeX()),
+  size_y_(map_obj->getSizeY()), area_(map_obj->getArea())
+{
+}
+
+//------------------------------------------------------------------------------
+VisitsMap::VisitsMap(const VisitsMap& original) :
+  visits_(map<int, long>(original.visits_)), size_x_(original.size_x_),
+  size_y_(original.size_y_), area_(original.area_)
+{
+}
+
+//------------------------------------------------------------------------------
+VisitsMap::~VisitsMap()
+{
+}
+

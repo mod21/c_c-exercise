@@ -1,0 +1,148 @@
+//------------------------------------------------------------------------------
+// CommandParser.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CommandParser.h"
+#include "Exceptions.h"
+#include "Util.h"
+#include "CommandLoad.h"
+#include "CommandSave.h"
+#include "CommandMove.h"
+#include "CommandFastMove.h"
+#include "CommandShow.h"
+#include "CommandQuit.h"
+#include "CommandReset.h"
+#include "CommandSolve.h"
+#include "CommandWhoami.h"
+
+#include <algorithm>
+#include <functional>
+#include <string>
+
+using std::string;
+using std::vector;
+
+//------------------------------------------------------------------------------
+CommandParser::CommandParser() :
+  command_ptr_(nullptr)
+{
+}
+
+//------------------------------------------------------------------------------
+CommandParser::~CommandParser()
+{
+  if (command_ptr_)
+  {
+    command_ptr_ = nullptr;
+  }
+}
+
+//------------------------------------------------------------------------------
+void CommandParser::readCommand()
+{
+  command_ptr_ = nullptr;
+
+  string line;
+  string commandArgument;
+
+  std::getline(std::cin, line);
+  vector<string> cmdArguments;
+
+  // trim leading and trailing spaces
+  string trimmedInput = Util::trim(line);
+
+  // end of first word
+  size_t firstWhiteSpacePos = trimmedInput.find_first_of(" \t");
+  string param1 = "";
+  string param2 = "";
+
+  if (firstWhiteSpacePos == string::npos)
+  {
+    cmd_ = trimmedInput;
+  }
+  else
+  {
+    cmd_ = trimmedInput.substr(0, firstWhiteSpacePos);
+
+    trimmedInput = Util::trim(trimmedInput.substr(firstWhiteSpacePos,
+      trimmedInput.length()));
+
+    firstWhiteSpacePos = trimmedInput.find_first_of(" \t");
+
+    if (firstWhiteSpacePos == string::npos)
+    {
+      param1 = trimmedInput;
+    }
+    else
+    {
+      param1 = trimmedInput.substr(0, firstWhiteSpacePos);
+      param2 = trimmedInput.substr(firstWhiteSpacePos, trimmedInput.length());
+    }
+
+    // only 0-1 arguments possible
+    if (param1.length() > 0)
+    {
+      cmdArguments.push_back(param1);
+    }
+    if (param2.length() > 0)
+    {
+      cmdArguments.push_back(param2);
+    }
+  }
+
+  // Commands should be case insensitive
+  std::transform(cmd_.begin(), cmd_.end(), cmd_.begin(), ::tolower);
+
+  parameter_ = cmdArguments;
+
+  if (cmd_ == CommandLoad::NAME)
+  {
+    command_ptr_ = new CommandLoad();
+  }
+  else if (cmd_ == CommandSave::NAME)
+  {
+    command_ptr_ = new CommandSave();
+  }
+  else if (cmd_ == CommandMove::NAME)
+  {
+    command_ptr_ = new CommandMove();
+  }
+  else if (cmd_ == CommandFastMove::NAME)
+  {
+    command_ptr_ = new CommandFastMove();
+  }
+  else if (cmd_ == CommandShow::NAME)
+  {
+    command_ptr_ = new CommandShow();
+  }
+  else if (cmd_ == CommandQuit::NAME)
+  {
+    command_ptr_ = new CommandQuit();
+  }
+  else if (cmd_ == CommandReset::NAME)
+  {
+    command_ptr_ = new CommandReset();
+  }
+  else if (cmd_ == CommandSolve::NAME)
+  {
+    command_ptr_ = new CommandSolve();
+  }
+  else if (cmd_ == CommandWhoami::NAME)
+  {
+    command_ptr_ = new CommandWhoami();
+  }
+  else
+  {
+    if (cmd_ != "")
+    {
+      throw UnknownCommandException();
+    }
+  }
+}

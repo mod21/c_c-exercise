@@ -1,0 +1,85 @@
+//------------------------------------------------------------------------------
+// CoordPair.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef COORDPAIR_H
+#define COORDPAIR_H
+
+
+//----------------------------------------------------------------------------
+// Direction Class
+// Deklaration
+//
+class Direction;
+
+
+//----------------------------------------------------------------------------
+// CoordPair Class
+// Class to manage tje coordinates of map 
+//
+class CoordPair
+{
+private:
+  
+  //--------------------------------------------------------------------------
+  // variable x and y for coordinate axis
+  //
+  int x_, y_;
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  CoordPair();
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param x coordinate axis
+  // @param y coordinate axis
+  //
+  CoordPair(int x, int y);
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param lvl level of user
+  //
+  CoordPair(const CoordPair &pair);
+
+  //--------------------------------------------------------------------------
+  // operator is set to pair
+  // @param pair
+  //
+  const bool operator ==(const CoordPair &pair);
+
+  //--------------------------------------------------------------------------
+  // operator is notset to pair
+  // @param pair
+  //
+  const bool operator !=(const CoordPair &pair);
+  
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  int getX();
+
+  int getY();
+
+  //--------------------------------------------------------------------------
+  // Setter Methods
+  //
+  void add(int x, int y);
+
+  void addDirection(Direction* d);
+
+
+};
+
+#endif

@@ -1,0 +1,74 @@
+//------------------------------------------------------------------------------
+// FieldOneWay.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELDONEWAY_H
+#define FIELDONEWAY_H
+
+#include "Field.h"
+
+//------------------------------------------------------------------------------
+// Lets the player only use this in one direction.
+//
+class FieldOneWay : public Field
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // Contains which direction this field points to.
+  //
+  Direction* direction_;
+
+  //----------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  //
+  FieldOneWay(FieldOneWay &);
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Default constructor - Should not be used.
+  //
+  FieldOneWay() = delete;
+
+  //----------------------------------------------------------------------------
+  // Creates a new instance.
+  // @param symbol The symbol for this field.
+  // @param direction The direction this field permits.
+  //
+  FieldOneWay(char symbol, Direction* direction);
+
+  //----------------------------------------------------------------------------
+  // Called when the player tries to enter a field.
+  // @param player The current player.
+  // @param position The position where the player is entering.
+  // @param direction The direction the player is entering from.
+  // @return Whether the player can enter here.
+  //
+  virtual bool onEnter(Player* player, CoordPair position,
+    Direction* direction);
+
+  //----------------------------------------------------------------------------
+  // Called when the player tries to leave a field.
+  // @param player The current player.
+  // @param position The position the player is leaving to.
+  // @param direction The direction the player is leaving to.
+  // @return Whether the player can leave here.
+  //
+  virtual bool onLeave(Player* player, CoordPair position,
+    Direction* direction);
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~FieldOneWay();
+};
+
+#endif

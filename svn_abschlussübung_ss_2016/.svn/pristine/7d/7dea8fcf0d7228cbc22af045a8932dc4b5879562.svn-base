@@ -1,0 +1,6 @@
+load empty.maze
+load invalidSteps.maze
+load invalidSteps2.maze
+load invalidFastMove.maze
+load moreMovesThanSteps.maze
+quit

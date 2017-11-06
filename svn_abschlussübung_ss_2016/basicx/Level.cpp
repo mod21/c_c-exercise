@@ -1,0 +1,175 @@
+#include "Level.h"
+#include "CoordPair.h"
+#include "Exceptions.h"
+#include "Field.h"
+#include "Player.h"
+#include "Map.h"
+#include "Direction.h"
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using std::cout;
+using std::endl;
+using std::string;
+
+class CoordPair;
+class Field;
+class Player;
+class Map;
+
+//------------------------------------------------------------------------------
+Level::Level(Map* map, int max_steps, string filename) :
+  map_(map), max_steps_(max_steps), player_(new Player(this)), filename_(filename)
+{
+  map_ = map;
+}
+
+//------------------------------------------------------------------------------
+Map* Level::getMap()
+{
+  return map_;
+}
+
+//------------------------------------------------------------------------------
+Player* Level::getPlayer()
+{
+  return player_;
+}
+
+//------------------------------------------------------------------------------
+int Level::getMaxSteps()
+{
+  return max_steps_;
+}
+
+//------------------------------------------------------------------------------
+string Level::getFilename()
+{
+  return filename_;
+}
+
+//------------------------------------------------------------------------------
+void Level::respawnPlayer()
+{
+  if (player_)
+  {
+    delete player_;
+  }
+  player_ = new Player(this);
+}
+
+//------------------------------------------------------------------------------
+vector<string> Level::serialize()
+{
+  vector<string> lines;
+
+  string seriesOfSteps = "";
+
+  auto history = player_->getHistory();
+
+  for (Direction* d : history)
+  {
+    seriesOfSteps.append(1, d->getChar());
+  }
+
+  lines.push_back(seriesOfSteps);
+  lines.push_back(std::to_string(getMaxSteps()));
+
+  int size_x = map_->getSizeX();
+  int size_y = map_->getSizeY();
+  for (int y = 0; y < size_y; y++)
+  {
+    string line = "";
+    for (int x = 0; x < size_x; x++)
+    {
+      char symbol = map_->getFieldAt(CoordPair(x, y))->getSymbol();
+      line.append(1, symbol);
+    }
+    lines.push_back(line);
+  }
+
+  return lines;
+}
+
+//------------------------------------------------------------------------------
+void Level::print(bool more, bool nopath)
+{
+  if (more)
+  {
+    cout << "Remaining Steps: " << player_->getRemainingSteps() << endl;
+    if(!nopath)
+    {
+      cout << "Moved Steps: ";
+      auto history = player_->getHistory();
+      for (Direction* d : history)
+      {
+        cout << d->getChar();
+      }
+      cout << endl;
+    }
+  }
+
+  CoordPair playerPos = player_->getPosition();
+  int size_x = map_->getSizeX();
+  int size_y = map_->getSizeY();
+  for (int y = 0; y < size_y; y++)
+  {
+    for (int x = 0; x < size_x; x++)
+    {
+      char symbol = PLAYER_SYMBOL;
+      CoordPair pair(x, y);
+      if (pair != playerPos)
+      {
+        Field* field = map_->getFieldAt(pair);
+        symbol = field->getDisplaySymbol(player_, pair);
+      }
+      cout << symbol;
+    }
+    cout << endl;
+  }
+}
+
+//------------------------------------------------------------------------------
+bool Level::fastMove(vector<Direction*> steps)
+{
+  Player* player = nullptr;
+  try
+  {
+    player = new Player(*player_);
+    for (Direction* direction : steps)
+    {
+      if (!player->hasStepsLeft())
+      {
+        delete player;
+        return false;
+      }
+      if (!player->step(direction, true))
+      {
+        delete player;
+        return false;
+      }
+    }
+  }
+  catch (const std::exception&)
+  {
+    if (player != nullptr)
+    {
+      delete player;
+    }
+    throw;
+  }
+
+  delete player_;
+  player_ = player;
+
+  return true;
+}
+
+//------------------------------------------------------------------------------
+Level::~Level()
+{
+  delete player_;
+  delete map_;
+}

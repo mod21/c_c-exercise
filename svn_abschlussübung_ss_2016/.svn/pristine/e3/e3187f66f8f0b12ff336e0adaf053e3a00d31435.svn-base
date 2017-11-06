@@ -1,0 +1,109 @@
+//------------------------------------------------------------------------------
+// Main.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CommandParser.h"
+#include "CommandLineArgumentParser.h"
+#include "Exceptions.h"
+#include "Game.h"
+#include "Util.h"
+#include "Command.h"
+
+#include <vector>
+#include <string>
+
+using std::cout;
+
+//------------------------------------------------------------------------------
+// main function
+// entry point for execution
+// @param argc argument count
+// @param **argv argument values
+//
+int main(int argc, char* argv[])
+{
+  try
+  {
+    Util::init();
+
+    CommandParser parser;
+    CommandLineArgumentParser argumentParser;
+    Game game;
+
+    try
+    {
+      argumentParser.parseArguments(argc, argv);
+
+      if (argumentParser.isAutoSave())
+      {
+        game.enableAutoSave(argumentParser.getAutoSavePath());
+      }
+      if (argumentParser.isDefaultLoad())
+      {
+        game.loadAndInitializeLevel(argumentParser.getDefaultLoadPath());
+      }
+    }
+    catch (const std::exception &ex)
+    {
+      int result = processErrorMessage(ex);
+      if (result)
+      {
+        Util::prepareExit();
+        return result;
+      }
+    }
+
+    while (true)
+    {
+      Command* command = nullptr;
+      try
+      {
+        std::cout << "sep> ";
+        parser.readCommand();
+
+        command = parser.getCommand();
+
+        // The user has entered nothing and pressed return
+        if (command == nullptr)
+        {
+          continue;
+        }
+
+        auto commandArguments = parser.getParams();
+        bool result = command->execute(game, commandArguments);
+        delete command;
+        command = nullptr;
+
+        if (result)
+        {
+          Util::prepareExit();
+          return 0;
+        }
+      }
+      catch (const std::exception &ex)
+      {
+        if (command != nullptr)
+        {
+          delete command;
+        }
+        int result = processErrorMessage(ex);
+        if (result)
+        {
+          Util::prepareExit();
+          return result;
+        }
+      }
+    }
+  }
+  catch (const std::exception& ex)
+  {
+    processErrorMessage(ex);
+  }
+}

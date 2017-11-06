@@ -1,0 +1,137 @@
+//------------------------------------------------------------------------------
+// Player.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Sp�cklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include "CoordPair.h"
+#include "Direction.h"
+
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+//----------------------------------------------------------------------------
+// Level Class
+// Deklaration
+//
+class Level;
+
+
+//----------------------------------------------------------------------------
+// Player Class
+// Class to manage all player informations
+//
+class Player
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // Variable Remaining steps inicial with 0
+  //
+  long remaining_steps_ = 0;
+
+  //--------------------------------------------------------------------------
+  // object level of player
+  //
+  Level* level_;
+
+  //--------------------------------------------------------------------------
+  // object history of steps from player
+  //
+  vector<Direction*>* history_;
+
+  //--------------------------------------------------------------------------
+  // object visited bonus fields of player
+  //
+  vector<CoordPair>* visited_bonus_fields_;
+
+  //--------------------------------------------------------------------------
+  // object player position 
+  //
+  CoordPair position_;
+
+  //--------------------------------------------------------------------------
+  // Variable is_finished to know current status of player
+  //
+  bool is_finished_;
+
+public:
+
+  //--------------------------------------------------------------------------
+  // player symbol for map
+  //
+  static const char player_symbol = '*';
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  Player() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param lvl level of user
+  //
+  Player(Level* lvl);
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param player with player information
+  //
+  Player(Player &player);
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  Level* getLevel();
+
+  CoordPair& getPosition();
+
+  vector<Direction*>* getHistory();
+
+  bool step(Direction* d, bool record);
+
+  bool hasStepsLeft();
+
+  long getRemainingSteps();
+
+  bool hasBonusFieldVisited(CoordPair pair);
+
+  bool isInFinish();
+
+  bool isFinished();
+
+  //--------------------------------------------------------------------------
+  // Setter Methods
+  //
+  void teleport(CoordPair pair);
+
+  void move(Direction* d);
+
+  void addToHistory(Direction* d);
+
+  void grantMoreSteps(long amount);
+
+  void takeRemainingSteps(long amount);
+
+  void visitBonusField(CoordPair pair);  
+
+  void checkFinished();
+  
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~Player();
+};
+
+#endif

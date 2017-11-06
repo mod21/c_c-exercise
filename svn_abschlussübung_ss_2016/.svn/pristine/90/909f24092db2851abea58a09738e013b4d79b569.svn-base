@@ -1,0 +1,23 @@
+load loadfiles/wiki.maze
+move down
+fastmove uuuurr
+move up
+move up
+move right
+move down
+move right
+move up
+move left
+move down
+move left
+move up
+move right
+move right
+move right
+move right
+move right
+fastmove ddrlll
+move left
+save savefiles/tc30.save
+quit
+

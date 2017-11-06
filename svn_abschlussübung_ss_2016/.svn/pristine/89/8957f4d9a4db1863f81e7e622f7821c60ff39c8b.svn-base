@@ -1,0 +1,134 @@
+//------------------------------------------------------------------------------
+// Game.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#ifndef GAME_H
+#define GAME_H
+
+#include <string>
+#include <vector>
+
+class Direction;
+class CoordPair;
+class Player;
+class Map;
+class Level;
+
+using std::vector;
+using std::string;
+
+//----------------------------------------------------------------------------
+// Game Class
+// Class to manage all game informations
+//
+class Game
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // private copy constructor
+  // @param other 
+  //
+  Game(Game& other);
+
+  //--------------------------------------------------------------------------
+  // object level of Level
+  //
+  Level * level_;
+
+  //--------------------------------------------------------------------------
+  // autosave information about enabled yes or no
+  //
+  bool isAutoSaveEnabled_;
+
+  //--------------------------------------------------------------------------
+  // autosave path which file should be used for autosave
+  //
+  string autoSavePath_;
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  Game();
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~Game();
+
+  //--------------------------------------------------------------------------
+  // create the map for the game
+  // @param textLines from load file
+  //
+  static Map* createMapFromLines(vector<string> textLines);
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  Level* getLevel();
+
+  //--------------------------------------------------------------------------
+  // Tries to read a level from a list of lines representing a level file
+  // @param textLines A list of lines
+  // @return A new level instance. Returns nullptr if the level isn't valid
+  static Level* readLevel(vector<string> textLines);
+
+  //--------------------------------------------------------------------------
+  // Converts a string to a list of moves
+  // @param history A string representing a series of moves
+  // @return A list of moves. Returns nullptr if the string isn't valid
+  static vector<Direction*>* getHistoryFromString(string history);
+
+  //--------------------------------------------------------------------------
+  // Setter Methods
+  //
+  void setLevel(Level* level);
+
+  //--------------------------------------------------------------------------
+  // Loads a new level from a list of lines representing a level file
+  // @param A list of lines
+  //
+  void loadLevel(vector<string>& textLines);
+
+  //--------------------------------------------------------------------------
+  // Loads and validates a level from a file
+  // @param path The path to the file
+  //
+  void loadFromFile(string path);
+
+  //--------------------------------------------------------------------------
+  // Tries to save the current level into a file
+  // @param path The path the file should be written to
+  void saveToFile(string path);
+
+  //--------------------------------------------------------------------------
+  // Enables the autosave function
+  // @path The path of the autosave file
+  //
+  void enableAutoSave(string path);
+
+  //--------------------------------------------------------------------------
+  // Disables the autosave function
+  //
+  void disableAutosave();
+
+  //--------------------------------------------------------------------------
+  // Conducts an autosave if a path is set
+  void autoSave();
+
+  //--------------------------------------------------------------------------
+  // Loads and fully initializes a level from a path
+  // @param path The path of the level file
+  //
+  void loadAndInitializeLevel(string path);
+};
+
+#endif

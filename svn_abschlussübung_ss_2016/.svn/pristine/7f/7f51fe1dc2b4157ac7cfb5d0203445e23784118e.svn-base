@@ -1,0 +1,6 @@
+load loadfiles/teleport1.maze
+fastmove llllllllllllllllrdd
+show more
+fastmove rrrrrrrrr
+quit
+

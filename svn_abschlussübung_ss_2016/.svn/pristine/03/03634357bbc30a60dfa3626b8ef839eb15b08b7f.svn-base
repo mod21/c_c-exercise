@@ -1,0 +1,16 @@
+load ice1.maze
+load ice2.maze
+move right
+save ice1.maze
+move down
+move left
+move left
+move left
+load ice2.maze
+move right
+move down
+show more
+fastmove llll
+move right
+quit
+

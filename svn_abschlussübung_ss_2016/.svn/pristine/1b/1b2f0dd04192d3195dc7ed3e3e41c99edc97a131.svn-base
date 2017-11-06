@@ -1,0 +1,2 @@
+FieldFinish.o: FieldFinish.cpp FieldFinish.h Field.h CoordPair.h \
+ Direction.h Player.h VisitsMap.h

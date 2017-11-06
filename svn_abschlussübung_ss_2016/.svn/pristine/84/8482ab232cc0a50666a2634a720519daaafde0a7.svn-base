@@ -1,0 +1,8 @@
+CommandFastMove.o: CommandFastMove.cpp CommandFastMove.h Command.h \
+ Direction.h Exceptions.h Messages.h ExceptionAlreadySolved.h \
+ ExceptionInvalidMove.h ExceptionInvalidBasicFile.h \
+ ExceptionUnknownCommand.h ExceptionWrongParameter.h \
+ ExceptionWrongParameterCount.h ExceptionNoMazeLoaded.h ExceptionNoPath.h \
+ ExceptionFileLoad.h ExceptionFileWrite.h ExceptionOutOfSteps.h \
+ ExceptionInvalidPath.h ExceptionWrongUsage.h Game.h Player.h CoordPair.h \
+ VisitsMap.h Level.h

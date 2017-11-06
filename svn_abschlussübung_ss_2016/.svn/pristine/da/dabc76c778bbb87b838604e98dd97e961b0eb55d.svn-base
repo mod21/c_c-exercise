@@ -1,0 +1,110 @@
+//------------------------------------------------------------------------------
+// Level.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef LEVEL_H
+#define LEVEL_H
+
+#include "Player.h"
+
+//----------------------------------------------------------------------------
+// Map Class
+// Deklaration
+//
+class Map;
+
+//----------------------------------------------------------------------------
+// Player Class
+// Deklaration
+//
+class Player;
+
+//----------------------------------------------------------------------------
+// Level Class
+// Class to manage all player informations
+//
+class Level
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // object map information
+  //
+  Map* map_;
+
+  //--------------------------------------------------------------------------
+  // variable max steps which are possible
+  //
+  long max_steps_;
+
+  //--------------------------------------------------------------------------
+  // object player of player
+  //
+  Player* player_;
+
+  //--------------------------------------------------------------------------
+  // copy constructor level with level information
+  //
+  Level(Level &);
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  Level() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param map map information
+  // @param max_steps how many steps are possible
+  //
+  Level(Map* map, long max_steps);
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  Map* getMap();
+
+  Player* getPlayer();
+
+  long getMaxSteps();
+
+  //--------------------------------------------------------------------------
+  // Returns the current level and its state as a save file
+  // @return A list of lines
+  //
+  vector<string> serialize();
+
+  //--------------------------------------------------------------------------
+  // Tries to execute the given steps for
+  // @return A list of lines
+  //
+  bool fastMove(vector<Direction*> steps);
+
+  //--------------------------------------------------------------------------
+  // Prints this level
+  // @param more When true more information is shown
+  //
+  void print(bool more);
+
+  //--------------------------------------------------------------------------
+  // Resets the player to its starting point
+  //
+  void respawnPlayer();
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~Level();
+
+};
+
+#endif

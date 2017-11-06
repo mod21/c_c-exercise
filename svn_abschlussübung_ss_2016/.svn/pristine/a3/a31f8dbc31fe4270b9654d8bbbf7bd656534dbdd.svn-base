@@ -1,0 +1,167 @@
+//------------------------------------------------------------------------------
+// Player.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#include "Player.h"
+#include "Messages.h"
+#include "Field.h"
+#include "Map.h"
+#include "Level.h"
+#include "CoordPair.h"
+#include "Field.h"
+#include "Direction.h"
+
+#include <iostream>
+
+//------------------------------------------------------------------------------
+Player::Player(Level* level) :
+  remaining_steps_(level->getMaxSteps()), level_(level),
+  history_(new vector<Direction*>()),
+  visited_bonus_fields_(new vector<CoordPair>()),
+  position_(level->getMap()->getStartingPosition()), is_finished_(false)
+{
+}
+
+//------------------------------------------------------------------------------
+Player::Player(Player &player) :
+  remaining_steps_(player.remaining_steps_), level_(player.level_),
+  history_(new vector<Direction*>(*player.history_)),
+  visited_bonus_fields_(new vector<CoordPair>(*player.visited_bonus_fields_)),
+  position_(player.position_), is_finished_(player.is_finished_)
+{
+}
+
+//------------------------------------------------------------------------------
+Level* Player::getLevel()
+{
+  return level_;
+}
+
+//------------------------------------------------------------------------------
+bool Player::step(Direction* d, bool record)
+{
+  CoordPair new_position = position_;
+  new_position.addDirection(d);
+  Map* map = level_->getMap();
+  if (map->getFieldAt(position_)->onLeave(this, position_, d) &&
+    map->getFieldAt(new_position)->onEnter(this, new_position, d))
+  {
+    if (record)
+    {
+      addToHistory(d);
+    }
+    return true;
+  }
+  return false;
+}
+
+//------------------------------------------------------------------------------
+CoordPair& Player::getPosition()
+{
+  return position_;
+}
+
+//------------------------------------------------------------------------------
+vector<Direction*>* Player::getHistory()
+{
+  return history_;
+}
+
+//------------------------------------------------------------------------------
+void Player::addToHistory(Direction* d)
+{
+  history_->push_back(d);
+  takeRemainingSteps(1);
+}
+
+//------------------------------------------------------------------------------
+bool Player::hasStepsLeft()
+{
+  return remaining_steps_ > 0;
+}
+
+//------------------------------------------------------------------------------
+void Player::grantMoreSteps(long amount)
+{
+  remaining_steps_ += amount;
+}
+
+//------------------------------------------------------------------------------
+void Player::teleport(CoordPair entrance)
+{
+  position_ = level_->getMap()->getPortalEnd(entrance);
+}
+
+//------------------------------------------------------------------------------
+void Player::move(Direction* d)
+{
+  position_.addDirection(d);
+}
+
+//------------------------------------------------------------------------------
+long Player::getRemainingSteps()
+{
+  return remaining_steps_;
+}
+
+//------------------------------------------------------------------------------
+void Player::takeRemainingSteps(long amount)
+{
+  remaining_steps_ -= amount;
+  if (remaining_steps_ < 0)
+  {
+    remaining_steps_ = 0;
+  }
+}
+
+//------------------------------------------------------------------------------
+void Player::visitBonusField(CoordPair pair)
+{
+  if (!hasBonusFieldVisited(pair))
+  {
+    visited_bonus_fields_->push_back(pair);
+  }
+}
+
+//------------------------------------------------------------------------------
+bool Player::hasBonusFieldVisited(CoordPair pair)
+{
+  return find(visited_bonus_fields_->begin(), visited_bonus_fields_->end(),
+    pair) != visited_bonus_fields_->end();
+}
+
+//------------------------------------------------------------------------------
+bool Player::isInFinish()
+{
+  return level_->getMap()->getFieldAt(getPosition()) == Field::FINISH;
+}
+
+//------------------------------------------------------------------------------
+void Player::checkFinished()
+{
+  if (is_finished_ || !isInFinish())
+  {
+    return;
+  }
+  is_finished_ = true;
+  std::cout << DomainMessages::SOLVED;
+}
+
+//------------------------------------------------------------------------------
+bool Player::isFinished()
+{
+  return is_finished_;
+}
+
+//------------------------------------------------------------------------------
+Player::~Player()
+{
+  delete history_;
+  delete visited_bonus_fields_;
+}

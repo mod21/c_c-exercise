@@ -1,0 +1,52 @@
+//------------------------------------------------------------------------------
+// Game.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#ifndef GAME_H
+#define GAME_H
+
+#include "Level.h"
+
+#include <string>
+#include <vector>
+
+class Game
+{
+private:
+  Game(Game& other);
+  Level * level_;
+  bool isAutoSaveEnabled_;
+  string autoSavePath_;
+
+public:
+  Game();
+
+  ~Game();
+  Level* getLevel();
+
+  void setLevel(Level* level);
+
+  void loadLevel(vector<string>& textLines);
+
+  void loadFromFile(string path);
+  void saveToFile(string path);
+
+  void enableAutoSave(string path);
+  void disableAutosave();
+
+  void autoSave();
+
+  static Level* readLevel(vector<string> textLines);
+
+  static Map* createMapFromLines(vector<string> textLines);
+
+  static vector<Direction*>* getHistoryFromString(string history);
+};
+
+#endif

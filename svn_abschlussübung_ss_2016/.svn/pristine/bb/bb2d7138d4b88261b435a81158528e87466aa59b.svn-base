@@ -1,0 +1,153 @@
+//------------------------------------------------------------------------------
+// Solver.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "Direction.h"
+#include "Field.h"
+#include "Level.h"
+#include "Map.h"
+#include "Player.h"
+#include "Solver.h"
+
+//------------------------------------------------------------------------------
+Solver::Solver(Level* level) : level_(level),
+  size_x_(level->getMap()->getSizeX()), size_y_(level->getMap()->getSizeY()),
+  players_(vector<Player***>()), queue_(queue<pair<Player*, unsigned int>>())
+{
+  players_.push_back(initializeNewMap());
+}
+
+//------------------------------------------------------------------------------
+inline void Solver::push4(int layer, Player* player)
+{
+  checkAndPush(layer, player, Direction::UP);
+  checkAndPush(layer, player, Direction::DOWN);
+  checkAndPush(layer, player, Direction::LEFT);
+  checkAndPush(layer, player, Direction::RIGHT);
+}
+
+//------------------------------------------------------------------------------
+inline void Solver::checkAndPush(unsigned int layer, Player* original,
+  Direction* direction)
+{
+  Player* player = new Player(*original);
+  if(player->hasStepsLeft() && player->step(direction, true))
+  {
+    queue_.push(pair<Player*, unsigned int>(player, layer));
+    return;
+  }
+  delete player;
+}
+
+//------------------------------------------------------------------------------
+inline void Solver::store(Player*** players, Player* player)
+{
+  CoordPair position = player->getPosition();
+  Player** column = players[position.getX()];
+  Player* old = column[position.getY()];
+  if (old)
+  {
+    delete old;
+  }
+  column[position.getY()] = player;
+}
+
+//------------------------------------------------------------------------------
+inline Player* Solver::get(Player*** players, CoordPair position)
+{
+  return players[position.getX()][position.getY()];
+}
+
+//------------------------------------------------------------------------------
+vector<Direction*>* Solver::solve()
+{
+  Player* original = new Player(*(level_->getPlayer()));
+  int original_steps = original->getHistory().size();
+  store(players_[0], original);
+  push4(0, original);
+  while (queue_.size())
+  {
+    pair<Player*, unsigned int> current_pair = queue_.front();
+    Player* current = current_pair.first;
+    unsigned int layer = current_pair.second;
+    queue_.pop();
+    if (current->isIceCounter())
+    {
+      unsigned int next_layer = layer + 1;
+      Player*** next_players = nullptr;
+      Player* next_player = new Player(*current);
+      if(players_.size() == next_layer)
+      {
+        next_players = initializeNewMap();
+        players_.push_back(next_players);
+      }
+      else
+      {
+        next_players = players_[next_layer];
+      }
+      store(next_players, next_player);
+      push4(next_layer, next_player);
+    }
+    Player*** players = players_[layer];
+    Player* other = get(players, current->getPosition());
+    if (other == nullptr ||
+      other->getRemainingSteps() <= current->getRemainingSteps())
+    {
+      push4(layer, current);
+      store(players, current);
+    }
+    else
+    {
+      delete current;
+    }
+  }
+  CoordPair finish = level_->getMap()->getFieldPosition(Field::FINISH);
+  Player* finished = nullptr;
+  for(Player*** players: players_)
+  {
+    Player* best = players[finish.getX()][finish.getY()];
+    if(best != nullptr && (finished == nullptr ||
+      finished->getRemainingSteps() < best->getRemainingSteps()))
+    {
+      finished = best;
+    }
+  }
+  if (finished == nullptr)
+  {
+    return nullptr;
+  }
+  vector<Direction*>* history = new vector<Direction*>(finished->getHistory());
+  for (int index = original_steps; index > 0; index--)
+  {
+    history->erase(history->begin());
+  }
+  return history;
+}
+
+//------------------------------------------------------------------------------
+Solver::~Solver()
+{
+  for(Player*** players: players_)
+  {
+    for (int column = 0; column < size_x_; column++)
+    {
+      Player** column_array = players[column];
+      for (int row = 0; row < size_y_; row++)
+      {
+        if (column_array[row])
+        {
+          delete column_array[row];
+        }
+      }
+      delete column_array;
+    }
+  delete players;
+  }
+}

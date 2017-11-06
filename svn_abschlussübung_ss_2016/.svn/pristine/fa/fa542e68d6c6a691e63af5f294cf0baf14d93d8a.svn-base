@@ -1,0 +1,50 @@
+//------------------------------------------------------------------------------
+// FieldIce.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELDICE_H
+#define FIELDICE_H
+
+#include "Field.h"
+
+//----------------------------------------------------------------------------
+// FieldIce Class
+// Class to manage all player informations
+//
+class FieldIce : public Field
+{
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  FieldIce();
+
+  //--------------------------------------------------------------------------
+  // field check by enter
+  // @param player 
+  // @param direction current direction of player
+  //
+  virtual bool onEnter(Player* player, Direction* direction);
+
+  //--------------------------------------------------------------------------
+  // field check on leave
+  // @param player 
+  // @param direction current direction of player
+  //
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~FieldIce();
+};
+
+#endif

@@ -1,0 +1,7 @@
+load loadfiles/brokenWall.maze
+load loadfiles/brokenWall2.maze
+load loadfiles/noStarts.maze
+load loadfiles/twoStarts.maze
+load loadfiles/noEnds.maze
+load loadfiles/twoEnds.maze
+quit

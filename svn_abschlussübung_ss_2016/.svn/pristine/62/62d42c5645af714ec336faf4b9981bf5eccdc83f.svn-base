@@ -1,0 +1,143 @@
+//------------------------------------------------------------------------------
+// Direction.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef DIRECTION_H
+#define DIRECTION_H
+
+#include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
+
+//------------------------------------------------------------------------------
+// A java style enum to store the cardinal directions in a two
+// dimenstional space.
+//
+class Direction
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // The character representing this direction.
+  //
+  char ch_;
+
+  //----------------------------------------------------------------------------
+  // Variable x and y coordinates
+  //
+  int x_, y_;
+
+  //----------------------------------------------------------------------------
+  // The word representing this direction.
+  //
+  string word_;
+
+  //----------------------------------------------------------------------------
+  // All instances of this direction ever created.
+  //
+  static vector<Direction*>* instances_;
+
+  //----------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  //
+  Direction(const Direction&);
+
+  //----------------------------------------------------------------------------
+  // Default constructor - Should not be used.
+  //
+  Direction() = delete;
+
+  //----------------------------------------------------------------------------
+  // Creates a new instance.
+  // @param ch The character representing this direction.
+  // @param x X offset.
+  // @param y Y offset.
+  // @param word The word representing this direction.
+  //
+  Direction(char ch, int x, int y, string word);
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~Direction();
+
+  //----------------------------------------------------------------------------
+  // Direction pointing upwards.
+  //
+  static Direction* UP;
+
+  //----------------------------------------------------------------------------
+  // Direction pointing to the left.
+  //
+  static Direction* LEFT;
+
+  //----------------------------------------------------------------------------
+  // Direction pointing downwards.
+  //
+  static Direction* DOWN;
+
+  //----------------------------------------------------------------------------
+  // Direction pointing to the right.
+  //
+  static Direction* RIGHT;
+
+  //----------------------------------------------------------------------------
+  // Returns the direction with the matching character.
+  // @return A direction. Returns nullptr if no direction is found.
+  //
+  static Direction* getDirectionByChar(char ch);
+
+  //----------------------------------------------------------------------------
+  // Returns the direction with the matching word.
+  // @return A direction. Returns nullptr if no direction is found.
+  //
+  static Direction* getDirectionByWord(string word);
+
+  //----------------------------------------------------------------------------
+  // Returns the character of this direction.
+  // @return A character.
+  //
+  char getChar();
+
+  //----------------------------------------------------------------------------
+  // Returns the X offset of this direction.
+  // @return A whole number between -1 and 1.
+  //
+  int getX();
+
+  //----------------------------------------------------------------------------
+  // Returns the Y offset of this direction.
+  // @return A whole number between -1 and 1.
+  //
+  int getY();
+
+  //----------------------------------------------------------------------------
+  // Returns the word representing this direction.
+  // @return A string.
+  //
+  string getWord();
+
+  //----------------------------------------------------------------------------
+  // Initializes all directions.
+  //
+  static void init();
+
+  //----------------------------------------------------------------------------
+  // Deletes all directions. Needs to be called before the
+  // program terminates.
+  //
+  static void remove();
+};
+
+#endif

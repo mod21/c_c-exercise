@@ -1,0 +1,55 @@
+//------------------------------------------------------------------------------
+// FieldCounter.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "FieldCounter.h"
+#include "Direction.h"
+#include "Player.h"
+#include "Level.h"
+
+//------------------------------------------------------------------------------
+FieldCounter::FieldCounter(long step_counter) :
+  Field(std::to_string(step_counter).at(0))
+{
+  stepCounter_ = step_counter;
+}
+
+//------------------------------------------------------------------------------
+bool FieldCounter::onEnter(Player* player, CoordPair position,
+  Direction* direction)
+{
+  bool canEnter = getRemainingStepCount(player, position) > 0;
+
+  if (canEnter)
+  {
+    player->move(direction);
+    player->visitCounterField(position);
+  }
+
+  return canEnter;
+}
+
+
+//------------------------------------------------------------------------------
+bool FieldCounter::onLeave(Player* player, CoordPair position,
+  Direction* direction)
+{
+  return true;
+}
+
+//------------------------------------------------------------------------------
+FieldCounter::~FieldCounter()
+{
+}
+
+long FieldCounter::getRemainingStepCount(Player * player, CoordPair position)
+{
+  return  stepCounter_ - player->getCounterFieldStepCount(position);
+}

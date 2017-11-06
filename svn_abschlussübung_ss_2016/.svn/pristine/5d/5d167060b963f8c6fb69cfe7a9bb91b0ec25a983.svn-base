@@ -1,0 +1,2 @@
+FieldOneWay.o: FieldOneWay.cpp FieldOneWay.h Field.h CoordPair.h \
+ Direction.h Player.h

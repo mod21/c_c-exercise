@@ -1,0 +1,4 @@
+load loadfiles/invalidTeleports.maze
+load loadfiles/invalidTeleports2.maze
+load loadfiles/invalidFieldType.maze
+quit

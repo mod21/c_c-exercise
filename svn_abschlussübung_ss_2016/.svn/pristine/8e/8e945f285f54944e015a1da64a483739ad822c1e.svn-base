@@ -1,0 +1,109 @@
+//------------------------------------------------------------------------------
+// CommandLineArgumentParser.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CommandLineArgumentParser.h"
+#include "Exceptions.h"
+
+
+//------------------------------------------------------------------------------
+CommandLineArgumentParser::CommandLineArgumentParser() : 
+  isAutoSave_(false),
+  isDefaultLoad_(false)
+{
+}
+
+
+//------------------------------------------------------------------------------
+CommandLineArgumentParser::~CommandLineArgumentParser()
+{
+}
+
+//------------------------------------------------------------------------------
+bool CommandLineArgumentParser::isAutoSave()
+{
+  return isAutoSave_;
+}
+
+//------------------------------------------------------------------------------
+bool CommandLineArgumentParser::isDefaultLoad()
+{
+  return isDefaultLoad_;
+}
+
+//------------------------------------------------------------------------------
+string CommandLineArgumentParser::getAutoSavePath()
+{
+  return autoSavePath_;
+}
+
+//------------------------------------------------------------------------------
+string CommandLineArgumentParser::getDefaultLoadPath()
+{
+  return defaultLoadPath_;
+}
+
+//------------------------------------------------------------------------------
+void CommandLineArgumentParser::parseArguements(int argc, char * argv[])
+{
+  string checkm("-m");
+  string checks("-s");
+
+  if (argc > 1)
+  {
+    if (argc == 3)
+    {
+      if ((checkm.compare(argv[1]) == 0) || (checks.compare(argv[1]) == 0))
+      {
+        std::string input = argv[1];
+        std::string input2 = argv[2];
+        if (checkm.compare(argv[1]) == 0)
+        {
+          isDefaultLoad_ = true;
+          defaultLoadPath_ = input2;
+        }
+        else
+        {
+          isAutoSave_ = true;
+          autoSavePath_ = input2;
+        }
+      }
+    }
+    else if (argc == 5)
+    {
+      if (((checkm.compare(argv[1]) == 0) || (checks.compare(argv[1]) == 0))
+        && ((checkm.compare(argv[3]) == 0) || (checks.compare(argv[3]) == 0)))
+      {
+        std::string input = argv[1];
+        std::string input2 = argv[2];
+        std::string input3 = argv[3];
+        std::string input4 = argv[4];
+
+        isDefaultLoad_ = true;
+        isAutoSave_ = true;
+
+        if (checkm.compare(argv[1]) == 0)
+        {
+          defaultLoadPath_ = input2;
+          autoSavePath_ = input4;
+        }
+        else
+        {
+          defaultLoadPath_ = input4;
+          autoSavePath_ = input2;
+        }
+      }
+    }
+    else
+    {
+      throw WrongUsageException();
+    }
+  }
+}

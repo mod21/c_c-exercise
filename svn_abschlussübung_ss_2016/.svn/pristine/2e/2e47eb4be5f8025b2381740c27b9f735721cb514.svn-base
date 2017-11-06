@@ -1,0 +1,86 @@
+//------------------------------------------------------------------------------
+// CommandParser.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef COMMANDPARSER_H
+#define COMMANDPARSER_H
+
+#include <string>
+#include <vector>
+
+//----------------------------------------------------------------------------
+// Command Class
+// Deklaration
+//
+class Command;
+
+//----------------------------------------------------------------------------
+// CommandParser Class
+// Parse the commands which are inserted at commandline
+//
+
+class CommandParser
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // object command parser 
+  //
+  Command* command_ptr_;
+
+  //--------------------------------------------------------------------------
+  // Variable parameter which includes the parameters of the command
+  //
+  std::vector<std::string> parameter_;
+
+  //--------------------------------------------------------------------------
+  // Variable cmd which includes the command 
+  //
+  std::string cmd_;
+
+  //--------------------------------------------------------------------------
+  // private Copy Constructor
+  // @param other
+  //
+  CommandParser(CommandParser& other);
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  CommandParser();
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~CommandParser();
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  Command* getCommand()
+  {
+    return command_ptr_;
+  }
+
+  std::vector<std::string> getParams()
+  {
+    return parameter_;
+  }
+
+  //--------------------------------------------------------------------------
+  // Setter Methods
+  //
+  void readCommand();
+
+};
+
+#endif

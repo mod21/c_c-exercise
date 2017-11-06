@@ -1,0 +1,186 @@
+//------------------------------------------------------------------------------
+// Player.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include "CoordPair.h"
+
+#include <algorithm>
+#include <vector>
+
+using std::vector;
+using std::string;
+
+//------------------------------------------------------------------------------
+// Using the level class.
+//
+class Level;
+
+//------------------------------------------------------------------------------
+// Using the direction class.
+//
+class Direction;
+
+//------------------------------------------------------------------------------
+// Holds a player.
+//
+class Player
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // Stores the remaining steps of this player.
+  //
+  long remaining_steps_ = 0;
+
+  //----------------------------------------------------------------------------
+  // object level of player
+  //
+  Level* level_;
+
+  //----------------------------------------------------------------------------
+  // object history of steps from player
+  //
+  vector<Direction*>* history_;
+
+  //----------------------------------------------------------------------------
+  // object visited bonus fields of player
+  //
+  vector<CoordPair>* visited_bonus_fields_;
+
+  //----------------------------------------------------------------------------
+  // object player position 
+  //
+  CoordPair position_;
+
+  //----------------------------------------------------------------------------
+  // Variable is_finished_ to know current status of player
+  //
+  bool is_finished_;
+
+  //----------------------------------------------------------------------------
+  // Default constructor - Should not be used.
+  //
+  Player() = delete;
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Creates a new instance
+  // @param level The level the player is in.
+  //
+  Player(Level* level);
+
+  //----------------------------------------------------------------------------
+  // Copy Constructor
+  //
+  Player(Player &player);
+
+  //----------------------------------------------------------------------------
+  // Returns the level the player is in.
+  // @return A level.
+  //
+  Level* getLevel();
+
+  //----------------------------------------------------------------------------
+  // Returns the current position of the player.
+  // @return A coordinate pair.
+  //
+  CoordPair& getPosition();
+
+  //----------------------------------------------------------------------------
+  // Gets the history of moves made by this player.
+  // @return A list of directions.
+  //
+  vector<Direction*>* getHistory();
+
+  //----------------------------------------------------------------------------
+  // Tries to conduct a step in the given direction.
+  // @param direction The direction to move to.
+  // @param record Whether or not this move should be added to the history.
+  // @return Whether the move was successful.
+  //
+  bool step(Direction* direction, bool record);
+
+  //----------------------------------------------------------------------------
+  // @return Returns if the player has some steps left.
+  //
+  bool hasStepsLeft();
+
+  //----------------------------------------------------------------------------
+  // @return Returns how many steps this player has left.
+  //
+  long getRemainingSteps();
+
+  //----------------------------------------------------------------------------
+  // @param pair The coordinates of the bonus field
+  // @return Returns if the player has visited the bonus field at
+  //         the given coordinates.
+  bool hasBonusFieldVisited(CoordPair pair);
+
+  //----------------------------------------------------------------------------
+  // @return Returns if the player is currently on the finish field.
+  //
+  bool isInFinish();
+
+  //----------------------------------------------------------------------------
+  // @return Returns if the player has already finished the game.
+  //
+  bool isFinished();
+
+  //----------------------------------------------------------------------------
+  // Teleports the player to the end of the portal to be entered.
+  // @param entrance The coordinates of the portal entrance.
+  //
+  void teleport(CoordPair entrance);
+
+  //----------------------------------------------------------------------------
+  // Moves the player in the given direction.
+  // @param direction The direction to move to.
+  void move(Direction* direction);
+
+  //----------------------------------------------------------------------------
+  // Adds the given move to the history.
+  // @param direction The direction to add.
+  //
+  void addToHistory(Direction* direction);
+
+  //----------------------------------------------------------------------------
+  // Gives the player more steps.
+  // @param The amount of steps to give.
+  //
+  void grantMoreSteps(long amount);
+
+  //----------------------------------------------------------------------------
+  // Subtracts a number of steps from the remaining steps.
+  // @param amount The amount of steps to subtract.
+  //
+  void takeRemainingSteps(long amount);
+
+  //----------------------------------------------------------------------------
+  // Marks a bonus field at the given coordinates as visited.
+  // @param pair The coordinates
+  //
+  void visitBonusField(CoordPair pair);
+
+  //----------------------------------------------------------------------------
+  // Checks if the player finishes the game.
+  //
+  void checkFinished();
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~Player();
+};
+
+#endif

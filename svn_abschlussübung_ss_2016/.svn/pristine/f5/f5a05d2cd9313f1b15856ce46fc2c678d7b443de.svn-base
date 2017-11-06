@@ -1,0 +1,2 @@
+FieldStart.o: FieldStart.cpp FieldStart.h Field.h Player.h CoordPair.h \
+ Direction.h

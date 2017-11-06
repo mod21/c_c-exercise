@@ -1,0 +1,50 @@
+//------------------------------------------------------------------------------
+// FieldStart.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELDSTART_H
+#define FIELDSTART_H
+
+#include "Field.h"
+
+//----------------------------------------------------------------------------
+// FieldStart Class
+// Class to manage all player informations
+//
+class FieldStart : public Field
+{
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  FieldStart();
+
+  //--------------------------------------------------------------------------
+  // field start position check by enter
+  // @param player 
+  // @param direction current direction of player
+  //
+  virtual bool onEnter(Player* player, Direction* direction);
+
+  //--------------------------------------------------------------------------
+  // field start position check on leave
+  // @param player 
+  // @param direction current direction of player
+  //
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~FieldStart();
+};
+
+#endif

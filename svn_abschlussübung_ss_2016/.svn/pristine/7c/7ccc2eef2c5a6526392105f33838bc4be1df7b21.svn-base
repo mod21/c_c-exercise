@@ -1,0 +1,149 @@
+//------------------------------------------------------------------------------
+// Field.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELD_H
+#define FIELD_H
+
+#include "CoordPair.h"
+
+#include <vector>
+
+using std::vector;
+
+//------------------------------------------------------------------------------
+// Using the direction class.
+//
+class Direction;
+
+//------------------------------------------------------------------------------
+// Using the player class.
+//
+class Player;
+
+//------------------------------------------------------------------------------
+// This is the base class for the fields in a map. It almost works like
+// an enum in java.
+//
+class Field
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // Character representing this field.
+  //
+  char symbol_;
+
+  //----------------------------------------------------------------------------
+  // Stores all field instances ever created.
+  //
+  static vector<Field*>* fields_;
+
+  //----------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  //
+  Field(Field &);
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Default constructor
+  //
+  Field() = delete;
+
+  //----------------------------------------------------------------------------
+  // Constant containing the total number of teleporter types.
+  //
+  static const int number_of_teleporter_types = 26;
+
+  //----------------------------------------------------------------------------
+  // Virtual destructor
+  //
+  virtual ~Field() = 0;
+
+  //----------------------------------------------------------------------------
+  // Wall field - The player cannot enter it.
+  //
+  static Field* WALL;
+
+  //----------------------------------------------------------------------------
+  // Path field - The player walk on it without any effects.
+  //
+  static Field* PATH;
+
+  //----------------------------------------------------------------------------
+  // Start field - The player spawns on it.
+  //
+  static Field* START;
+
+  //----------------------------------------------------------------------------
+  // Finish field - The player spawns on it.
+  //
+  static Field* FINISH;
+
+  //----------------------------------------------------------------------------
+  // Ice field - The player slides on it until another field is reached.
+  //
+  static Field* ICE;
+
+  //----------------------------------------------------------------------------
+  // Hole field - The player gets teleported to start field.
+  //
+  static Field* HOLE;
+
+  //----------------------------------------------------------------------------
+  // Creates a new instance.
+  // @param symbol The symbol used when displaying the map.
+  //
+  Field(char symbol);
+
+  //----------------------------------------------------------------------------
+  // Called when the player tries to enter a field.
+  // @param player The current player.
+  // @param position The position where the player is entering.
+  // @param direction The direction the player is entering from.
+  // @return Whether the player can enter here.
+  //
+  virtual bool onEnter(Player* player, CoordPair position,
+    Direction* direction) = 0;
+
+  //----------------------------------------------------------------------------
+  // Called when the player tries to leave a field.
+  // @param player The current player.
+  // @param position The position the player is leaving to.
+  // @param direction The direction the player is leaving to.
+  // @return Whether the player can leave here.
+  //
+  virtual bool onLeave(Player* player, CoordPair position,
+    Direction* direction) = 0;
+
+  //----------------------------------------------------------------------------
+  // Returns the symbol used to display this field.
+  // @returns A character.
+  //
+  char getSymbol();
+
+  //----------------------------------------------------------------------------
+  // Returns the field with the matching character.
+  // @return A field. Returns nullptr when no field is found.
+  static Field* getBySymbol(char symbol);
+
+  //----------------------------------------------------------------------------
+  // Initializes one instance for each field type.
+  //
+  static void init();
+
+  //----------------------------------------------------------------------------
+  // Deletes all field instances ever created.
+  //
+  static void remove();
+};
+
+#endif

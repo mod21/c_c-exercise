@@ -1,0 +1,14 @@
+load quicksandInvalid.maze
+load quicksandInvalid2.maze
+load quicksand3.maze
+fastmove rrrr
+show more
+move right
+move right
+move right
+move right
+show more
+load quicksandBonus.maze
+load quicksandBonus2.maze
+show more
+quit

@@ -1,0 +1,75 @@
+//------------------------------------------------------------------------------
+// FieldCounter.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELDCOUNTER_H
+#define FIELDCOUNTER_H
+
+#include "Field.h"
+
+//------------------------------------------------------------------------------
+// The player spawns here.
+//
+class FieldCounter : public Field
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  //
+  FieldCounter(FieldCounter &);
+  int stepCounter_;
+public:
+
+  //----------------------------------------------------------------------------
+  // copy Constructor
+  // @param number of steps a player can step on this field until it is blocking
+  //
+  FieldCounter(long step_count);
+
+  //----------------------------------------------------------------------------
+  // Called when the player tries to enter a field.
+  // @param player The current player.
+  // @param position The position where the player is entering.
+  // @param direction The direction the player is entering from.
+  // @return Whether the player can enter here.
+  //
+  virtual bool onEnter(Player* player, CoordPair position,
+    Direction* direction);
+
+  //----------------------------------------------------------------------------
+  // Called when the player tries to leave a field.
+  // @param player The current player.
+  // @param position The position the player is leaving to.
+  // @param direction The direction the player is leaving to.
+  // @return Whether the player can leave here.
+  //
+  virtual bool onLeave(Player* player, CoordPair position,
+    Direction* direction);
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~FieldCounter();
+
+  //----------------------------------------------------------------------------
+  // Constant containing the maximal number of counter field steps.
+  //
+  static const int step_maximum = 9;
+
+  //----------------------------------------------------------------------------
+  // Returns the symbol used to display this field.
+  // @returns A character.
+  //
+  long getRemainingStepCount(Player* player, CoordPair position);
+
+};
+
+#endif

@@ -1,0 +1,63 @@
+//------------------------------------------------------------------------------
+// CommandFastMove.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef COMMANDFASTMOVE_H
+#define COMMANDFASTMOVE_H
+
+#include "Command.h"
+
+#include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
+
+//----------------------------------------------------------------------------
+// This command lets the player execute multiple steps at once.
+//
+class CommandFastMove: public Command
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  // @param original Instance to be copied.
+  //
+  CommandFastMove(const CommandFastMove& original);
+
+  //--------------------------------------------------------------------------
+  // Private assignment operator - Should not be used.
+  // @param original Instance to be assigned.
+  //
+  CommandFastMove& operator=(const CommandFastMove& original);
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Default constructor - creates a new instance.
+  //
+  CommandFastMove();
+
+  //--------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  virtual ~CommandFastMove();
+
+  //--------------------------------------------------------------------------
+  // Executes the command. Abstract method.
+  // @param game The game where action should be performed on.
+  // @param params Possible parameters needed for the execution.
+  // @return Whether the command should terminate the program.
+  //
+  virtual bool execute(Game& game, vector<string>& params);
+};
+
+#endif

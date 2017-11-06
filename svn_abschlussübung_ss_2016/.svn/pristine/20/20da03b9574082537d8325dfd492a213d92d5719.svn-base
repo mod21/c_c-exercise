@@ -1,0 +1,130 @@
+//------------------------------------------------------------------------------
+// Exceptions.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef EXCEPTIONS_H
+#define EXCEPTIONS_H
+
+#include <exception>
+#include <iostream>
+#include <typeinfo>
+#include "Messages.h"
+
+using namespace std;
+
+class InvalidBasicFileException: public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::INVALID_FILE.c_str();
+  }
+};
+
+class UnknownCommandException: public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::UNKNOWN_COMMAND.c_str();
+  }
+};
+
+class WrongParameterException: public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::WRONG_PARAMETER.c_str();
+  }
+};
+
+class WrongParameterCountException: public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::WRONG_PARAMETER_COUNT.c_str();
+  }
+};
+
+class NoMazeLoadedException: public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::NO_MAZE_LOADED.c_str();
+  }
+};
+
+class FileLoadException: public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::IOS_FAILURE.c_str();
+  }
+};
+
+class FileWriteException: public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::WRITE_ERROR.c_str();
+  }
+};
+
+class OutOfStepsException: public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::OUT_OF_STEPS.c_str();
+  }
+};
+
+class InvalidMoveException: public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::INVALID_MOVE.c_str();
+  }
+};
+
+class InvalidPathException: public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::INVALID_PATH.c_str();
+  }
+};
+
+class WrongUsageException : public exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::WRONG_USAGE.c_str();
+  }
+};
+
+inline const int processErrorMessage(exception const & ex)
+{
+  // TODO wrong usage
+  if (typeid(ex) == typeid(bad_alloc))
+  {
+    cout << DomainMessages::OUT_OF_MEMORY;
+    return 1;
+  }
+  else if (typeid(ex) == typeid(ios_base::failure))
+  {
+    cout << DomainMessages::IOS_FAILURE;
+    return 0;
+  }
+  else
+  {
+    cout << ex.what();
+    return 0;
+  }
+};
+
+#endif

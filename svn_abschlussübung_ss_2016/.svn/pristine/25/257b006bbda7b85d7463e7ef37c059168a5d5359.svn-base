@@ -1,0 +1,48 @@
+//------------------------------------------------------------------------------
+// Level.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef LEVEL_H
+#define LEVEL_H
+
+#include "Player.h"
+
+class Map;
+class Player;
+
+class Level
+{
+private:
+  Player* player_;
+  Map* map_;
+  long max_steps_;
+  Level(Level &);
+
+public:
+  Level(Map* map, long max_steps);
+
+  Map* getMap();
+
+  Player* getPlayer();
+
+  long getMaxSteps();
+
+  void print(bool more);
+
+  ~Level();
+
+  void respawnPlayer();
+
+  vector<string> serialize();
+
+  bool fastMove(vector<Direction*> steps);
+};
+
+#endif

@@ -1,0 +1,67 @@
+//------------------------------------------------------------------------------
+// CommandWhoami.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef COMMANDWHOAMI_H
+#define COMMANDWHOAMI_H
+
+#include "Command.h"
+
+#include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
+
+//------------------------------------------------------------------------------
+// Terminates the program.
+//
+class CommandWhoami : public Command
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  // @param original Instance to be copied.
+  //
+  CommandWhoami(const CommandWhoami& original);
+
+  //----------------------------------------------------------------------------
+  // Private assignment operator - Should not be used.
+  // @param original Instance to be assigned from.
+  //
+  CommandWhoami& operator=(const CommandWhoami& original);
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Default constructor - creates a new instance.
+  //
+  CommandWhoami();
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  virtual ~CommandWhoami();
+
+  //----------------------------------------------------------------------------
+  // Executes the command. Abstract method.
+  // @param game The game where action should be performed on.
+  // @param params Possible parameters needed for the execution.
+  // @return Whether the command should terminate the program.
+  //
+  virtual bool execute(Game& game, vector<string>& params);
+
+  //----------------------------------------------------------------------------
+  //The name of the command
+  static const string NAME;
+};
+
+#endif

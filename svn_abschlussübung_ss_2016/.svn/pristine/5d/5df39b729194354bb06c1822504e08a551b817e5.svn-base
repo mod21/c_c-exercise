@@ -1,0 +1,8 @@
+load  loadfiles/wiki.maze
+load	loadfiles/wiki.maze
+load loadfiles/wiki.maze
+
+show  more 
+show	more
+
+quit

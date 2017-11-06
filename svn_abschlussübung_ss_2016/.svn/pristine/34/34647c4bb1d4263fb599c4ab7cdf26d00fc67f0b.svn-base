@@ -1,0 +1,21 @@
+load loadfiles/quicksandBonus3.maze
+move right
+show more
+load loadfiles/quicksandBonus3.maze
+move left
+show more
+load loadfiles/quicksandBonus3.maze
+move up
+show more
+load loadfiles/quicksandBonus3.maze
+fastmove l
+show more
+load loadfiles/quicksandBonus3.maze
+fastmove u
+show more
+load loadfiles/quicksandBonus3.maze
+fastmove r
+show more
+quit
+
+

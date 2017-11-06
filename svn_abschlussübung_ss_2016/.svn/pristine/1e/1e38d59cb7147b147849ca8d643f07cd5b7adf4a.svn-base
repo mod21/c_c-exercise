@@ -1,0 +1,172 @@
+//------------------------------------------------------------------------------
+// Level.cpp.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "Level.h"
+#include "CoordPair.h"
+#include "Exceptions.h"
+#include "Field.h"
+#include "Player.h"
+#include "Map.h"
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using std::cout;
+using std::endl;
+
+class CoordPair;
+class Field;
+class Player;
+class Map;
+
+//------------------------------------------------------------------------------
+Level::Level(Map* map, long max_steps)
+{
+  map_ = map;
+  max_steps_ = max_steps;
+  player_ = new Player(this);
+}
+
+//------------------------------------------------------------------------------
+Map* Level::getMap()
+{
+  return map_;
+}
+
+//------------------------------------------------------------------------------
+Player* Level::getPlayer()
+{
+  return player_;
+}
+
+//------------------------------------------------------------------------------
+long Level::getMaxSteps()
+{
+  return max_steps_;
+}
+
+//------------------------------------------------------------------------------
+void Level::respawnPlayer()
+{
+  if (player_)
+  {
+    delete player_;
+  }
+  player_ = new Player(this);
+}
+
+//------------------------------------------------------------------------------
+vector<string>* Level::serialize()
+{
+  vector<string> * lines = new vector<string>();
+
+  string seriesOfSteps = "";
+
+  auto history = player_->getHistory();
+
+  if (history != nullptr)
+  {
+    for (Direction* d : *history)
+    {
+      seriesOfSteps.append(1, d->getChar());
+    }
+  }
+
+  lines->push_back(seriesOfSteps);
+  lines->push_back(std::to_string(getMaxSteps()));
+
+  int size_x = map_->getSizeX();
+  int size_y = map_->getSizeY();
+  for (int y = 0; y < size_y; y++)
+  {
+    string line = "";
+    for (int x = 0; x < size_x; x++)
+    {
+      char symbol = Player::player_symbol;
+
+      CoordPair pair(x, y);
+      Field* field = map_->getFieldAt(pair);
+      symbol = field == nullptr ?
+      Field::air_symbol : field->getSymbol();
+
+      line.append(1, symbol);
+    }
+    lines->push_back(line);
+  }
+
+  return lines;
+}
+
+//------------------------------------------------------------------------------
+void Level::print(bool more)
+{
+  if (more)
+  {
+    cout << "Remaining steps: " << player_->getRemainingSteps() << endl;
+    cout << "Moved Steps: ";
+    auto history = player_->getHistory();
+    for (Direction* d : *history)
+    {
+      cout << d->getChar();
+    }
+    cout << endl;
+  }
+
+  CoordPair playerPos = player_->getPosition();
+  int size_x = map_->getSizeX();
+  int size_y = map_->getSizeY();
+  for (int y = 0; y < size_y; y++)
+  {
+    for (int x = 0; x < size_x; x++)
+    {
+      char symbol = Player::player_symbol;
+      if (playerPos.getX() != x || playerPos.getY() != y)
+      {
+        CoordPair pair(x, y);
+        Field* field = map_->getFieldAt(pair);
+        symbol =
+          field == nullptr || player_->hasBonusFieldVisited(pair) ?
+            Field::air_symbol : field->getSymbol();
+      }
+      cout << symbol;
+    }
+    cout << endl;
+  }
+}
+
+//------------------------------------------------------------------------------
+bool Level::fastMove(vector<Direction*> steps)
+{
+  Player* player = new Player(*player_);
+  for (Direction* direction : steps)
+  {
+    if (!player->hasStepsLeft())
+    {
+      return false;
+    }
+    if (!player->step(direction, true))
+    {
+      delete player;
+      return false;
+    }
+  }
+  delete player_;
+  player_ = player;
+  return true;
+}
+
+//------------------------------------------------------------------------------
+Level::~Level()
+{
+  delete player_;
+  delete map_;
+}

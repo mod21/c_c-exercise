@@ -1,0 +1,6 @@
+load loadfiles/empty.maze
+load loadfiles/invalidSteps.maze
+load loadfiles/invalidSteps2.maze
+load loadfiles/invalidFastMove.maze
+load loadfiles/moreMovesThanSteps.maze
+quit

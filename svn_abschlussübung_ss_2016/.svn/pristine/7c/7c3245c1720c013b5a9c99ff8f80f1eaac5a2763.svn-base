@@ -1,0 +1,164 @@
+//------------------------------------------------------------------------------
+// Solver.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "Direction.h"
+#include "Field.h"
+#include "Level.h"
+#include "Map.h"
+#include "Player.h"
+#include "Solver.h"
+
+//------------------------------------------------------------------------------
+Solver::Solver(Level* level) : level_(level),
+  size_x_(level->getMap()->getSizeX()), size_y_(level->getMap()->getSizeY()),
+  layers_(vector<Player***>()), queue_(queue<pair<Player*, int>>()),
+  initial_steps_(level->getPlayer()->getHistory().size())
+{
+  layers_.push_back(initializeNewMap());
+}
+
+//------------------------------------------------------------------------------
+inline void Solver::push4(int layer, Player* player)
+{
+  checkAndPush(layer, player, Direction::UP);
+  checkAndPush(layer, player, Direction::DOWN);
+  checkAndPush(layer, player, Direction::LEFT);
+  checkAndPush(layer, player, Direction::RIGHT);
+}
+
+//------------------------------------------------------------------------------
+inline void Solver::checkAndPush(int layer, Player* original,
+  Direction* direction)
+{
+  Player player(*original);
+  if (player.hasStepsLeft() && player.step(direction, true))
+  {
+    queue_.push(pair<Player*, int>(new Player(player), layer));
+    return;
+  }
+}
+
+//------------------------------------------------------------------------------
+inline void Solver::store(Player*** layer, Player* player)
+{
+  CoordPair position = player->getPosition();
+  layer[position.getX()][position.getY()] = player;
+}
+
+//------------------------------------------------------------------------------
+inline Player* Solver::get(Player*** layer, CoordPair position)
+{
+  return layer[position.getX()][position.getY()];
+}
+
+//------------------------------------------------------------------------------
+void Solver::solve()
+{
+  // Lay initial player on the queue and on the first layer.
+  Player* original = new Player(*(level_->getPlayer()));
+  store(layers_[0], original);
+  push4(0, original);
+
+  // Work through the queue.
+  while (queue_.size())
+  {
+    // Retrieve next player.
+    pair<Player*, int> current_pair = queue_.front();
+    Player* current = current_pair.first;
+    int layer = current_pair.second;
+    queue_.pop();
+
+    // Push to next layer if icecounter is active.
+    if (current->resetIceCounter())
+    {
+      unsigned int next_layer = layer + 1;
+      Player*** next_players = nullptr;
+      if (layers_.size() == next_layer)
+      {
+        next_players = initializeNewMap();
+        layers_.push_back(next_players);
+      }
+      else
+      {
+        next_players = layers_[next_layer];
+      }
+      queue_.push(pair<Player*, int>(new Player(*current), next_layer));
+    }
+
+    // Compare to other player on this position.
+    Player*** players = layers_[layer];
+    Player* other = get(players, current->getPosition());
+    if (other != nullptr &&
+      other->getRemainingSteps() > current->getRemainingSteps())
+    {
+      delete current;
+      continue;
+    }
+
+    // Lay current player on the queue and store it on the map.
+    store(players, current);
+    push4(layer, current);
+    if (other)
+    {
+      delete other;
+    }
+  }
+}
+
+vector<Direction*>* Solver::getWinner()
+{
+  // Find best player on the finish field.
+  CoordPair finish = level_->getMap()->getFieldPosition(Field::FINISH);
+  Player* finished = nullptr;
+  for (Player*** players: layers_)
+  {
+    Player* best = players[finish.getX()][finish.getY()];
+    if (best != nullptr && (finished == nullptr ||
+      finished->getRemainingSteps() < best->getRemainingSteps()))
+    {
+      finished = best;
+    }
+  }
+  if (finished == nullptr)
+  {
+    return nullptr;
+  }
+
+  // Return steps vector.
+  vector<Direction*>* history = new vector<Direction*>(finished->getHistory());
+  while (initial_steps_--)
+  {
+    history->erase(history->begin());
+  }
+  return history;
+}
+
+//------------------------------------------------------------------------------
+Solver::~Solver()
+{
+  // Break down layers array.
+  for (Player*** layers: layers_)
+  {
+    for (int column = 0; column < size_x_; column++)
+    {
+      Player** column_array = layers[column];
+      for (int row = 0; row < size_y_; row++)
+      {
+        if (column_array[row])
+        {
+          delete column_array[row];
+        }
+      }
+      delete column_array;
+    }
+  delete layers;
+  }
+}

@@ -1,0 +1,63 @@
+//------------------------------------------------------------------------------
+// FieldOneWay.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELDONEWAY_H
+#define FIELDONEWAY_H
+
+#include "Field.h"
+
+//----------------------------------------------------------------------------
+// FieldPath Class
+// Class to manage all player informations
+//
+class FieldOneWay: public Field
+{
+private:
+  //--------------------------------------------------------------------------
+  // Variable for direction
+  //
+  Direction* direction_;
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  FieldOneWay() = delete;
+
+  //--------------------------------------------------------------------------
+  // copy Constructor
+  // @param symbol
+  // @param direction
+  //
+  FieldOneWay(char symbol, Direction* direction);
+
+  //--------------------------------------------------------------------------
+  // field position check by enter
+  // @param player 
+  // @param direction current direction of player
+  //
+  virtual bool onEnter(Player* player, Direction* direction);
+
+  //--------------------------------------------------------------------------
+  // field position check on leave
+  // @param player 
+  // @param direction current direction of player
+  //
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~FieldOneWay();
+};
+
+#endif

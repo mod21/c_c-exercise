@@ -1,0 +1,53 @@
+//------------------------------------------------------------------------------
+// Map.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef MAP_H
+#define MAP_H
+
+class Field;
+class CoordPair;
+class Field;
+
+class Map
+{
+private:
+  Field** fields_;
+  int sizeX_, sizeY_, area_;
+  Map(Map &);
+
+  bool isWithinBounds(CoordPair pair);
+  bool checkWall();
+
+public:
+  Map(Field** fields, int sizeX, int sizeY);
+
+  inline int encodeCoords(CoordPair pair);
+
+  Field* getFieldAt(CoordPair pair);
+
+  void setFieldAt(CoordPair pair, Field* field);
+
+  const CoordPair getStartingPosition();
+
+  int getSizeX();
+
+  int getSizeY();
+
+  int getArea();
+
+  CoordPair getPortalEnd(Field* field, CoordPair position);
+
+  bool validate();
+
+  ~Map();
+};
+
+#endif

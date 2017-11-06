@@ -1,0 +1,28 @@
+//------------------------------------------------------------------------------
+// ExceptionWrongParameterCount.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef EXCEPTIONWRONGPARAMETERCOUNT_H
+#define EXCEPTIONWRONGPARAMETERCOUNT_H
+
+#include <exception>
+
+//----------------------------------------------------------------------------
+// Thrown when the parameter count in a command is invalid.
+//
+class WrongParameterCountException: public std::exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::WRONG_PARAMETER_COUNT.c_str();
+  }
+};
+
+#endif

@@ -1,0 +1,7 @@
+CommandWhoami.o: CommandWhoami.cpp CommandWhoami.h Command.h Exceptions.h \
+ Messages.h ExceptionAlreadySolved.h ExceptionInvalidMove.h \
+ ExceptionInvalidBasicFile.h ExceptionUnknownCommand.h \
+ ExceptionWrongParameter.h ExceptionWrongParameterCount.h \
+ ExceptionNoMazeLoaded.h ExceptionNoPath.h ExceptionFileLoad.h \
+ ExceptionFileWrite.h ExceptionOutOfSteps.h ExceptionInvalidPath.h \
+ ExceptionWrongUsage.h Game.h

@@ -1,0 +1,42 @@
+//------------------------------------------------------------------------------
+// Messages.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef MESSAGES_H
+#define MESSAGES_H
+
+#include <string>
+using namespace std;
+
+namespace DomainMessages
+{
+  const string IOS_FAILURE = "[ERR] File could not be opened.\n";
+  const string INVALID_FILE = "[ERR] Invalid file.\n";
+  const string INVALID_PATH = "[ERR] Invalid path.\n";
+  const string WRITE_ERROR = "[ERR] File could not be written.\n";
+  const string INVALID_MOVE = "[ERR] Invalid move.\n";
+  const string OUT_OF_STEPS = "[ERR] No more steps possible.\n";
+
+  const string OUT_OF_MEMORY = "[ERR] Out of memory.\n";
+  const string WRONG_USAGE =
+    "[ERR] Wrong usage: ./basic [-s <filename1>] [-m <filename2>]\n";
+
+  const string UNKNOWN_COMMAND = "[ERR] Unknown command.\n";
+  const string WRONG_PARAMETER_COUNT = "[ERR] Wrong parameter count.\n";
+  const string WRONG_PARAMETER = "[ERR] Wrong parameter.\n";
+  const string NO_MAZE_LOADED = "[ERR] No maze loaded.\n";
+
+  const string BYE = "Bye!\n";
+  const string SOLVED = "Congratulation! You solved the maze.\n";
+
+  const string INPUTPARAMS = "input params wrong\n";
+}
+
+#endif

@@ -1,0 +1,2 @@
+FieldIce.o: FieldIce.cpp FieldIce.h Field.h CoordPair.h Direction.h \
+ Player.h VisitsMap.h Level.h Map.h FieldCounter.h

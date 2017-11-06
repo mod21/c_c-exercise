@@ -1,0 +1,94 @@
+//------------------------------------------------------------------------------
+// Messages.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef MESSAGES_H
+#define MESSAGES_H
+
+#include <string>
+using std::string;
+
+namespace DomainMessages
+{
+
+  //--------------------------------------------------------------------------
+  // Error Msg for File not found
+  //
+  const string IOS_FAILURE = "[ERR] File could not be opened.\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for invalid syntax of file
+  //
+  const string INVALID_FILE = "[ERR] Invalid file.\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for invalid path of done or whant to do steps
+  //
+  const string INVALID_PATH = "[ERR] Invalid path.\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for save file could not be written
+  //
+  const string WRITE_ERROR = "[ERR] File could not be written.\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for invalid move because not possible or not allowed
+  //
+  const string INVALID_MOVE = "[ERR] Invalid move.\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for no steps left
+  //
+  const string OUT_OF_STEPS = "[ERR] No more steps possible.\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for system out of memory
+  //
+  const string OUT_OF_MEMORY = "[ERR] Out of memory.\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for wrong arguments added
+  //
+  const string WRONG_USAGE =
+    "[ERR] Wrong usage: ./basic [-s <filename1>] [-m <filename2>]\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for something which is not defined was inserted as command
+  //
+  const string UNKNOWN_COMMAND = "[ERR] Unknown command.\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for wrong count of parameter was inserted
+  //
+  const string WRONG_PARAMETER_COUNT = "[ERR] Wrong parameter count.\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for wrong parameter where inserted
+  //
+  const string WRONG_PARAMETER = "[ERR] Wrong parameter.\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for no map was load
+  //
+  const string NO_MAZE_LOADED = "[ERR] No maze loaded.\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for quit
+  //
+  const string BYE = "Bye!\n";
+
+  //--------------------------------------------------------------------------
+  // Error Msg for congratulations because game is won
+  //
+  const string SOLVED = "Congratulation! You solved the maze.\n";
+
+}
+
+#endif

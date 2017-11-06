@@ -1,0 +1,52 @@
+//------------------------------------------------------------------------------
+// CommandQuit.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef COMMANDQUIT_H
+#define COMMANDQUIT_H
+
+#include <string>
+#include <vector>
+#include "Command.h"
+
+
+//----------------------------------------------------------------------------
+// CommandQuit Class
+// passed by Command class
+// class to exit the game
+//
+class CommandQuit: public Command
+{
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  CommandQuit() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param name command name which was used
+  //
+  CommandQuit(std::string name);
+  
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~CommandQuit();
+  
+  //--------------------------------------------------------------------------
+  // Executes the command.
+  // @param game The game where action should be performed on
+  // @param params Possible parameters needed for the execution
+  //
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+#endif

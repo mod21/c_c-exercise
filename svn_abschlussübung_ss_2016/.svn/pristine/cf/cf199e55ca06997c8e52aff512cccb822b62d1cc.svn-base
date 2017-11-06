@@ -1,0 +1,2 @@
+Solver.o: Solver.cpp Direction.h Field.h CoordPair.h Level.h Player.h \
+ VisitsMap.h Map.h Solver.h

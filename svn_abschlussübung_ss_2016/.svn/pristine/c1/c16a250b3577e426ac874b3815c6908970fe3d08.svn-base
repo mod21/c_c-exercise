@@ -1,0 +1,10 @@
+load wiki.Maze
+load wiki.maze
+move UP
+move Up
+fastmove R
+fastmove RL
+fastmove rL
+show morE
+quit
+

@@ -1,0 +1,93 @@
+//------------------------------------------------------------------------------
+// Game.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#ifndef GAME_H
+#define GAME_H
+
+#include "Level.h"
+
+#include <string>
+#include <vector>
+
+//----------------------------------------------------------------------------
+// Game Class
+// Class to manage all game informations
+//
+class Game
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // private copy constructor
+  // @param other 
+  //
+  Game(Game& other);
+
+  //--------------------------------------------------------------------------
+  // object level of Level
+  //
+  Level * level_;
+
+  //--------------------------------------------------------------------------
+  // autosave information about enabled yes or no
+  //
+  bool isAutoSaveEnabled_;
+
+  //--------------------------------------------------------------------------
+  // autosave path which file should be used for autosave
+  //
+  string autoSavePath_;
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  Game();
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~Game();
+
+  //--------------------------------------------------------------------------
+  // create the map for the game
+  // @param textLines from load file
+  //
+  static Map* createMapFromLines(vector<string> textLines);
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  Level* getLevel();
+
+  static Level* readLevel(vector<string> textLines);
+
+  static vector<Direction*>* getHistoryFromString(string history);
+
+  //--------------------------------------------------------------------------
+  // Setter Methods
+  //
+  void setLevel(Level* level);
+
+  void loadLevel(vector<string>& textLines);
+
+  void loadFromFile(string path);
+  void saveToFile(string path);
+
+  void enableAutoSave(string path);
+  void disableAutosave();
+
+  void autoSave();
+
+  void loadAndInitializeLevel(string path);
+};
+
+#endif

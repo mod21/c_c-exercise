@@ -1,0 +1,11 @@
+load ice3.maze
+load iceTeleport.maze
+load iceQuicksand1.maze
+load iceQuicksand2.maze
+show more
+move right
+load iceBonus.maze
+show more
+move right
+quit
+

@@ -1,0 +1,45 @@
+//------------------------------------------------------------------------------
+// FieldBonus.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "FieldBonus.h"
+#include "Direction.h"
+
+//------------------------------------------------------------------------------
+FieldBonus::FieldBonus(long bonus) :
+  Field('a' - 1 + (char) bonus)
+{
+  bonus_ = bonus;
+}
+
+//------------------------------------------------------------------------------
+bool FieldBonus::onEnter(Player* player, CoordPair position,
+  Direction* direction)
+{
+  player->move(direction);
+  if (!player->hasBonusFieldVisited(position))
+  {
+    player->grantMoreSteps(bonus_);
+    player->visitBonusField(position);
+  }
+  return true;
+}
+
+//------------------------------------------------------------------------------
+bool FieldBonus::onLeave(Player* player, Direction* direction)
+{
+  return true;
+}
+
+//------------------------------------------------------------------------------
+FieldBonus::~FieldBonus()
+{
+
+}

@@ -1,0 +1,2 @@
+FieldBonus.o: FieldBonus.cpp FieldBonus.h Field.h CoordPair.h Direction.h \
+ Player.h

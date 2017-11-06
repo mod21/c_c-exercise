@@ -1,0 +1,6 @@
+Game.o: Game.cpp Exceptions.h Messages.h ExceptionInvalidMove.h \
+ ExceptionInvalidBasicFile.h ExceptionUnknownCommand.h \
+ ExceptionWrongParameter.h ExceptionWrongParameterCount.h \
+ ExceptionNoMazeLoaded.h ExceptionFileLoad.h ExceptionFileWrite.h \
+ ExceptionOutOfSteps.h ExceptionInvalidPath.h ExceptionWrongUsage.h \
+ Field.h Player.h CoordPair.h Direction.h Game.h Level.h Util.h Map.h

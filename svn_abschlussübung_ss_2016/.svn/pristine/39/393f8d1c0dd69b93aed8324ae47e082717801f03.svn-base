@@ -1,0 +1,7 @@
+load brokenWall.maze
+load brokenWall2.maze
+load noStarts.maze
+load twoStarts.maze
+load noEnds.maze
+load twoEnds.maze
+quit

@@ -1,0 +1,29 @@
+//------------------------------------------------------------------------------
+// Util.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef UTIL_H
+#define UTIL_H
+
+#include <string>
+
+namespace Util
+{
+  bool checkAllDigits(const std::string &str);
+  std::string trim(const std::string& str,
+    const std::string& whitespace = " \t");
+
+  void prepareExit();
+
+  void init();
+}
+;
+
+#endif

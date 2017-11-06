@@ -1,0 +1,124 @@
+//------------------------------------------------------------------------------
+// Field.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "Field.h"
+#include "FieldWall.h"
+#include "FieldTeleport.h"
+#include "FieldStart.h"
+#include "FieldQuicksand.h"
+#include "FieldPath.h"
+#include "FieldOneWay.h"
+#include "FieldIce.h"
+#include "FieldFinish.h"
+#include "FieldBonus.h"
+#include "FieldHole.h"
+#include "FieldCounter.h"
+#include "Direction.h"
+
+//------------------------------------------------------------------------------
+Field::Field(char symbol)
+{
+  symbol_ = symbol;
+  fields_->push_back(this);
+}
+
+//------------------------------------------------------------------------------
+vector<Field*>* Field::fields_;
+
+//------------------------------------------------------------------------------
+Field* Field::PATH;
+
+//------------------------------------------------------------------------------
+Field* Field::WALL;
+
+//------------------------------------------------------------------------------
+Field* Field::START;
+
+//------------------------------------------------------------------------------
+Field* Field::FINISH;
+
+//------------------------------------------------------------------------------
+Field* Field::ICE;
+
+//------------------------------------------------------------------------------
+Field* Field::HOLE;
+
+//------------------------------------------------------------------------------
+Field::~Field()
+{
+}
+
+//------------------------------------------------------------------------------
+char Field::getSymbol()
+{
+  return symbol_;
+}
+
+//------------------------------------------------------------------------------
+Field* Field::getBySymbol(char symbol)
+{
+  for (Field* field : *fields_)
+  {
+    if (field->getSymbol() == symbol)
+    {
+      return field;
+    }
+  }
+  return nullptr;
+}
+
+//------------------------------------------------------------------------------
+void Field::init()
+{
+  fields_ = new vector<Field*>();
+  PATH = new FieldPath();
+  WALL = new FieldWall();
+  START = new FieldStart();
+  FINISH = new FieldFinish();
+  ICE = new FieldIce();
+  HOLE = new FieldHole();
+  for (long i = 1; i <= 5; i++)
+  {
+    new FieldBonus(i);
+  }
+  for (long i = 1; i <= 5; i++)
+  {
+    new FieldQuicksand(i);
+  }
+  for (long i = 1; i < FieldCounter::step_maximum; i++)
+  {
+    new FieldCounter(i);
+  }
+
+  for (char i = 0; i < number_of_teleporter_types; i++)
+  {
+    new FieldTeleport(i);
+  }
+  new FieldOneWay('^', Direction::UP);
+  new FieldOneWay('<', Direction::LEFT);
+  new FieldOneWay('v', Direction::DOWN);
+  new FieldOneWay('>', Direction::RIGHT);
+}
+
+//------------------------------------------------------------------------------
+void Field::remove()
+{
+  if (fields_ == nullptr)
+  {
+    return;
+  }
+  for (Field* field : *fields_)
+  {
+    delete field;
+  }
+  delete fields_;
+  fields_ = nullptr;
+}

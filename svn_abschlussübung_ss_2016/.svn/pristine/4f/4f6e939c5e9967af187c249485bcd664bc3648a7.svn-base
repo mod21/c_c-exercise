@@ -1,0 +1,98 @@
+//------------------------------------------------------------------------------
+// Game.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#ifndef GAME_H
+#define GAME_H
+
+#include <string>
+
+class Direction;
+class CoordPair;
+class Player;
+class Map;
+class Level;
+
+using std::string;
+
+//----------------------------------------------------------------------------
+// Contains the current level and some other settings.
+//
+class Game
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  //
+  Game(Game &);
+
+  //--------------------------------------------------------------------------
+  // The current level.
+  //
+  Level* level_;
+
+  //--------------------------------------------------------------------------
+  // Whether autosave is enabled.
+  //
+  bool isAutoSaveEnabled_;
+
+  //--------------------------------------------------------------------------
+  // The current autosave path.
+  //
+  string autoSavePath_;
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Creates a new instance.
+  //
+  Game();
+
+  //--------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~Game();
+
+  //--------------------------------------------------------------------------
+  // Returns the current level.
+  // @reutrn A level. Returns nullptr if no level is loaded.
+  //
+  Level* getLevel();
+
+  //--------------------------------------------------------------------------
+  // Sets a new level and deletes the old one.
+  // @param level The new level.
+  //
+  void setLevel(Level* level);
+
+  //--------------------------------------------------------------------------
+  // Enables the autosave function.
+  // @path The path of the autosave file.
+  //
+  void enableAutoSave(string path);
+
+  //--------------------------------------------------------------------------
+  // Disables the autosave function.
+  //
+  void disableAutosave();
+
+  //--------------------------------------------------------------------------
+  // Conducts an autosave if a path is set.
+  //
+  void autoSave();
+
+  //--------------------------------------------------------------------------
+  // Loads and fully initializes a level from a path.
+  // @param path The path of the level file.
+  //
+  void loadAndInitializeLevel(string path);
+};
+
+#endif

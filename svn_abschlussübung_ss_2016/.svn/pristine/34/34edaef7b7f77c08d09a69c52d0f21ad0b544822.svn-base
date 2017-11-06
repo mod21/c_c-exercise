@@ -1,0 +1,164 @@
+//------------------------------------------------------------------------------
+// Field.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELD_H
+#define FIELD_H
+
+#include "CoordPair.h"
+#include <vector>
+
+
+using std::vector;
+
+//----------------------------------------------------------------------------
+// Direction Class
+// Deklaration
+//
+class Direction;
+
+//----------------------------------------------------------------------------
+// Player Class
+// Deklaration
+//
+class Player;
+
+//----------------------------------------------------------------------------
+// Player Class
+// Class to manage all player informations
+//
+class Field
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // Variable symbol of field
+  //
+  char symbol_;
+
+  //--------------------------------------------------------------------------
+  // variable fields 
+  //
+  static vector<Field*>* fields_;
+
+  //--------------------------------------------------------------------------
+  // private copy constructor
+  //
+  Field(Field &);
+
+public:
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  Field() = delete;
+
+  //--------------------------------------------------------------------------
+  // variable number of teleporter types definition
+  //
+  static const int number_of_teleporter_types = 26;
+
+  //--------------------------------------------------------------------------
+  // deklaration and defintion of space symbol 
+  //
+  static const char air_symbol = ' ';
+
+  //--------------------------------------------------------------------------
+  // Destruktor
+  //
+  virtual ~Field() = 0;
+
+  //--------------------------------------------------------------------------
+  // declaration Wall
+  //
+  static Field* WALL;
+
+  //--------------------------------------------------------------------------
+  // declaration PATH
+  //
+  static Field* PATH;
+
+  //--------------------------------------------------------------------------
+  // declaration START
+  //
+  static Field* START;
+
+  //--------------------------------------------------------------------------
+  // declaration FINISH
+  //
+  static Field* FINISH;
+
+  //--------------------------------------------------------------------------
+  // declaration ICE
+  //
+  static Field* ICE;
+
+  //--------------------------------------------------------------------------
+  // copy Constructor
+  // @param symbol for field
+  //
+  Field(char symbol);
+
+  //--------------------------------------------------------------------------
+  // field check by enter
+  // @param player information
+  // @param position of player
+  // @param direction current direction of player
+  //
+  virtual bool onEnter(Player* player, CoordPair position, Direction* direction)
+  {
+    return onEnter(player, direction);
+  }
+
+  //--------------------------------------------------------------------------
+  // field check by onLeave
+  // @param player information
+  // @param position of player
+  // @param direction current direction of player
+  //
+  virtual bool onLeave(Player* player, CoordPair position, Direction* direction)
+  {
+    return onLeave(player, direction);
+  }
+
+  //--------------------------------------------------------------------------
+  // field check by enter
+  // @param player information
+  // @param direction current direction of player
+  //
+  virtual bool onEnter(Player* player, Direction* direction)
+  {
+    return false;
+  }
+
+  //--------------------------------------------------------------------------
+  // field check by onLeave
+  // @param player information
+  // @param direction current direction of player
+  //
+  virtual bool onLeave(Player* player, Direction* direction)
+  {
+    return false;
+  }
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  char getSymbol();
+
+  static Field* getBySymbol(char symbol);
+
+  //--------------------------------------------------------------------------
+  // Setter Methods
+  //
+  static void init();
+  static void remove();
+};
+
+#endif

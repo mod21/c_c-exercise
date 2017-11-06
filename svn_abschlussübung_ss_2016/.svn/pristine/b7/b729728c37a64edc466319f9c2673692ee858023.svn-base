@@ -1,0 +1,134 @@
+//------------------------------------------------------------------------------
+// Map.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef MAP_H
+#define MAP_H
+
+//----------------------------------------------------------------------------
+// Field Class
+// Deklaration
+//
+class Field;
+
+//----------------------------------------------------------------------------
+// CoordPair Class
+// Deklaration
+//
+class CoordPair;
+
+//----------------------------------------------------------------------------
+// Field Class
+// Deklaration
+//
+class Field;
+
+//----------------------------------------------------------------------------
+// Map Class
+// Class to create the game map
+//
+class Map
+{
+private:
+
+  //--------------------------------------------------------------------------
+  /// object fields of field
+  //
+  Field** fields_;
+
+  //--------------------------------------------------------------------------
+  /// variable size x and y with area for map
+  //
+  int size_x_, size_y_, area_;
+
+  //--------------------------------------------------------------------------
+  // Private copy constructor
+  // @param map 
+  //
+  Map(Map &);
+
+  //--------------------------------------------------------------------------
+  // check coords with map coords about validation
+  //
+  bool isWithinBounds(CoordPair pair);
+
+  //--------------------------------------------------------------------------
+  // check wall validation
+  //
+  bool checkWall();
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  Map() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // create map with fields and size
+  // @param fields information
+  // @param sizeX size of x axis 
+  // @param sizeY size of y axis
+  //
+  Map(Field** fields, int sizeX, int sizeY);
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+
+  bool validate();
+
+  Field* getFieldAt(CoordPair pair);
+
+  const CoordPair getStartingPosition();
+
+  //--------------------------------------------------------------------------
+  // Returns the width of the map
+  // @return A positive number
+  //
+  int getSizeX();
+
+  //--------------------------------------------------------------------------
+  // Returns the height of the map
+  // @return A positive number
+  //
+  int getSizeY();
+
+  //--------------------------------------------------------------------------
+  // Calculates the area of the map
+  // @return width * height
+  //
+  int getArea();
+
+  //--------------------------------------------------------------------------
+  // Returns the position of the portal on the other side
+  // @param field The type of the entrance
+  // @position The position of the entrance
+  // @return The position of the exit
+  //
+  CoordPair getPortalEnd(Field* field, CoordPair position);
+
+  //--------------------------------------------------------------------------
+  // Setter Methods
+  //
+  void setFieldAt(CoordPair pair, Field* field);
+
+  //--------------------------------------------------------------------------
+  // Converts a coordinate pair to a one dimensional number
+  // @param The coordinate pair
+  // @return The index in the fields-array
+  //
+  inline int encodeCoords(CoordPair pair);
+
+  ~Map();
+};
+
+#endif

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+diff ref/tc$1.txt out/tc$1.txt

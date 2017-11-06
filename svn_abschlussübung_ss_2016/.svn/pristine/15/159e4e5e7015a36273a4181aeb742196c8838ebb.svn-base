@@ -1,0 +1,40 @@
+//------------------------------------------------------------------------------
+// FieldIce.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "Field.h"
+#include "Direction.h"
+
+//------------------------------------------------------------------------------
+FieldIce::FieldIce() :
+  Field('+')
+{
+
+}
+
+//------------------------------------------------------------------------------
+bool FieldIce::onEnter(Player* player, Direction* direction)
+{
+  player->move(direction);
+  player->step(direction, false);
+  return true;
+}
+
+//------------------------------------------------------------------------------
+bool FieldIce::onLeave(Player* player, Direction* direction)
+{
+  return true;
+}
+
+//------------------------------------------------------------------------------
+FieldIce::~FieldIce()
+{
+
+}

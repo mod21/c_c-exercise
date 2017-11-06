@@ -1,0 +1,41 @@
+//------------------------------------------------------------------------------
+// FieldPath.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "FieldPath.h"
+#include "Direction.h"
+#include "Player.h"
+
+//------------------------------------------------------------------------------
+FieldPath::FieldPath() :
+  Field(' ')
+{
+}
+
+//------------------------------------------------------------------------------
+bool FieldPath::onEnter(Player* player, CoordPair position,
+  Direction* direction)
+{
+  player->move(direction);
+  return true;
+}
+
+//------------------------------------------------------------------------------
+bool FieldPath::onLeave(Player* player, CoordPair position,
+  Direction* direction)
+{
+  return true;
+}
+
+//------------------------------------------------------------------------------
+FieldPath::~FieldPath()
+{
+
+}

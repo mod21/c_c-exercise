@@ -1,0 +1,14 @@
+load loadfiles/quicksandInvalid.maze
+load loadfiles/quicksandInvalid2.maze
+load loadfiles/quicksand3.maze
+fastmove rrrr
+show more
+move right
+move right
+move right
+move right
+show more
+load loadfiles/quicksandBonus.maze
+load loadfiles/quicksandBonus2.maze
+show more
+quit

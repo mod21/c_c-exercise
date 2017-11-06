@@ -1,0 +1,113 @@
+//------------------------------------------------------------------------------
+// Direction.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "Direction.h"
+
+//------------------------------------------------------------------------------
+Direction* Direction::UP;
+
+//------------------------------------------------------------------------------
+Direction* Direction::LEFT;
+
+//------------------------------------------------------------------------------
+Direction* Direction::DOWN;
+
+//------------------------------------------------------------------------------
+Direction* Direction::RIGHT;
+
+//------------------------------------------------------------------------------
+Direction::Direction(char ch, int x, int y, string word) :
+  ch_(ch),
+  x_(x),
+  y_(y),
+  word_(word)
+{
+  instances_->push_back(this);
+}
+
+//------------------------------------------------------------------------------
+Direction::~Direction()
+{
+}
+
+//------------------------------------------------------------------------------
+char Direction::getChar()
+{
+  return ch_;
+}
+
+//------------------------------------------------------------------------------
+string Direction::getWord()
+{
+  return word_;
+}
+
+//------------------------------------------------------------------------------
+int Direction::getX()
+{
+  return x_;
+}
+
+//------------------------------------------------------------------------------
+int Direction::getY()
+{
+  return y_;
+}
+
+//------------------------------------------------------------------------------
+vector<Direction*>* Direction::instances_ = nullptr;
+
+//------------------------------------------------------------------------------
+Direction* Direction::getDirectionByChar(char ch)
+{
+  for (Direction* d : *instances_)
+  {
+    if (d->getChar() == ch)
+    {
+      return d;
+    }
+  }
+  return nullptr;
+}
+
+//------------------------------------------------------------------------------
+Direction* Direction::getDirectionByWord(string word)
+{
+  for (Direction* d : *instances_)
+  {
+    if (d->getWord() == word)
+    {
+      return d;
+    }
+  }
+  return nullptr;
+}
+
+//------------------------------------------------------------------------------
+void Direction::init()
+{
+  instances_ = new vector<Direction*>();
+  UP = new Direction('u', 0, -1, "up");
+  LEFT = new Direction('l', -1, 0, "left");
+  DOWN = new Direction('d', 0, 1, "down");
+  RIGHT = new Direction('r', 1, 0, "right");
+}
+
+//------------------------------------------------------------------------------
+void Direction::remove()
+{
+  for (vector<Direction*>::iterator iterator = instances_->begin();
+    iterator != instances_->end(); iterator++)
+  {
+    delete *iterator;
+  }
+  delete instances_;
+}

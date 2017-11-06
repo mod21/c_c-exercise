@@ -1,0 +1,62 @@
+//------------------------------------------------------------------------------
+// FieldHole.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELDHOLE_H
+#define FIELDHOLE_H
+
+#include "Field.h"
+
+//------------------------------------------------------------------------------
+// The player spawns here.
+//
+class FieldHole : public Field
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  //
+  FieldHole(FieldHole &);
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Creates a new instance.
+  //
+  FieldHole();
+
+  //----------------------------------------------------------------------------
+  // Called when the player tries to enter a field.
+  // @param player The current player.
+  // @param position The position where the player is entering.
+  // @param direction The direction the player is entering from.
+  // @return Whether the player can enter here.
+  //
+  virtual bool onEnter(Player* player, CoordPair position,
+    Direction* direction);
+
+  //----------------------------------------------------------------------------
+  // Called when the player tries to leave a field.
+  // @param player The current player.
+  // @param position The position the player is leaving to.
+  // @param direction The direction the player is leaving to.
+  // @return Whether the player can leave here.
+  //
+  virtual bool onLeave(Player* player, CoordPair position,
+    Direction* direction);
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~FieldHole();
+};
+
+#endif

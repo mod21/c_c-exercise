@@ -1,0 +1,117 @@
+//------------------------------------------------------------------------------
+// CommandParser.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Sp�cklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CommandParser.h"
+#include "Exceptions.h"
+#include "Util.h"
+#include "CommandLoad.h"
+#include "CommandSave.h"
+#include "CommandMove.h"
+#include "CommandFastMove.h"
+#include "CommandShow.h"
+#include "CommandQuit.h"
+#include "CommandReset.h"
+
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//------------------------------------------------------------------------------
+CommandParser::CommandParser()
+{
+  command_ptr_ = nullptr;
+}
+
+//------------------------------------------------------------------------------
+CommandParser::~CommandParser()
+{
+  if (command_ptr_)
+  {
+    command_ptr_ = nullptr;
+  }
+}
+
+//------------------------------------------------------------------------------
+void CommandParser::readCommand()
+{
+  command_ptr_ = nullptr;
+
+  string line;
+  string commandArgument;
+
+   std::getline(cin, line);
+   vector<string> cmdArguments;
+
+  // trim leading and trailing spaces
+  string trimmedInput = Util::trim(line);
+
+  // end of first word
+  size_t firstWhiteSpacePos = trimmedInput.find_first_of(" \t");
+
+  if (firstWhiteSpacePos == string::npos)
+  {
+    cmd_ = trimmedInput;
+  }
+  else
+  {
+    cmd_ = trimmedInput.substr(0, firstWhiteSpacePos);
+
+    trimmedInput = Util::trim(trimmedInput.substr(firstWhiteSpacePos, trimmedInput.length()));
+
+    // only 0-1 arguments possible
+    if (trimmedInput.length() > 0)
+      cmdArguments.push_back(trimmedInput);
+  }
+
+  // Commands should be case insensitive
+  std::transform(cmd_.begin(), cmd_.end(), cmd_.begin(), ::tolower);
+
+  parameter_ = cmdArguments;
+
+  if (cmd_ == "load")
+  {
+    command_ptr_ = new CommandLoad(cmd_);
+  }
+  else if (cmd_ == "save")
+  {
+    command_ptr_ = new CommandSave(cmd_);
+  }
+  else if (cmd_ == "move")
+  {
+    command_ptr_ = new CommandMove(cmd_);
+  }
+  else if (cmd_ == "fastmove")
+  {
+    command_ptr_ = new CommandFastMove(cmd_);
+  }
+  else if (cmd_ == "show")
+  {
+    command_ptr_ = new CommandShow(cmd_);
+  }
+  else if (cmd_ == "quit")
+  {
+    command_ptr_ = new CommandQuit(cmd_);
+  }
+  else if (cmd_ == "reset")
+  {
+    command_ptr_ = new CommandReset(cmd_);
+  }
+  else
+  {
+    if (cmd_ != "")
+    {
+      throw UnknownCommandException();
+    }
+  }
+}

@@ -1,0 +1,4 @@
+load invalidTeleports.maze
+load invalidTeleports2.maze
+load invalidFieldType.maze
+quit

@@ -1,0 +1,111 @@
+//------------------------------------------------------------------------------
+// VisitsMap.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef VISITSMAP_H
+#define VISITSMAP_H
+
+#include <map>
+
+using std::map;
+
+//------------------------------------------------------------------------------
+// Using coordpair class.
+//
+class CoordPair;
+
+//------------------------------------------------------------------------------
+// Using map class.
+//
+class Map;
+
+//------------------------------------------------------------------------------
+// Stores how often a player has been on a field.
+//
+class VisitsMap
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // A one dimensional array how often a player has been somewhere.
+  //
+  map<int, long> visits_;
+//  long* visits_;
+
+  //----------------------------------------------------------------------------
+  // Stores the width of the map.
+  //
+  int size_x_;
+
+  //----------------------------------------------------------------------------
+  // Stores the height of the map.
+  //
+  int size_y_;
+
+  //----------------------------------------------------------------------------
+  // Stores the area of the map.
+  //
+  int area_;
+
+  //----------------------------------------------------------------------------
+  // Default constructor - Should not be used.
+  //
+  VisitsMap() = delete;
+
+  //----------------------------------------------------------------------------
+  // Converts a coordinate pair to a one dimensional number.
+  // @param The coordinate pair.
+  // @return The index in the fields-array.
+  //
+  inline int encodeCoords(CoordPair pair)
+  {
+    return pair.getX() + pair.getY() * size_x_;
+  }
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Creates a new instance.
+  // @param map The original map.
+  //
+  VisitsMap(Map* map_object);
+
+  //----------------------------------------------------------------------------
+  // Copy constructor.
+  // @param map The map to be copied.
+  //
+  VisitsMap(const VisitsMap& original);
+
+  //----------------------------------------------------------------------------
+  // Returns how often a player has been at the given coordinates.
+  // @param pair The coordinates.
+  // @return Returns how often a player has been at the given coordinates.
+  //
+  inline long getVisitsAt(CoordPair pair)
+  {
+    return visits_[encodeCoords(pair)];
+  }
+
+  //----------------------------------------------------------------------------
+  // Visits the given field.
+  // @param pair The coordinates.
+  //
+  inline void visit(CoordPair pair)
+  {
+    visits_[encodeCoords(pair)]++;
+  }
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~VisitsMap();
+};
+
+#endif

@@ -1,0 +1,56 @@
+//------------------------------------------------------------------------------
+// FieldTeleport.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELDTELEPORT_H
+#define FIELDTELEPORT_H
+
+#include "Field.h"
+
+//----------------------------------------------------------------------------
+// FieldWall Class
+// Class to manage all player informations
+//
+class FieldTeleport: public Field
+{
+public:
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  FieldTeleport() = delete;
+
+  //--------------------------------------------------------------------------
+  // copy Constructor
+  // @param id teleport it
+  //
+  FieldTeleport(char id);
+
+  //--------------------------------------------------------------------------
+  // field position check by enter
+  // @param player 
+  // @param direction current direction of player
+  //
+  virtual bool onEnter(Player* player, CoordPair position,
+    Direction* direction);
+
+  //--------------------------------------------------------------------------
+  // field wall position check on leave
+  // @param player 
+  // @param direction current direction of player
+  //
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~FieldTeleport();
+};
+
+#endif

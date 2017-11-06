@@ -1,0 +1,42 @@
+//------------------------------------------------------------------------------
+// CoordPair.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef COORDPAIR_H
+#define COORDPAIR_H
+
+class Direction;
+
+class CoordPair
+{
+private:
+  int x_, y_;
+
+public:
+  CoordPair();
+
+  CoordPair(int x, int y);
+
+  CoordPair(const CoordPair &pair);
+
+  int getX();
+
+  int getY();
+
+  void add(int x, int y);
+
+  void addDirection(Direction* d);
+
+  const bool operator ==(const CoordPair &pair);
+
+  const bool operator !=(const CoordPair &pair);
+};
+
+#endif

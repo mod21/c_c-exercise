@@ -1,0 +1,66 @@
+//------------------------------------------------------------------------------
+// LevelIO.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef LEVEL_IO_H
+#define LEVEL_IO_H
+
+#include <algorithm>
+#include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
+
+namespace LevelIO
+{
+  //----------------------------------------------------------------------------
+  // Tries to create a map from the given lines.
+  // @param textLines The lines of the save file.
+  // @return Returns a new map. Returns nullptr if the lines are invalid.
+  //
+  Map* createMapFromLines(vector<string> textLines);
+
+  //----------------------------------------------------------------------------
+  // Converts a string to a list of moves.
+  // @param history A string representing a series of moves.
+  // @param A list of moves as reference
+  // @return Returns false if the string isn't valid
+  bool tryGetHistoryFromString(string text, vector<Direction*>& list);
+
+  //----------------------------------------------------------------------------
+  // Tries to read a level from a list of lines representing a level file.
+  // @param textLines A list of lines.
+  // @return A new level instance. Returns nullptr if the level isn't valid.
+  //
+  Level* parseLevel(vector<string> textLines);
+
+  //----------------------------------------------------------------------------
+  // Loads a new level from a list of lines representing a level file.
+  // @param A list of lines.
+  //
+  void loadLevel(vector<string>& textLines);
+
+  //----------------------------------------------------------------------------
+  // Loads and validates a level from a file.
+  // @param path The path to the file.
+  // @return A new level instance.
+  //
+  Level* loadFromFile(string path);
+
+  //----------------------------------------------------------------------------
+  // Tries to save the current level into a file.
+  // @param level The level to save.
+  // @param path The path the file should be written to.
+  //
+  void saveToFile(Level* level, string path);
+};
+
+#endif

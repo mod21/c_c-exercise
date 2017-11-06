@@ -1,0 +1,4 @@
+LoAd loadfiles/wiki.maze
+LOAD loadfiles/wiki.maze
+MOVE up
+quiT

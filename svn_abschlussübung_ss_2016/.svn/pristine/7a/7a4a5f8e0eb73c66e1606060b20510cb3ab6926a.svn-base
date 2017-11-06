@@ -1,0 +1,22 @@
+load loadfiles/oneway.maze
+move left
+move right
+move up
+move down
+move right
+load loadfiles/oneway.maze
+fastmove l
+fastmove d
+fastmove r
+fastmove l
+load loadfiles/oneway.maze
+fastmove lr
+load loadfiles/oneway.maze
+fastmove udrrr
+fastmove ll
+fastmove uuu
+fastmove uudu
+show more
+load loadfiles/oneway.maze
+fastmove rrr
+quit

@@ -1,0 +1,149 @@
+//------------------------------------------------------------------------------
+// Solver.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef SOLVER_H
+#define SOLVER_H
+
+#include <iostream>
+#include <queue>
+#include <tuple>
+#include <vector>
+
+using std::queue;
+using std::pair;
+using std::vector;
+
+//------------------------------------------------------------------------------
+// Using direction class.
+//
+class Direction;
+
+//------------------------------------------------------------------------------
+// Using player class.
+//
+class Player;
+
+//------------------------------------------------------------------------------
+// Using level class.
+//
+class Level;
+
+//------------------------------------------------------------------------------
+// Using map class.
+//
+class Map;
+
+//------------------------------------------------------------------------------
+// Stores how often a player has been on a field.
+//
+class Solver
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // The level to be solved.
+  //
+  Level* level_;
+
+  //----------------------------------------------------------------------------
+  // Width of the map - for more efficient access.
+  //
+  int size_x_;
+
+  //----------------------------------------------------------------------------
+  // Height of the map - for more efficient access.
+  //
+  int size_y_;
+
+  //----------------------------------------------------------------------------
+  // Two dimensional array of player pointers - Represents the map.
+  //
+  vector<Player***> players_;
+
+  //----------------------------------------------------------------------------
+  // One half of the queue containing the players.
+  //
+  queue<pair<Player*, unsigned int>> queue_;
+
+  //----------------------------------------------------------------------------
+  // Lays 4 players on the queue each facing in another direction.
+  // @param player The player.
+  //
+  inline void push4(int layer, Player* player);
+
+  //----------------------------------------------------------------------------
+  // Stores this player to the array map.
+  // @param player The player.
+  //
+  inline void store(Player*** players, Player* player);
+
+  //----------------------------------------------------------------------------
+  // Returns the player that occupies the given position on the map.
+  // @param position The position.
+  //
+  inline Player* get(Player*** players, CoordPair position);
+
+  //----------------------------------------------------------------------------
+  // Makes a move and lays the player on the queue if the move is successful.
+  // @param layer The current layer.
+  // @param player The player.
+  // @param direction The direction to go to.
+  //
+  inline void checkAndPush(unsigned int layer, Player* original,
+    Direction* direction);
+
+  inline Player*** initializeNewMap()
+  {
+    Player*** players = new Player**[size_x_];
+    for (int column = 0; column < size_x_; column++)
+    {
+      Player** column_array = new Player*[size_y_];
+      for (int row = 0; row < size_y_; row++)
+      {
+        column_array[row] = nullptr;
+      }
+      players[column] = column_array;
+    }
+    return players;
+  }
+
+  //----------------------------------------------------------------------------
+  // Default constructor - Should not be used.
+  //
+  Solver() = delete;
+
+  //----------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  //
+  Solver(Solver &);
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Creates a new instance.
+  // @param level The level to be solved.
+  //
+  Solver(Level* level);
+
+  //----------------------------------------------------------------------------
+  // Tries to solve the given level.
+  // @return Returns a list of moves needed to solve the level. Returns nullptr
+  //         if no path is found.
+  //
+  vector<Direction*>* solve();
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~Solver();
+};
+
+#endif

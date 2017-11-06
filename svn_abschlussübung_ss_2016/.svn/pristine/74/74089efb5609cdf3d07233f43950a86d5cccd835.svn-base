@@ -1,0 +1,101 @@
+//------------------------------------------------------------------------------
+// Main.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CommandParser.h"
+#include "CommandLineArgumentParser.h"
+#include "Exceptions.h"
+#include "Game.h"
+#include "Util.h"
+#include "Command.h"
+
+#include <vector>
+#include <string>
+
+using namespace std;
+
+//------------------------------------------------------------------------------
+// main function
+// entry point for execution
+// @param argc argument count
+// @param **argv argument values
+//
+int main(int argc, char* argv[])
+{
+  Util::init();
+
+  CommandParser parser;
+  CommandLineArgumentParser argumentParser;
+  Game game;
+
+  try
+  {
+    argumentParser.parseArguments(argc, argv);
+
+    if (argumentParser.isAutoSave())
+    {
+      game.enableAutoSave(argumentParser.getAutoSavePath());
+    }
+    if (argumentParser.isDefaultLoad())
+    {
+      game.loadAndInitializeLevel(argumentParser.getDefaultLoadPath());
+    }
+  }
+  catch (const exception &ex)
+  {
+    int result = processErrorMessage(ex);
+    if(result)
+    {
+    return result;
+    }
+  }
+
+  while (true)
+  {
+    Command* c = nullptr;
+    try
+    {
+      std::cout << "sep> ";
+      parser.readCommand();
+
+      c = parser.getCommand();
+
+      // The user has entered nothing and pressed return
+      if (c == nullptr)
+      {
+        continue;
+      }
+
+      auto commandArguments = parser.getParams();
+      int result = c->execute(game, commandArguments);
+      delete c;
+      c = nullptr;
+
+      if (result == 0)
+      {
+        Util::prepareExit();
+        return 0;
+      }
+    }
+    catch (const exception &ex)
+    {
+      if (c != nullptr)
+      {
+        delete c;
+      }
+      int result = processErrorMessage(ex);
+      if (result)
+      {
+        Util::prepareExit();
+        return result;
+      }
+    }
+  }
+}

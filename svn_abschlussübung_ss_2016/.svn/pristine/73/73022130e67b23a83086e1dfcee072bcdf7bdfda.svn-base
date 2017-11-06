@@ -1,0 +1,215 @@
+tabai@pluto:~/basic$ /usr/bin/valgrind.bin -v --tool=memcheck --leak-check=full ./basic
+
+
+==6515== HEAP SUMMARY:
+==6515==     in use at exit: 13,593 bytes in 339 blocks
+==6515==   total heap usage: 169,659 allocs, 169,320 frees, 2,309,649 bytes allocated
+==6515==
+==6515== Searching for pointers to 339 not-freed blocks
+==6515== Checked 121,336 bytes
+==6515==
+==6515== 17 bytes in 1 blocks are possibly lost in loss record 6 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A3E5D: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(std::string const&, unsigned int, unsigned int) (basic_string.h:1725)
+==6515==    by 0x8052A56: CommandParser::readCommand() (CommandParser.cpp:69)
+==6515==    by 0x805AF5B: main (Main.cpp:51)
+==6515==
+==6515== 67 bytes in 4 blocks are possibly lost in loss record 10 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x805DBBF: Util::init() (Util.cpp:48)
+==6515==    by 0x805AE81: main (Main.cpp:26)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 24 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x805CBBD: _GLOBAL__sub_I__ZN6PlayerC2EP5Level (Player.cpp:171)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 25 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x805B6D4: _GLOBAL__sub_I_main (Main.cpp:77)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 26 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x805A846: _GLOBAL__sub_I__ZN5LevelC2EP3Mapl (Level.cpp:172)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 27 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x80590B1: _GLOBAL__sub_I__ZN4GameC2Ev (Game.cpp:230)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 28 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x8055F47: _GLOBAL__sub_I__ZN11CommandShowC2ESs (CommandShow.cpp:59)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 29 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x8055705: _GLOBAL__sub_I__ZN11CommandSaveC2ESs (CommandSave.cpp:37)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 30 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x8054F5A: _GLOBAL__sub_I__ZN12CommandResetC2ESs (CommandReset.cpp:43)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 31 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x80547EC: _GLOBAL__sub_I__ZN11CommandQuitC2ESs (CommandQuit.cpp:36)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 32 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x80536C2: _GLOBAL__sub_I__ZN13CommandParserC2Ev (CommandParser.cpp:121)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 33 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x805282B: _GLOBAL__sub_I__ZN11CommandMoveC2ESs (CommandMove.cpp:71)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 34 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x8051ED8: _GLOBAL__sub_I__ZN11CommandLoadC2ESs (CommandLoad.cpp:61)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 35 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x8051525: _GLOBAL__sub_I__ZN25CommandLineArgumentParserC2Ev (CommandLineArgumentParser.cpp:109)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 36 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x804FB2C: _GLOBAL__sub_I__ZN15CommandFastMoveC2ESs (CommandFastMove.cpp:73)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 590 bytes in 15 blocks are possibly lost in loss record 37 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x80A2163: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==6515==    by 0x80A3F95: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==6515==    by 0x80A461F: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==6515==    by 0x804EF9E: _GLOBAL__sub_I__ZN12CommandDebugC2ESs (CommandDebug.cpp:49)
+==6515==    by 0x80B713C: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x804DF13: ??? (in /home/t/tabai/basic/basic)
+==6515==    by 0x80B70D8: __libc_csu_init (in /home/t/tabai/basic/basic)
+==6515==    by 0x4098C53: (below main) (libc-start.c:203)
+==6515==
+==6515== 665 (228 direct, 437 indirect) bytes in 23 blocks are definitely lost in loss record 38 of 38
+==6515==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==6515==    by 0x805E346: operator new(unsigned int) (new_op.cc:51)
+==6515==    by 0x805AF5B: main (Main.cpp:51)
+==6515==
+==6515== LEAK SUMMARY:
+==6515==    definitely lost: 228 bytes in 23 blocks
+==6515==    indirectly lost: 437 bytes in 32 blocks
+==6515==      possibly lost: 8,344 bytes in 215 blocks
+==6515==    still reachable: 4,584 bytes in 69 blocks
+==6515==         suppressed: 0 bytes in 0 blocks
+==6515== Reachable blocks (those to which a pointer was found) are not shown.
+==6515== To see them, rerun with: --leak-check=full --show-reachable=yes
+==6515==
+==6515== ERROR SUMMARY: 17 errors from 17 contexts (suppressed: 15 from 6)
+--6515--
+--6515-- used_suppression:     15 dl-hack3-cond-1
+==6515==
+==6515== ERROR SUMMARY: 17 errors from 17 contexts (suppressed: 15 from 6)
+
+tabai@pluto:~/basic$

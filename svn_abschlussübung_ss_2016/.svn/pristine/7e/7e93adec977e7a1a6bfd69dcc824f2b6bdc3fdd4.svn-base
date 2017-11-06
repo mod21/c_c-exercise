@@ -1,0 +1,97 @@
+//------------------------------------------------------------------------------
+// CommandParser.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef COMMANDPARSER_H
+#define COMMANDPARSER_H
+
+#include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
+
+//----------------------------------------------------------------------------
+// Using the command base class.
+//
+class Command;
+
+//----------------------------------------------------------------------------
+// Reads commands from the command line.
+//
+class CommandParser
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // The current command.
+  //
+  Command* command_ptr_;
+
+  //--------------------------------------------------------------------------
+  // The current arguments of the command.
+  //
+  vector<string> parameter_;
+
+  //--------------------------------------------------------------------------
+  // The current command.
+  //
+  string cmd_;
+
+  //--------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  // @param original Instance to be copied.
+  //
+  CommandParser(const CommandParser& original);
+
+  //--------------------------------------------------------------------------
+  // Private assignment operator - Should not be used.
+  // @param original Instance to be assigned.
+  //
+  CommandParser& operator=(const CommandParser& original);
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Default constructor - Creates a new instance.
+  //
+  CommandParser();
+
+  //--------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~CommandParser();
+
+  //--------------------------------------------------------------------------
+  // Returns the last command this parser has read.
+  // @return A command instance.
+  //
+  Command* getCommand()
+  {
+    return command_ptr_;
+  }
+
+  //--------------------------------------------------------------------------
+  // Returns the last parameters this parser has read.
+  // @return A list of strings.
+  //
+  vector<string> getParams()
+  {
+    return parameter_;
+  }
+
+  //--------------------------------------------------------------------------
+  // Reads the next command from the command line. Stores nullptr as the last
+  // command if the user enters nothing at all.
+  //
+  void readCommand();
+};
+
+#endif

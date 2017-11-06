@@ -1,0 +1,245 @@
+//------------------------------------------------------------------------------
+// Player.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include "CoordPair.h"
+#include "VisitsMap.h"
+
+#include <vector>
+
+using std::vector;
+
+//------------------------------------------------------------------------------
+// Using the level class.
+//
+class Level;
+
+//------------------------------------------------------------------------------
+// Using the direction class.
+//
+class Direction;
+
+//------------------------------------------------------------------------------
+// Using the visits map class.
+//
+class VisitsMap;
+
+//------------------------------------------------------------------------------
+// Holds a player.
+//
+class Player
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // Stores the remaining steps of this player.
+  //
+  int remaining_steps_ = 0;
+
+  //----------------------------------------------------------------------------
+  // The level the player is currently in.
+  //
+  Level* level_;
+
+  //----------------------------------------------------------------------------
+  // The steps the player has done so far.
+  //
+  vector<Direction*> history_;
+
+  //----------------------------------------------------------------------------
+  // The fields visited so far.
+  //
+  VisitsMap visited_fields_;
+
+  //----------------------------------------------------------------------------
+  // object player position 
+  //
+  CoordPair position_;
+
+  //----------------------------------------------------------------------------
+  // Variable is_finished_ to know current status of player
+  //
+  bool is_finished_;
+
+  //----------------------------------------------------------------------------
+  // Stores if the player has slided from an ice field to a counter on
+  // the last move.
+  //
+  bool is_icecounter_;
+
+  //----------------------------------------------------------------------------
+  // Default constructor - Should not be used.
+  //
+  Player() = delete;
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Creates a new instance
+  // @param level The level the player is in.
+  //
+  Player(Level* level);
+
+  //----------------------------------------------------------------------------
+  // Copy Constructor
+  //
+  Player(Player &player);
+
+  //----------------------------------------------------------------------------
+  // Returns the level the player is in.
+  // @return A level.
+  //
+  inline Level* getLevel()
+  {
+    return level_;
+  }
+
+  //----------------------------------------------------------------------------
+  // Returns the current position of the player.
+  // @return A coordinate pair.
+  //
+  inline CoordPair& getPosition()
+  {
+    return position_;
+  }
+
+  //----------------------------------------------------------------------------
+  // Marks the current field as visited.
+  //
+  inline void markFieldAsVisited()
+  {
+    visited_fields_.visit(position_);
+  }
+
+  //----------------------------------------------------------------------------
+  // Gets the history of moves made by this player.
+  // @return A list of directions.
+  //
+  inline vector<Direction*> getHistory()
+  {
+    return history_;
+  }
+
+  //----------------------------------------------------------------------------
+  // Tries to conduct a step in the given direction.
+  // @param direction The direction to move to.
+  // @param record Whether or not this move should be added to the history.
+  // @return Whether the move was successful.
+  //
+  bool step(Direction* direction, bool record);
+
+  //----------------------------------------------------------------------------
+  // @return Returns if the player has some steps left.
+  //
+  inline bool hasStepsLeft()
+  {
+    return remaining_steps_ > 0;
+  }
+
+  //----------------------------------------------------------------------------
+  // @return Returns how many steps this player has left.
+  //
+  inline int getRemainingSteps()
+  {
+    return remaining_steps_;
+  }
+
+  //----------------------------------------------------------------------------
+  // @param pair The coordinates of the field.
+  // @return Returns how often the player has visited the field at the given
+  //         coordinates.
+  inline int getFieldVisits(CoordPair pair)
+  {
+    return visited_fields_.getVisitsAt(pair);
+  }
+
+  //----------------------------------------------------------------------------
+  // @return Returns if the player is currently on the finish field.
+  //
+  inline bool isInFinish();
+
+  //----------------------------------------------------------------------------
+  // @return Returns if the player has already finished the game.
+  //
+  bool isFinished()
+  {
+    return is_finished_;
+  }
+
+  //----------------------------------------------------------------------------
+  // Teleports the player to the end of the portal to be entered.
+  // @param entrance The coordinates of the portal entrance.
+  //
+  void teleport(CoordPair entrance);
+
+  //----------------------------------------------------------------------------
+  // Moves the player in the given direction.
+  // @param direction The direction to move to.
+  inline void move(Direction* direction)
+  {
+    position_.addDirection(direction);
+  }
+
+  //----------------------------------------------------------------------------
+  // Adds the given move to the history.
+  // @param direction The direction to add.
+  //
+  void addToHistory(Direction* direction);
+
+  //----------------------------------------------------------------------------
+  // Gives the player more steps.
+  // @param The amount of steps to give.
+  //
+  void grantMoreSteps(int amount);
+
+  //----------------------------------------------------------------------------
+  // Subtracts a number of steps from the remaining steps.
+  // @param amount The amount of steps to subtract.
+  //
+  void takeRemainingSteps(int amount);
+
+  //----------------------------------------------------------------------------
+  // Checks if the player finishes the game.
+  //
+  void checkFinished();
+
+  //----------------------------------------------------------------------------
+  // Teleports the player back to the spawn.
+  //
+  void teleportToSpawn();
+
+  //----------------------------------------------------------------------------
+  // @return Returns if the player has slided from an ice field to a counter on
+  // the last move.
+  //
+  inline bool isIceCounter()
+  {
+    return is_icecounter_;
+  }
+
+  //----------------------------------------------------------------------------
+  // Sets that the player has slided from an ice field to a counter on
+  // the last move.
+  //
+  inline void setIceCounter()
+  {
+    is_icecounter_ = true;
+  }
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~Player();
+};
+
+#endif

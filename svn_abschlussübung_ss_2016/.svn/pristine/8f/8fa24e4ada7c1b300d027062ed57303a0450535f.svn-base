@@ -1,0 +1,80 @@
+//------------------------------------------------------------------------------
+// Command.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#ifndef COMMAND_H
+#define COMMAND_H
+
+#include <string>
+#include <vector>
+
+//----------------------------------------------------------------------------
+// Game Class
+// Declaration
+//
+class Game;
+
+//----------------------------------------------------------------------------
+// Command Class
+// class to manage the game commands
+//
+class Command
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // Private copy constructor
+  // @param original inserted original command
+  //
+  Command(const Command& original);
+
+  //--------------------------------------------------------------------------
+  // Private assignment operator
+  // @param original inserted original command
+  //
+  Command& operator=(const Command& original);
+
+  //--------------------------------------------------------------------------
+  /// Name of this command
+  //
+  std::string command_name_;
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  Command() = delete;
+
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // @param name command name which was used
+  //
+  Command(std::string name);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~Command();
+
+  //--------------------------------------------------------------------------
+  // Executes the command.
+  // @param game The game where action should be performed on
+  // @param params Possible parameters needed for the execution
+  // @return Integer representing the success of the action
+  //
+  virtual int execute(Game& game, std::vector<std::string>& params) = 0;
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  const std::string& getName() const;
+};
+
+#endif

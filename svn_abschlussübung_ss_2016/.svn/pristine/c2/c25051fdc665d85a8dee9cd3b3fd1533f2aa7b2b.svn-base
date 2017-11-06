@@ -1,0 +1,167 @@
+//------------------------------------------------------------------------------
+// Player.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#include "Player.h"
+#include "Messages.h"
+#include "Field.h"
+#include "Map.h"
+#include "Level.h"
+#include "CoordPair.h"
+#include "Field.h"
+#include "Direction.h"
+
+#include <iostream>
+
+//------------------------------------------------------------------------------
+Player::Player(Level* level) :
+  remaining_steps_(level->getMaxSteps()), level_(level),
+  history_(vector<Direction*>()),
+  visited_fields_(VisitsMap(level->getMap())),
+  position_(level->getMap()->getStartingPosition()), is_finished_(false),
+  is_icecounter_(false)
+{
+  markFieldAsVisited();
+}
+
+//------------------------------------------------------------------------------
+Player::Player(Player& player) :
+  remaining_steps_(player.remaining_steps_), level_(player.level_),
+  history_(vector<Direction*>(player.history_)),
+  visited_fields_(VisitsMap(player.visited_fields_)),
+  position_(player.position_), is_finished_(player.is_finished_),
+  is_icecounter_(player.is_icecounter_)
+{
+}
+
+//------------------------------------------------------------------------------
+Level* Player::getLevel()
+{
+  return level_;
+}
+
+//------------------------------------------------------------------------------
+bool Player::step(Direction* d, bool record)
+{
+  is_icecounter_ = false;
+  CoordPair new_position = position_;
+  new_position.addDirection(d);
+  Map* map = level_->getMap();
+  if (map->getFieldAt(position_)->onLeave(this, position_, d) &&
+    map->getFieldAt(new_position)->onEnter(this, new_position, d))
+  {
+    if (record)
+    {
+      addToHistory(d);
+    }
+    return true;
+  }
+  return false;
+}
+
+//------------------------------------------------------------------------------
+CoordPair& Player::getPosition()
+{
+  return position_;
+}
+
+//------------------------------------------------------------------------------
+vector<Direction*> Player::getHistory()
+{
+  return history_;
+}
+
+//------------------------------------------------------------------------------
+void Player::addToHistory(Direction* d)
+{
+  history_.push_back(d);
+  takeRemainingSteps(1);
+}
+
+//------------------------------------------------------------------------------
+void Player::teleport(CoordPair entrance)
+{
+  position_ = level_->getMap()->getPortalEnd(entrance);
+  markFieldAsVisited();
+}
+
+//------------------------------------------------------------------------------
+void Player::takeRemainingSteps(int amount)
+{
+  remaining_steps_ -= amount;
+  if (remaining_steps_ < 0)
+  {
+    remaining_steps_ = 0;
+  }
+}
+
+//------------------------------------------------------------------------------
+void Player::markFieldAsVisited()
+{
+  visited_fields_.visit(position_);
+}
+
+//------------------------------------------------------------------------------
+int Player::getFieldVisits(CoordPair pair)
+{
+  return visited_fields_.getVisitsAt(pair);
+}
+
+//------------------------------------------------------------------------------
+bool Player::isInFinish()
+{
+  return level_->getMap()->getFieldAt(position_) == Field::FINISH;
+}
+
+//------------------------------------------------------------------------------
+void Player::checkFinished()
+{
+  if (is_finished_ || !isInFinish())
+  {
+    return;
+  }
+  is_finished_ = true;
+  std::cout << DomainMessages::SOLVED;
+}
+
+//------------------------------------------------------------------------------
+bool Player::isFinished()
+{
+  return is_finished_;
+}
+
+//------------------------------------------------------------------------------
+void Player::teleportToSpawn()
+{
+  position_ = level_->getMap()->getStartingPosition();
+  markFieldAsVisited();
+}
+
+//------------------------------------------------------------------------------
+bool Player::isIceCounter()
+{
+  return is_icecounter_;
+}
+
+//------------------------------------------------------------------------------
+void Player::setIceCounter()
+{
+  is_icecounter_ = true;
+}
+
+//------------------------------------------------------------------------------
+//Field* Player::getCurrentField()
+//{
+//  return level_->getMap()->getFieldAt(position_);
+//}
+
+//------------------------------------------------------------------------------
+Player::~Player()
+{
+}

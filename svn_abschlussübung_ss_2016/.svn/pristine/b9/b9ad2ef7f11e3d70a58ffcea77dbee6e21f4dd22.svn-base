@@ -1,0 +1,82 @@
+//------------------------------------------------------------------------------
+// CommandLineArgumentParser.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#ifndef COMMANDLINEARGUMENTPARSER_H
+#define COMMANDLINEARGUMENTPARSER_H
+
+#include <string>
+
+using namespace std;
+
+//----------------------------------------------------------------------------
+// CommandLineArgumentParser Class
+// class to read and work with arguments at program startup
+//
+class CommandLineArgumentParser
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // Private Copy Constructor
+  // @param other arguments
+  //
+  CommandLineArgumentParser(CommandLineArgumentParser& other);
+
+  //--------------------------------------------------------------------------
+  // Variable for information about autosave setting
+  //
+  bool isAutoSave_;
+
+  //--------------------------------------------------------------------------
+  // Variable for information about direct load setting
+  //
+  bool isDefaultLoad_;
+
+  //--------------------------------------------------------------------------
+  // Variable for information about auto save path of save file
+  //
+  string autoSavePath_;
+
+  //--------------------------------------------------------------------------
+  // Variable for information about load path of save file
+  //
+  string defaultLoadPath_;
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  CommandLineArgumentParser();
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~CommandLineArgumentParser();
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  bool isAutoSave();
+
+  bool isDefaultLoad();
+
+  string getAutoSavePath();
+
+  string getDefaultLoadPath();
+
+  //--------------------------------------------------------------------------
+  // Setter Methods
+  //
+  void parseArguments(int argc, char* argv[]);
+
+};
+#endif
+

@@ -1,0 +1,50 @@
+//------------------------------------------------------------------------------
+// Util.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef UTIL_H
+#define UTIL_H
+
+#include <string>
+
+namespace Util
+{
+  //--------------------------------------------------------------------------
+  // check inserted digits
+  // @param str inserted digit
+  //
+  bool checkAllDigits(const std::string &str);
+
+  //--------------------------------------------------------------------------
+  // trim function
+  // @param str inserted digit
+  // @param whitespace character defintion
+  //
+  std::string trim(const std::string& str,
+    const std::string& whitespace = " \t");
+
+  //--------------------------------------------------------------------------
+  // Deletes allocated objects before terminating the program
+  //
+  void prepareExit();
+
+  //--------------------------------------------------------------------------
+  // Initializes all java-style-enums
+  //
+  void init();
+
+  //--------------------------------------------------------------------------
+  // Checks the given filename for invalid characters
+  // @return Returns whether or not the given filename is valid
+  //
+  bool checkFileName(std::string name);
+};
+
+#endif

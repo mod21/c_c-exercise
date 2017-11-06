@@ -1,0 +1,39 @@
+//------------------------------------------------------------------------------
+// CommandQuit.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CommandQuit.h"
+#include "Exceptions.h"
+#include "Messages.h"
+#include "Game.h"
+
+#include <iostream>
+
+const string CommandQuit::NAME = "quit";
+//------------------------------------------------------------------------------
+CommandQuit::CommandQuit() : Command(NAME)
+{
+}
+
+//------------------------------------------------------------------------------
+CommandQuit::~CommandQuit()
+{
+}
+
+//------------------------------------------------------------------------------
+bool CommandQuit::execute(Game& game, std::vector<std::string>& params)
+{
+  if (params.size() != 0)
+  {
+    throw WrongParameterCountException();
+  }
+  std::cout << DomainMessages::BYE;
+  return true;
+}

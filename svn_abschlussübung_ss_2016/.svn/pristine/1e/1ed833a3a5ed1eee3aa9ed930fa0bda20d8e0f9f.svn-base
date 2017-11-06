@@ -1,0 +1,49 @@
+//------------------------------------------------------------------------------
+// Util.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "Util.h"
+#include "Direction.h"
+#include "Field.h"
+#include <algorithm>
+#include <string>
+
+//------------------------------------------------------------------------------
+namespace Util
+{
+  bool checkAllDigits(const std::string &str)
+  {
+    return str.length() != 0 && std::all_of(str.begin(), str.end(), ::isdigit);
+  }
+
+  std::string trim(const std::string& str, const std::string& whitespace)
+  {
+    const auto strBegin = str.find_first_not_of(whitespace);
+    if (strBegin == std::string::npos)
+      return ""; // no content
+
+    const auto strEnd = str.find_last_not_of(whitespace);
+    const auto strRange = strEnd - strBegin + 1;
+
+    return str.substr(strBegin, strRange);
+  }
+
+  void prepareExit()
+  {
+    Direction::remove();
+    Field::remove();
+  }
+
+  void init()
+  {
+    Direction::init();
+    Field::init();
+  }
+}

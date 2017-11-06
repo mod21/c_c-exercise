@@ -1,0 +1,95 @@
+#pre00: Start and Quit (return 0)
+./basic < in/quit.txt > out/pre00.txt
+
+#pre01: Load Wiki-Example - Quit (return 0)
+./basic -m loadfiles/wiki.maze -s savefiles/pre01.save < in/quit.txt > out/pre01.txt
+
+#tc01: Usage (return 2)
+./basic -s abc -m > out/tc01.txt
+
+#tc02: Not existing load file (return 0)
+./basic -m loadfiles/Idonotexist.maze > out/tc02.txt < in/quit.txt
+
+#tc03: Save file cannot be written (return 0)
+./basic -s nopermissionsfolder/save -m loadfiles/wiki.maze > out/tc03.txt < in/quit.txt
+
+#tc04: Invalid Filename - please check file not existing (return 0)
+./basic -s invalid_filename -m loadfiles/wiki.maze > out/tc04.txt <in/quit.txt
+
+#tc05: Multiple Load-Parameters (return 2)
+./basic -m load1 -m load2 > out/tc05.txt
+
+#tc06: Cannot write save file (return 0)
+./basic -s dev/full -m loadfiles/wiki.maze < in/quit.txt > out/tc06.txt
+
+#tc07: Invalid load files (return 0)
+./basic  < in/loadInvalidFiles.txt > out/tc07.txt
+
+#tc08: Invalid load files (return 0)
+./basic < in/loadInvalidFiles2.txt > out/tc08.txt
+
+#tc09: Invalid load files (return 0)
+./basic < in/loadInvalidFiles3.txt > out/tc09.txt
+
+#tc10: Big Maze File & Solve (return 0)
+./basic -m loadfiles/big.maze -s savefiles/tc10.save < in/quit.txt > out/tc10.txt
+
+#tc11: move against wall (return 0)
+./basic -s savefiles/tc11.save < in/moveAgainstWall.txt > out/tc11.txt
+
+#tc12: Ice 1 (return 0)
+./basic < in/ice1.txt > out/tc12.txt
+
+#tc13: Ice 2  combined with other field types (return 0)
+./basic < in/ice2.txt > out/tc13.txt
+
+#tc14: Teleports (return 0)
+./basic < in/teleports.txt > out/tc14.txt
+
+#tc15: One Way (return 0)
+./basic < in/oneway.txt > out/tc15.txt
+
+#tc16: Bonus - Quicksand (return 0)
+./basic < in/bonus.txt > out/tc16.txt
+
+#tc17: Long Fastmove  (return 0)
+./basic -s savefiles/tc17.save < in/long-fastmove.txt > out/tc17.txt
+
+#tc18: Save (return 0)
+./basic -s savefiles/tc18.save < in/save.txt > out/tc18.txt
+
+#tc19: CommandLineTest - case insensitiv Command (return 0)
+./basic  < in/commandLine.txt > out/tc19.txt
+
+#tc20: CommandLineTest - case sensitiv (return 0)
+./basic  < in/commandLine2.txt > out/tc20.txt
+
+#tc21: Many Loads - check that Students do free Mazes on Load of new Maze/please provide a longer runtime - about 10 seconds should do (return 0)
+./basic < in/manyLoads.txt > out/tc21.txt
+
+#tc22: No maze Loaded  (return 0)
+./basic < in/NoMazeLoaded.txt > out/tc22.txt
+
+#tc23: No maze Loaded 2 - check BOTH files does not exist after (return 0)
+./basic -s savefiles/IShouldNotBeCreated < in/NoMazeLoaded.txt > out/tc23.txt
+
+#tc24: Reset 1 (return 0)
+./basic < in/reset.txt > out/tc24.txt
+
+#tc25: Reset 2 (return 0)
+./basic -s savefiles/tc25.save < in/reset.txt > out/tc25.txt
+
+#tc26: CommandLineTest - invalid number of parameters (return 0)
+./basic  < in/commandLine3.txt > out/tc26.txt
+
+#tc27: CommandLineTest - invalid parameters (return 0)
+./basic  < in/commandLine4.txt > out/tc27.txt
+
+#tc28: CommandLine - not existing commands (return 0)
+./basic  < in/commandLine5.txt > out/tc28.txt
+
+#tc29: Special Cases - Steps = 0 (return 0)
+./basic  < in/Steps0.txt > out/tc29.txt
+
+#tc30: Full Run Thorugh Maze - wiki.maze (return 0)
+./basic  < in/full.txt > out/tc30.txt

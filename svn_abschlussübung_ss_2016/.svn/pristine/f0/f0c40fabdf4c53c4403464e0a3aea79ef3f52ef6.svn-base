@@ -1,0 +1,8 @@
+LevelIO.o: LevelIO.cpp Direction.h Exceptions.h Messages.h \
+ ExceptionAlreadySolved.h ExceptionInvalidMove.h \
+ ExceptionInvalidBasicFile.h ExceptionUnknownCommand.h \
+ ExceptionWrongParameter.h ExceptionWrongParameterCount.h \
+ ExceptionNoMazeLoaded.h ExceptionNoPath.h ExceptionFileLoad.h \
+ ExceptionFileWrite.h ExceptionOutOfSteps.h ExceptionInvalidPath.h \
+ ExceptionWrongUsage.h Field.h CoordPair.h Level.h Player.h VisitsMap.h \
+ LevelIO.h Map.h Util.h

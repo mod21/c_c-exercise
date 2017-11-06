@@ -1,0 +1,58 @@
+//------------------------------------------------------------------------------
+// Direction.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef DIRECTION_H
+#define DIRECTION_H
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Direction
+{
+private:
+  char ch_;
+  int x_, y_;
+  string word_;
+  static vector<Direction*>* instances_;
+
+  Direction(const Direction &);
+
+public:
+  Direction(const char ch, const int x, const int y, const string word);
+
+  char getChar();
+
+  int getX();
+
+  int getY();
+
+  string getWord();
+
+  static void init();
+
+  static void remove();
+
+  static Direction* UP;
+
+  static Direction* LEFT;
+
+  static Direction* DOWN;
+
+  static Direction* RIGHT;
+
+  static Direction* getDirectionByChar(char ch);
+
+  static Direction* getDirectionByWord(string word);
+};
+
+#endif

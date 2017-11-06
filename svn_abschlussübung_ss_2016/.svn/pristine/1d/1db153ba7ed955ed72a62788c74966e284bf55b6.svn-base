@@ -1,0 +1,49 @@
+//------------------------------------------------------------------------------
+// CommandDebug.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "Command.h"
+#include "Exceptions.h"
+#include "Game.h"
+#include "Field.h"
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+//------------------------------------------------------------------------------
+CommandDebug::CommandDebug(std::string name) :
+  Command(name)
+{
+}
+
+//------------------------------------------------------------------------------
+CommandDebug::~CommandDebug()
+{
+}
+
+//------------------------------------------------------------------------------
+int CommandDebug::execute(Game& game, std::vector<std::string>& params)
+{
+  if (params.size() == 0)
+  {
+    throw WrongParameterCountException();
+  }
+  if (params.at(0) == "fields")
+  {
+    Field::printKnownFields();
+  }
+  else
+  {
+    throw WrongParameterException();
+  }
+  return 1;
+}

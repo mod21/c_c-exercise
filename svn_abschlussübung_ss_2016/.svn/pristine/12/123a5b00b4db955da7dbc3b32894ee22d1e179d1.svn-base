@@ -1,0 +1,122 @@
+//------------------------------------------------------------------------------
+// CommandParser.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CommandParser.h"
+#include "Exceptions.h"
+#include "Util.h"
+#include "CommandLoad.h"
+#include "CommandSave.h"
+#include "CommandMove.h"
+#include "CommandFastMove.h"
+#include "CommandShow.h"
+#include "CommandSolve.h"
+#include "CommandQuit.h"
+#include "CommandReset.h"
+#include "CommandWhoami.h"
+
+#include <algorithm>
+#include <functional>
+#include <string>
+
+#include <iostream>
+#include <istream>
+#include <iterator>
+#include <sstream>
+
+using std::string;
+using std::vector;
+
+//------------------------------------------------------------------------------
+CommandParser::CommandParser() :
+  command_ptr_(nullptr)
+{
+}
+
+//------------------------------------------------------------------------------
+CommandParser::~CommandParser()
+{
+  if (command_ptr_)
+  {
+    command_ptr_ = nullptr;
+  }
+}
+
+//------------------------------------------------------------------------------
+void CommandParser::readCommand()
+{
+  command_ptr_ = nullptr;
+
+  string line;
+  string commandArgument;
+
+  std::getline(std::cin, line);
+
+  std::stringstream sstr(line); //stringstream tokenizes the string on streaming.
+
+  std::istream_iterator<std::string> it(sstr);
+  std::istream_iterator<std::string> eos; // end of stream iterator
+  std::vector<std::string> cmdArguments(it, eos);
+
+  if (cmdArguments.size() != 0)
+  {
+    cmd_ = cmdArguments.front();
+    cmdArguments.erase(cmdArguments.begin());
+  }
+
+  // Commands should be case insensitive
+  std::transform(cmd_.begin(), cmd_.end(), cmd_.begin(), ::tolower);
+
+  parameter_ = cmdArguments;
+
+  if (cmd_ == CommandLoad::NAME)
+  {
+    command_ptr_ = new CommandLoad();
+  }
+  else if (cmd_ == CommandSave::NAME)
+  {
+    command_ptr_ = new CommandSave();
+  }
+  else if (cmd_ == CommandMove::NAME)
+  {
+    command_ptr_ = new CommandMove();
+  }
+  else if (cmd_ == CommandFastMove::NAME)
+  {
+    command_ptr_ = new CommandFastMove();
+  }
+  else if (cmd_ == CommandShow::NAME)
+  {
+    command_ptr_ = new CommandShow();
+  }
+  else if (cmd_ == CommandSolve::NAME)
+  {
+    command_ptr_ = new CommandSolve();
+  }
+  else if (cmd_ == CommandQuit::NAME)
+  {
+    command_ptr_ = new CommandQuit();
+  }
+  else if (cmd_ == CommandReset::NAME)
+  {
+    command_ptr_ = new CommandReset();
+  }
+  else if (cmd_ == CommandWhoami::NAME)
+  {
+    command_ptr_ = new CommandWhoami();
+  }
+  else
+  {
+    if (cmd_ != "")
+    {
+      throw UnknownCommandException();
+    }
+  }
+}

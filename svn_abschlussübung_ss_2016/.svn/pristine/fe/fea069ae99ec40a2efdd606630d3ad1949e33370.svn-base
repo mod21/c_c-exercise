@@ -1,0 +1,116 @@
+//------------------------------------------------------------------------------
+// Direction.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Sp�cklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef DIRECTION_H
+#define DIRECTION_H
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//----------------------------------------------------------------------------
+// Direction Class
+// Class to manage all player informations
+//
+class Direction
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // Variable ch 
+  //
+  char ch_;
+
+  //--------------------------------------------------------------------------
+  // Variable x and y coordinates
+  //
+  int x_, y_;
+
+  //--------------------------------------------------------------------------
+  // Variable word
+  //
+  string word_;
+
+  //--------------------------------------------------------------------------
+  // Variable instances
+  //
+  static vector<Direction*>* instances_;
+  
+  //--------------------------------------------------------------------------
+  // private copy constructor
+  //
+  Direction(const Direction &);
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  Direction() = delete;
+
+  //--------------------------------------------------------------------------
+  // copy Constructor
+  // @param ch
+  // @param x
+  // @param y
+  // @param word
+  //
+  Direction(const char ch, const int x, const int y, const string word);
+
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  ~Direction();
+
+  //--------------------------------------------------------------------------
+  // object direction up
+  //
+  static Direction* UP;
+  //--------------------------------------------------------------------------
+  // object direction LEFT
+  //
+  static Direction* LEFT;
+  //--------------------------------------------------------------------------
+  // object direction DOWN
+  //
+  static Direction* DOWN;
+  //--------------------------------------------------------------------------
+  // object direction RIGHT
+  //
+  static Direction* RIGHT;
+  
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  //
+  static Direction* getDirectionByChar(char ch);
+
+  static Direction* getDirectionByWord(string word);
+  
+  char getChar();
+
+  int getX();
+
+  int getY();
+
+  string getWord();
+
+  //--------------------------------------------------------------------------
+  // Setter Methods
+  //
+  static void init();
+
+  static void remove();
+  
+};
+
+#endif

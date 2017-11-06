@@ -1,0 +1,11 @@
+move up
+move down
+move right
+move left
+fastmove rrl
+fastmove r
+reset
+show
+show more
+save ShouldNotExist2.maze
+quit

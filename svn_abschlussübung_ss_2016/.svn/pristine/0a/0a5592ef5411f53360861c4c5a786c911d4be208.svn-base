@@ -1,0 +1,133 @@
+//------------------------------------------------------------------------------
+// Command.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#ifndef COMMAND_H
+#define COMMAND_H
+
+#include <string>
+#include <vector>
+
+class Game;
+
+class Command
+{
+private:
+  //--------------------------------------------------------------------------
+  // Private copy constructor
+
+  Command(const Command& original);
+
+  //--------------------------------------------------------------------------
+  // Private assignment operator
+
+  Command& operator=(const Command& original);
+
+  //--------------------------------------------------------------------------
+  /// Name of this command
+  std::string command_name_;
+
+public:
+  //--------------------------------------------------------------------------
+  // Constructor
+
+  Command(std::string name);
+
+  //--------------------------------------------------------------------------
+  // Destructor
+
+  virtual ~Command();
+
+  //--------------------------------------------------------------------------
+  // Executes the command.
+  // @param game The game where action should be performed on
+  // @param params Possible parameters needed for the execution
+  // @return Integer representing the success of the action
+
+  virtual int execute(Game& game, std::vector<std::string>& params) = 0;
+
+  //--------------------------------------------------------------------------
+  // Getter Methods
+  const std::string& getName() const;
+};
+
+class CommandLoad: public Command
+{
+public:
+  CommandLoad(std::string name);
+  virtual ~CommandLoad();
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+class CommandSave: public Command
+{
+public:
+  CommandSave(std::string name);
+  virtual ~CommandSave();
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+class CommandMove: public Command
+{
+public:
+  CommandMove(std::string name);
+  virtual ~CommandMove();
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+class CommandFastMove: public Command
+{
+public:
+  CommandFastMove(std::string name);
+  virtual ~CommandFastMove();
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+class CommandShow: public Command
+{
+public:
+  CommandShow(std::string name);
+  virtual ~CommandShow();
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+class CommandQuit: public Command
+{
+public:
+  CommandQuit(std::string name);
+  virtual ~CommandQuit();
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+class CommandReset: public Command
+{
+public:
+  CommandReset(std::string name);
+  virtual ~CommandReset();
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+class StartupCommand: public Command
+{
+public:
+  StartupCommand(std::string name);
+  virtual ~StartupCommand();
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+// TODO remove later
+class CommandDebug: public Command
+{
+public:
+  CommandDebug(std::string name);
+  virtual ~CommandDebug();
+  virtual int execute(Game & game, std::vector<std::string>& params);
+};
+
+#endif

@@ -1,0 +1,54 @@
+#include "Util.h"
+#include "Direction.h"
+#include "Field.h"
+#include <algorithm>
+#include <string>
+#include <ctype.h>
+
+//------------------------------------------------------------------------------
+namespace Util
+{
+  bool checkAllDigits(const std::string &str)
+  {
+    return str.length() != 0 && all_of(str.begin(), str.end(), ::isdigit);
+  }
+
+  std::string trim(const string& str, const string& whitespace)
+  {
+    const auto strBegin = str.find_first_not_of(whitespace);
+    if (strBegin == string::npos)
+    {
+      return ""; // no content
+    }
+
+    const auto strEnd = str.find_last_not_of(whitespace);
+    const auto strRange = strEnd - strBegin + 1;
+
+    return str.substr(strBegin, strRange);
+  }
+
+  void prepareExit()
+  {
+    Direction::remove();
+    Field::remove();
+  }
+
+  void init()
+  {
+    Direction::init();
+    Field::init();
+  }
+
+  bool checkFileName(string name)
+  {
+    for (int index = name.size() - 1; index >= 0; index--)
+    {
+      char symbol = name.at(index);
+      if (!(isalnum(symbol) || symbol == '/' || symbol == '.'))
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+}

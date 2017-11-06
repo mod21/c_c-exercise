@@ -1,0 +1,34 @@
+//------------------------------------------------------------------------------
+// FieldWall.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELDWALL_H
+#define FIELDWALL_H
+
+#include "Field.h"
+
+class Direction;
+class Field;
+class Level;
+
+class FieldWall: public Field
+{
+
+public:
+  FieldWall();
+
+  virtual bool onEnter(Level* lvl, Direction* direction);
+
+  virtual bool onLeave(Level* lvl, Direction* direction);
+
+  ~FieldWall();
+};
+
+#endif

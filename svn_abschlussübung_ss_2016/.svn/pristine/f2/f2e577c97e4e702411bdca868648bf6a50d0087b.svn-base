@@ -1,0 +1,139 @@
+//------------------------------------------------------------------------------
+// Game.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+#ifndef GAME_H
+#define GAME_H
+
+#include <string>
+#include <vector>
+
+class Direction;
+class CoordPair;
+class Player;
+class Map;
+class Level;
+
+using std::vector;
+using std::string;
+
+//----------------------------------------------------------------------------
+// Contains the current level and some other settings.
+//
+class Game
+{
+private:
+
+  //--------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  //
+  Game(Game &);
+
+  //--------------------------------------------------------------------------
+  // The current level.
+  //
+  Level* level_;
+
+  //--------------------------------------------------------------------------
+  // Whether autosave is enabled.
+  //
+  bool isAutoSaveEnabled_;
+
+  //--------------------------------------------------------------------------
+  // The current autosave path.
+  //
+  string autoSavePath_;
+
+public:
+
+  //--------------------------------------------------------------------------
+  // Creates a new instance.
+  //
+  Game();
+
+  //--------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~Game();
+
+  //--------------------------------------------------------------------------
+  // Tries to create a map from the given lines.
+  // @param textLines The lines of the save file.
+  // @return Returns a new map. Returns nullptr if the lines are invalid.
+  //
+  static Map* createMapFromLines(vector<string> textLines);
+
+  //--------------------------------------------------------------------------
+  // Returns the current level.
+  // @reutrn A level. Returns nullptr if no level is loaded.
+  //
+  Level* getLevel();
+
+  //--------------------------------------------------------------------------
+  // Tries to read a level from a list of lines representing a level file.
+  // @param textLines A list of lines.
+  // @return A new level instance. Returns nullptr if the level isn't valid.
+  //
+  static Level* readLevel(vector<string> textLines);
+
+  //--------------------------------------------------------------------------
+  // Converts a string to a list of moves.
+  // @param history A string representing a series of moves.
+  // @return A list of moves. Returns nullptr if the string isn't valid.
+  //
+  static vector<Direction*>* getHistoryFromString(string history);
+
+  //--------------------------------------------------------------------------
+  // Sets a new level and deletes the old one.
+  // @param level The new level.
+  //
+  void setLevel(Level* level);
+
+  //--------------------------------------------------------------------------
+  // Loads a new level from a list of lines representing a level file.
+  // @param A list of lines.
+  //
+  void loadLevel(vector<string>& textLines);
+
+  //--------------------------------------------------------------------------
+  // Loads and validates a level from a file.
+  // @param path The path to the file.
+  //
+  void loadFromFile(string path);
+
+  //--------------------------------------------------------------------------
+  // Tries to save the current level into a file.
+  // @param path The path the file should be written to.
+  //
+  void saveToFile(string path);
+
+  //--------------------------------------------------------------------------
+  // Enables the autosave function.
+  // @path The path of the autosave file.
+  //
+  void enableAutoSave(string path);
+
+  //--------------------------------------------------------------------------
+  // Disables the autosave function.
+  //
+  void disableAutosave();
+
+  //--------------------------------------------------------------------------
+  // Conducts an autosave if a path is set.
+  //
+  void autoSave();
+
+  //--------------------------------------------------------------------------
+  // Loads and fully initializes a level from a path.
+  // @param path The path of the level file.
+  //
+  void loadAndInitializeLevel(string path);
+};
+
+#endif

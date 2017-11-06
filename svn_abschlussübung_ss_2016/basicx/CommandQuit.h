@@ -1,0 +1,56 @@
+#ifndef COMMANDQUIT_H
+#define COMMANDQUIT_H
+
+#include "Command.h"
+
+#include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
+
+//------------------------------------------------------------------------------
+// Terminates the program.
+//
+class CommandQuit : public Command
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  // @param original Instance to be copied.
+  //
+  CommandQuit(const CommandQuit& original);
+
+  //----------------------------------------------------------------------------
+  // Private assignment operator - Should not be used.
+  // @param original Instance to be assigned from.
+  //
+  CommandQuit& operator=(const CommandQuit& original);
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Default constructor - creates a new instance.
+  //
+  CommandQuit();
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  virtual ~CommandQuit();
+
+  //----------------------------------------------------------------------------
+  // Executes the command. Abstract method.
+  // @param game The game where action should be performed on.
+  // @param params Possible parameters needed for the execution.
+  // @return Whether the command should terminate the program.
+  //
+  virtual bool execute(Game& game, vector<string>& params);
+
+  //----------------------------------------------------------------------------
+  //The name of the command
+  static const string NAME;
+};
+
+#endif

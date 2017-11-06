@@ -1,0 +1,2 @@
+FieldPath.o: FieldPath.cpp FieldPath.h Field.h Player.h CoordPair.h \
+ Direction.h

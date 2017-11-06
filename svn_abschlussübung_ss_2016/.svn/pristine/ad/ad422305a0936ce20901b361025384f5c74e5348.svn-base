@@ -1,0 +1,134 @@
+//------------------------------------------------------------------------------
+// Level.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef LEVEL_H
+#define LEVEL_H
+
+#include "Player.h"
+
+//------------------------------------------------------------------------------
+// Using the map class
+//
+class Map;
+
+//------------------------------------------------------------------------------
+// Using the player class
+//
+class Player;
+
+//------------------------------------------------------------------------------
+// Holds all components of a level.
+//
+class Level
+{
+private:
+
+  //----------------------------------------------------------------------------
+  // Symbol used to display the current position of the player.
+  //
+  static const char PLAYER_SYMBOL = '*';
+
+  //----------------------------------------------------------------------------
+  // The current map.
+  //
+  Map* map_;
+
+  //----------------------------------------------------------------------------
+  // The maximum steps available for this level.
+  //
+  long max_steps_;
+
+  //----------------------------------------------------------------------------
+  // The current player.
+  //
+  Player* player_;
+
+  //----------------------------------------------------------------------------
+  // The filename of this level.
+  //
+  string filename_;
+
+  //----------------------------------------------------------------------------
+  // Default constructor - Should not be used.
+  //
+  Level() = delete;
+
+  //----------------------------------------------------------------------------
+  // Private copy constructor - Should not be used.
+  //
+  Level(Level &);
+
+public:
+
+  //----------------------------------------------------------------------------
+  // Creates a new instance.
+  // @param map The map to use.
+  // @param max_steps How many steps are possible.
+  // @param filename The filename of this level.
+  //
+  Level(Map* map, long max_steps, string filename);
+
+  //----------------------------------------------------------------------------
+  // Returns the current map.
+  // @return A map.
+  //
+  Map* getMap();
+
+  //----------------------------------------------------------------------------
+  // Returns the current player.
+  // @return A player.
+  //
+  Player* getPlayer();
+
+  //----------------------------------------------------------------------------
+  // Returns the maximum number of possible steps.
+  // @return A positive whole number.
+  //
+  long getMaxSteps();
+
+  //----------------------------------------------------------------------------
+  // Returns the filename of this level.
+  // @return A string.
+  //
+  string getFilename();
+
+  //----------------------------------------------------------------------------
+  // Returns the current level and its state as a save file.
+  // @return A list of lines.
+  //
+  vector<string> serialize();
+
+  //----------------------------------------------------------------------------
+  // Tries to execute the given steps for the current player.
+  // @param steps The steps to execute.
+  // @return Whether all moves were successful.
+  //
+  bool fastMove(vector<Direction*> steps);
+
+  //----------------------------------------------------------------------------
+  // Prints this level.
+  // @param more When true, more information is shown.
+  // @param more When true, no path is shown.
+  //
+  void print(bool more, bool nopath);
+
+  //----------------------------------------------------------------------------
+  // Resets the player to its starting point.
+  //
+  void respawnPlayer();
+
+  //----------------------------------------------------------------------------
+  // Deletes this instance.
+  //
+  ~Level();
+};
+
+#endif

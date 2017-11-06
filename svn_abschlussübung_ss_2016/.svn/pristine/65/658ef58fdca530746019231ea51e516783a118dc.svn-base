@@ -1,0 +1,2 @@
+FieldIce.o: FieldIce.cpp FieldIce.h Field.h Player.h CoordPair.h \
+ Direction.h

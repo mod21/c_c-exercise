@@ -1,0 +1,2 @@
+FieldWall.o: FieldWall.cpp FieldWall.h Field.h CoordPair.h Direction.h \
+ Level.h Player.h

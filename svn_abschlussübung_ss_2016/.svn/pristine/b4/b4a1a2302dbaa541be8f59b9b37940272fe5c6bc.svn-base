@@ -1,0 +1,41 @@
+/*
+ * Main.cpp
+ *
+ *  Created on: 02.04.2016
+ *      Author: sanx
+ */
+
+#include "../Field.h"
+
+#include <iostream>
+#include <string>
+
+using std::cout;
+using std::endl;
+
+// Use this to perform some basic tests
+int main_old()
+{
+  cout << "Hello World!" << endl;
+
+  Direction::init();
+  Field::init();
+
+  Field** fields = new Field*[15];
+
+  for (int i = 0; i < 15; i++)
+  {
+    fields[i] = i % 2 == 0 ? Field::WALL : Field::PATH;
+  }
+
+  Map* map = new Map(fields, 5, 3);
+  Level* lvl = new Level(map, 10);
+
+  lvl->print(true);
+
+  delete lvl;
+  Direction::remove();
+  Field::remove();
+
+  return 0;
+}

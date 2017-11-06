@@ -1,0 +1,38 @@
+//------------------------------------------------------------------------------
+// FieldFinish.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "FieldFinish.h"
+#include "Direction.h"
+
+//------------------------------------------------------------------------------
+FieldFinish::FieldFinish() :
+  Field('x')
+{
+}
+
+//------------------------------------------------------------------------------
+bool FieldFinish::onEnter(Player* player, Direction* direction)
+{
+  player->move(direction);
+  return true;
+}
+
+//------------------------------------------------------------------------------
+bool FieldFinish::onLeave(Player* player, Direction* direction)
+{
+  return true;
+}
+
+//------------------------------------------------------------------------------
+FieldFinish::~FieldFinish()
+{
+
+}

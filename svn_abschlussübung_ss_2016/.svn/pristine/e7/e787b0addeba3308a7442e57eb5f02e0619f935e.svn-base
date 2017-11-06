@@ -1,0 +1,2 @@
+FieldCounter.o: FieldCounter.cpp FieldCounter.h Field.h CoordPair.h \
+ Direction.h Player.h VisitsMap.h Level.h

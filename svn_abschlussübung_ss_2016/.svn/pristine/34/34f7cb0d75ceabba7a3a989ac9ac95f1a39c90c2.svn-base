@@ -1,0 +1,5 @@
+load loadfiles/moveAgainstWall.maze
+load loadfiles/simple.maze
+move left
+fastmove l
+quit

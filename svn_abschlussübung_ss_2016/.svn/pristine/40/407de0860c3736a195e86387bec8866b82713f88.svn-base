@@ -1,0 +1,51 @@
+//------------------------------------------------------------------------------
+// CommandSave.cpp
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#include "CommandSave.h"
+#include "Exceptions.h"
+#include "Game.h"
+//------------------------------------------------------------------------------
+CommandSave::CommandSave(std::string name) :
+  Command(name)
+{
+}
+
+//------------------------------------------------------------------------------
+CommandSave::~CommandSave()
+{
+}
+
+//------------------------------------------------------------------------------
+int CommandSave::execute(Game& game, std::vector<std::string>& params)
+{
+  if (params.size() != 1)
+  {
+    throw WrongParameterCountException();
+  }
+
+  string check_char = params.at(0);
+  string ccheck;
+
+  int i = check_char.size();
+  for (i = i - 1; i >= 0; i--)
+  {
+    ccheck = check_char.at(i);
+
+    if (!(isalnum(check_char.at(i)) || ccheck == "/" || ccheck == "."))
+    {
+      throw WrongParameterException();
+    }
+  }
+
+  game.saveToFile(params.at(0));
+
+  return 1;
+}

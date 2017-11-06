@@ -1,0 +1,334 @@
+tabai@pluto:~/svn$ /usr/bin/valgrind.bin -v --tool=memcheck --leak-check=full ./basic -m wiki.txt
+==17962== Memcheck, a memory error detector
+==17962== Copyright (C) 2002-2010, and GNU GPL'd, by Julian Seward et al.
+==17962== Using Valgrind-3.6.0.SVN-Debian and LibVEX; rerun with -h for copyright info
+==17962== Command: ./basic -m wiki.txt
+==17962==
+--17962-- Valgrind options:
+--17962--    -v
+--17962--    --tool=memcheck
+--17962--    --leak-check=full
+--17962-- Contents of /proc/version:
+--17962--   Linux version 2.6.32-5-686-bigmem (Debian 2.6.32-48squeeze11) (ben@decadent.org.uk) (gcc version 4.3.5 (Debian 4.3.5-4) ) #1 SMP Wed Feb 18 13:39:53 UTC 2015
+--17962-- Arch and hwcaps: X86, x86-sse1-sse2
+--17962-- Page sizes: currently 4096, max supported 4096
+--17962-- Valgrind library directory: /usr/lib/valgrind
+--17962-- Reading syms from /lib/ld-2.11.3.so (0x4000000)
+--17962--   Considering /lib/ld-2.11.3.so ..
+--17962--   .. CRC mismatch (computed 330dee00 wanted 44fdf41e)
+--17962--   Considering /usr/lib/debug/lib/ld-2.11.3.so ..
+--17962--   .. CRC is valid
+--17962-- Reading syms from /home/t/tabai/svn/basic (0x8048000)
+--17962-- Reading syms from /usr/lib/valgrind/memcheck-x86-linux (0x38000000)
+--17962--    object doesn't have a dynamic symbol table
+--17962-- Reading suppressions file: /usr/lib/valgrind/default.supp
+--17962-- REDIR: 0x4016490 (index) redirected to 0x3803eda3 (vgPlain_x86_linux_REDIR_FOR_index)
+--17962-- Reading syms from /usr/lib/valgrind/vgpreload_core-x86-linux.so (0x401f000)
+--17962-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so (0x4021000)
+==17962== WARNING: new redirection conflicts with existing -- ignoring it
+--17962--     new: 0x04016490 (index               ) R-> 0x04024cb0 index
+--17962-- REDIR: 0x4016670 (strlen) redirected to 0x40250f0 (strlen)
+--17962-- Reading syms from /lib/i686/cmov/libm-2.11.3.so (0x403d000)
+--17962--   Considering /lib/i686/cmov/libm-2.11.3.so ..
+--17962--   .. CRC mismatch (computed 241821a9 wanted eda4ecfe)
+--17962--   Considering /usr/lib/debug/lib/i686/cmov/libm-2.11.3.so ..
+--17962--   .. CRC is valid
+--17962-- Reading syms from /lib/libgcc_s.so.1 (0x4064000)
+--17962--   Considering /lib/libgcc_s.so.1 ..
+--17962--   .. CRC mismatch (computed 5efc9915 wanted ece5a7a0)
+--17962--    object doesn't have a symbol table
+--17962-- Reading syms from /lib/i686/cmov/libc-2.11.3.so (0x4082000)
+--17962--   Considering /lib/i686/cmov/libc-2.11.3.so ..
+--17962--   .. CRC mismatch (computed 0221079b wanted 080d06d3)
+--17962--   Considering /usr/lib/debug/lib/i686/cmov/libc-2.11.3.so ..
+--17962--   .. CRC is valid
+--17962-- REDIR: 0x40fa770 (rindex) redirected to 0x4024b60 (rindex)
+--17962-- REDIR: 0x40fa300 (strlen) redirected to 0x401f42c (_vgnU_ifunc_wrapper)
+--17962-- REDIR: 0x40fa340 (__strlen_sse2) redirected to 0x40250b0 (strlen)
+--17962-- REDIR: 0x40f6a90 (malloc) redirected to 0x4023ecb (malloc)
+--17962-- REDIR: 0x40fba00 (memcpy) redirected to 0x4025870 (memcpy)
+--17962-- REDIR: 0x40fa3c0 (__GI_strlen) redirected to 0x40250d0 (__GI_strlen)
+--17962-- REDIR: 0x40f9d60 (strcmp) redirected to 0x40256b0 (strcmp)
+--17962-- REDIR: 0x40f6150 (calloc) redirected to 0x40231af (calloc)
+--17962-- REDIR: 0x40fb1a0 (bcmp) redirected to 0x4026080 (bcmp)
+--17962-- REDIR: 0x40f69b0 (free) redirected to 0x4023ae5 (free)
+--17962-- REDIR: 0x40fb000 (memchr) redirected to 0x4025830 (memchr)
+==17962== Invalid read of size 4
+==17962==    at 0x805676E: __gnu_cxx::__normal_iterator<Direction**, std::vector<Direction*, std::allocator<Direction*> > >::__normal_iterator(Direction** const&) (stl_iterator.h:726)
+==17962==    by 0x8056681: std::vector<Direction*, std::allocator<Direction*> >::begin() (stl_vector.h:539)
+==17962==    by 0x8056163: Direction::getDirectionByChar(char) (Direction.cpp:68)
+==17962==    by 0x8059ABE: LevelIO::getHistoryFromString(std::string) (LevelIO.cpp:77)
+==17962==    by 0x8059B8D: LevelIO::readLevel(std::vector<std::string, std::allocator<std::string> >) (LevelIO.cpp:95)
+==17962==    by 0x8059EF9: LevelIO::loadFromFile(std::string) (LevelIO.cpp:152)
+==17962==    by 0x8057D4F: Game::loadAndInitializeLevel(std::string) (Game.cpp:78)
+==17962==    by 0x805AEE1: parseArguments(Game&, int, char**) (Main.cpp:35)
+==17962==    by 0x805B101: main (Main.cpp:98)
+==17962==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==17962==
+==17962==
+==17962== Process terminating with default action of signal 11 (SIGSEGV)
+==17962==  Access not within mapped region at address 0x0
+==17962==    at 0x805676E: __gnu_cxx::__normal_iterator<Direction**, std::vector<Direction*, std::allocator<Direction*> > >::__normal_iterator(Direction** const&) (stl_iterator.h:726)
+==17962==    by 0x8056681: std::vector<Direction*, std::allocator<Direction*> >::begin() (stl_vector.h:539)
+==17962==    by 0x8056163: Direction::getDirectionByChar(char) (Direction.cpp:68)
+==17962==    by 0x8059ABE: LevelIO::getHistoryFromString(std::string) (LevelIO.cpp:77)
+==17962==    by 0x8059B8D: LevelIO::readLevel(std::vector<std::string, std::allocator<std::string> >) (LevelIO.cpp:95)
+==17962==    by 0x8059EF9: LevelIO::loadFromFile(std::string) (LevelIO.cpp:152)
+==17962==    by 0x8057D4F: Game::loadAndInitializeLevel(std::string) (Game.cpp:78)
+==17962==    by 0x805AEE1: parseArguments(Game&, int, char**) (Main.cpp:35)
+==17962==    by 0x805B101: main (Main.cpp:98)
+==17962==  If you believe this happened as a result of a stack
+==17962==  overflow in your program's main thread (unlikely but
+==17962==  possible), you can try to increase the size of the
+==17962==  main thread stack using the --main-stacksize= flag.
+==17962==  The main thread stack size used in this run was 8388608.
+==17962==
+==17962== HEAP SUMMARY:
+==17962==     in use at exit: 19,966 bytes in 219 blocks
+==17962==   total heap usage: 235 allocs, 16 frees, 20,196 bytes allocated
+==17962==
+==17962== Searching for pointers to 219 not-freed blocks
+==17962== Checked 116,680 bytes
+==17962==
+==17962== 13 bytes in 1 blocks are possibly lost in loss record 2 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A22DA: std::string::_M_mutate(unsigned int, unsigned int, unsigned int) (basic_string.tcc:479)
+==17962==    by 0x80930E8: std::basic_istream<char, std::char_traits<char> >& std::getline<char, std::char_traits<char>, std::allocator<char> >(std::basic_istream<char, std::char_traits<char> >&, std::basic_string<char, std::char_traits<char>, std::allocator<char> >&, char) (basic_string.h:1364)
+==17962==    by 0x8057D4F: Game::loadAndInitializeLevel(std::string) (Game.cpp:78)
+==17962==    by 0x805AEE1: parseArguments(Game&, int, char**) (Main.cpp:35)
+==17962==    by 0x805B101: main (Main.cpp:98)
+==17962==
+==17962== 21 bytes in 1 blocks are possibly lost in loss record 3 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x805AE6A: parseArguments(Game&, int, char**) (Main.cpp:27)
+==17962==    by 0x805B101: main (Main.cpp:98)
+==17962==
+==17962== 21 bytes in 1 blocks are possibly lost in loss record 4 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A22DA: std::string::_M_mutate(unsigned int, unsigned int, unsigned int) (basic_string.tcc:479)
+==17962==    by 0x80A2477: std::string::_M_leak_hard() (basic_string.tcc:462)
+==17962==    by 0x8059B8D: LevelIO::readLevel(std::vector<std::string, std::allocator<std::string> >) (LevelIO.cpp:95)
+==17962==    by 0x8059EF9: LevelIO::loadFromFile(std::string) (LevelIO.cpp:152)
+==17962==    by 0x8057D4F: Game::loadAndInitializeLevel(std::string) (Game.cpp:78)
+==17962==    by 0x805AEE1: parseArguments(Game&, int, char**) (Main.cpp:35)
+==17962==    by 0x805B101: main (Main.cpp:98)
+==17962==
+==17962== 323 bytes in 9 blocks are possibly lost in loss record 7 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3192: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned int) (basic_string.tcc:629)
+==17962==    by 0x80A3231: std::string::reserve(unsigned int) (basic_string.tcc:510)
+==17962==    by 0x80A349C: std::string::append(char const*, unsigned int) (basic_string.tcc:308)
+==17962==    by 0x8093188: std::basic_istream<char, std::char_traits<char> >& std::getline<char, std::char_traits<char>, std::allocator<char> >(std::basic_istream<char, std::char_traits<char> >&, std::basic_string<char, std::char_traits<char>, std::allocator<char> >&, char) (istream.cc:396)
+==17962==    by 0x80601F2: std::basic_istream<char, std::char_traits<char> >& std::getline<char, std::char_traits<char>, std::allocator<char> >(std::basic_istream<char, std::char_traits<char> >&, std::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (basic_string.h:2795)
+==17962==    by 0x8057D4F: Game::loadAndInitializeLevel(std::string) (Game.cpp:78)
+==17962==    by 0x805AEE1: parseArguments(Game&, int, char**) (Main.cpp:35)
+==17962==    by 0x805B101: main (Main.cpp:98)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 15 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x805CA89: _GLOBAL__sub_I__ZN6PlayerC2EP5Level (Player.cpp:166)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 16 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x805B7E3: _GLOBAL__sub_I__Z14parseArgumentsR4GameiPPc (Main.cpp:118)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 17 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x805A743: _GLOBAL__sub_I__ZN7LevelIO18createMapFromLinesESt6vectorISsSaISsEE (LevelIO.cpp:179)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 18 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x8059224: _GLOBAL__sub_I__ZN5LevelC2EP3Mapl (Level.cpp:166)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 19 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x8058391: _GLOBAL__sub_I__ZN4GameC2Ev (Game.cpp:82)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 20 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x8055F42: _GLOBAL__sub_I__ZN11CommandShowC2Ev (CommandShow.cpp:54)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 21 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x8055753: _GLOBAL__sub_I__ZN11CommandSaveC2Ev (CommandSave.cpp:46)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 22 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x8054F34: _GLOBAL__sub_I__ZN12CommandResetC2Ev (CommandReset.cpp:45)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 23 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x80547B2: _GLOBAL__sub_I__ZN11CommandQuitC2Ev (CommandQuit.cpp:38)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 24 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x8052B7F: _GLOBAL__sub_I__ZN13CommandParserC2Ev (CommandParser.cpp:138)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 25 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x8051DB5: _GLOBAL__sub_I__ZN11CommandMoveC2Ev (CommandMove.cpp:73)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 26 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x8051473: _GLOBAL__sub_I__ZN11CommandLoadC2Ev (CommandLoad.cpp:48)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 27 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x8050BDC: _GLOBAL__sub_I__ZN25CommandLineArgumentParserC2Ev (CommandLineArgumentParser.cpp:104)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== 558 bytes in 14 blocks are possibly lost in loss record 28 of 29
+==17962==    at 0x4023F50: malloc (vg_replace_malloc.c:236)
+==17962==    by 0x805E206: operator new(unsigned int) (new_op.cc:51)
+==17962==    by 0x80A2023: std::string::_Rep::_S_create(unsigned int, unsigned int, std::allocator<char> const&) (new_allocator.h:104)
+==17962==    by 0x80A3E55: char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) (basic_string.tcc:138)
+==17962==    by 0x80A44DF: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (basic_string.h:1725)
+==17962==    by 0x804F11C: _GLOBAL__sub_I__ZN15CommandFastMoveC2Ev (CommandFastMove.cpp:79)
+==17962==    by 0x80B6FFC: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x804DEF3: ??? (in /home/t/tabai/svn/basic)
+==17962==    by 0x80B6F98: __libc_csu_init (in /home/t/tabai/svn/basic)
+==17962==    by 0x4098C53: (below main) (libc-start.c:203)
+==17962==
+==17962== LEAK SUMMARY:
+==17962==    definitely lost: 0 bytes in 0 blocks
+==17962==    indirectly lost: 0 bytes in 0 blocks
+==17962==      possibly lost: 8,190 bytes in 208 blocks
+==17962==    still reachable: 11,776 bytes in 11 blocks
+==17962==         suppressed: 0 bytes in 0 blocks
+==17962== Reachable blocks (those to which a pointer was found) are not shown.
+==17962== To see them, rerun with: --leak-check=full --show-reachable=yes
+==17962==
+==17962== ERROR SUMMARY: 19 errors from 19 contexts (suppressed: 15 from 6)
+==17962==
+==17962== 1 errors in context 1 of 19:
+==17962== Invalid read of size 4
+==17962==    at 0x805676E: __gnu_cxx::__normal_iterator<Direction**, std::vector<Direction*, std::allocator<Direction*> > >::__normal_iterator(Direction** const&) (stl_iterator.h:726)
+==17962==    by 0x8056681: std::vector<Direction*, std::allocator<Direction*> >::begin() (stl_vector.h:539)
+==17962==    by 0x8056163: Direction::getDirectionByChar(char) (Direction.cpp:68)
+==17962==    by 0x8059ABE: LevelIO::getHistoryFromString(std::string) (LevelIO.cpp:77)
+==17962==    by 0x8059B8D: LevelIO::readLevel(std::vector<std::string, std::allocator<std::string> >) (LevelIO.cpp:95)
+==17962==    by 0x8059EF9: LevelIO::loadFromFile(std::string) (LevelIO.cpp:152)
+==17962==    by 0x8057D4F: Game::loadAndInitializeLevel(std::string) (Game.cpp:78)
+==17962==    by 0x805AEE1: parseArguments(Game&, int, char**) (Main.cpp:35)
+==17962==    by 0x805B101: main (Main.cpp:98)
+==17962==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==17962==
+--17962--
+--17962-- used_suppression:     15 dl-hack3-cond-1
+==17962==
+==17962== ERROR SUMMARY: 19 errors from 19 contexts (suppressed: 15 from 6)
+Segmentation fault
+tabai@pluto:~/svn$

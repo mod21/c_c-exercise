@@ -1,0 +1,27 @@
+//------------------------------------------------------------------------------
+// ExceptionInvalidMove.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef EXCEPTIONINVALIDMOVE_H
+#define EXCEPTIONINVALIDMOVE_H
+
+#include <exception>
+#include <iostream>
+#include <typeinfo>
+
+class InvalidMoveException: public std::exception
+{
+  virtual const char* what() const throw ()
+  {
+    return DomainMessages::INVALID_MOVE.c_str();
+  }
+};
+
+#endif

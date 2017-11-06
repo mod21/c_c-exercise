@@ -1,0 +1,32 @@
+//------------------------------------------------------------------------------
+// FieldTeleport.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELDTELEPORT_H
+#define FIELDTELEPORT_H
+
+#include "Field.h"
+
+
+class FieldTeleport : public Field
+{
+public:
+  FieldTeleport(char id);
+
+  virtual bool onEnter(Player* player, CoordPair position,
+    Direction* direction);
+
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  ~FieldTeleport();
+};
+
+
+#endif

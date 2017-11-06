@@ -1,0 +1,9 @@
+load loadfiles/iceTeleport.maze
+show more
+reset
+show more
+move right
+show more
+reset
+show more
+quit

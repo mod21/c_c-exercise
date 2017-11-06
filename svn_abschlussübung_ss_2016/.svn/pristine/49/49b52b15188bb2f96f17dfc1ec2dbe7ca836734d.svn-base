@@ -1,0 +1,33 @@
+//------------------------------------------------------------------------------
+// FieldBonus.h
+//
+// Group: Group 13604, study assistant Philip Loibl
+//
+// Authors: Thomas Eckstein 1530679
+// Spöcklberger Johannes 1531135
+// Tatjana Baier 1530003
+//------------------------------------------------------------------------------
+//
+
+#ifndef FIELDBONUS_H
+#define FIELDBONUS_H
+
+#include "Field.h"
+
+class FieldBonus : public Field
+{
+private:
+  long bonus_;
+
+public:
+  FieldBonus(long bonus);
+
+  virtual bool onEnter(Player* player, CoordPair position,
+    Direction* direction);
+
+  virtual bool onLeave(Player* player, Direction* direction);
+
+  ~FieldBonus();
+};
+
+#endif
